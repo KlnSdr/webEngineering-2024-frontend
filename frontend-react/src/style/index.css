@@ -7,6 +7,33 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.headline-with-lines {
+  position: relative;
+  text-align: center;
+  font-weight: bold;
+  font-size: 2em; /* Adjust the font size as needed */
+}
+
+.headline-with-lines::before,
+.headline-with-lines::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 10%;
+  height: 1px; /* Adjust the thickness of the line */
+  background-color: #000; /* Adjust the color of the line */
+}
+
+.headline-with-lines::before {
+  left: 20%;
+  margin-right: 10px; /* Adjust the spacing between the line and text */
+}
+
+.headline-with-lines::after {
+  right: 20%;
+  margin-left: 10px; /* Adjust the spacing between the line and text */
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

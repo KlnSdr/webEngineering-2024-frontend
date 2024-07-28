@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Heading from "./Heading";
 
 interface LabelInputProps {
   labelText: string;
@@ -14,7 +15,7 @@ const LabelInput: React.FC<LabelInputProps> = ({
   const [value, setValue] = useState(initialValue);
   return (
     <div>
-      <label>{labelText}</label>
+      <Heading headingText={labelText} />
       <input
         type="text"
         value={value}

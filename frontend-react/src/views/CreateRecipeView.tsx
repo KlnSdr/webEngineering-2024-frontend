@@ -50,7 +50,7 @@ function CreateRecipeView() {
       />
       <Heading headingText="Zubereitung" />
       <TextArea
-        initialValue="test"
+        initialValue=""
         onChange={(content: string) => {
           setState({ ...state, description: content });
         }}

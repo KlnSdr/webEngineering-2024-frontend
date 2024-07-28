@@ -4,4 +4,9 @@ interface NeededProduct {
   amount: number;
 }
 
-export type { NeededProduct };
+interface Product {
+    name: string;
+    unit: string;
+}
+
+export type { NeededProduct, Product };

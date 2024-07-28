@@ -1,24 +1,22 @@
 import React, { useState } from "react";
 import AddProductLine from "./AddProductLine";
 import Button from "./Button";
-import { NeededProduct } from "../types/Products";
+import { NeededProduct, Product } from "../types/Products";
 
 interface AddProductsProps {
   onChange: (products: NeededProduct[]) => void;
+  availableProducts: Product[];
 }
 
-const AddProducts: React.FC<AddProductsProps> = ({ onChange }) => {
+const AddProducts: React.FC<AddProductsProps> = ({
+  onChange,
+  availableProducts,
+}) => {
   const [neededProducts, setNeededProducts] = useState<NeededProduct[]>([]);
   const emptyNeededProduct: NeededProduct = {
     id: -1,
     productName: "",
     amount: 0,
-  };
-  const availableProducts: { [product: string]: string } = {
-    "": "",
-    one: "g",
-    two: "ml",
-    three: "stk",
   };
 
   const updateNeededProduct = (
@@ -48,7 +46,7 @@ const AddProducts: React.FC<AddProductsProps> = ({ onChange }) => {
         return (
           <AddProductLine
             key={product.id}
-            products={Object.keys(availableProducts)}
+            products={availableProducts.map((prod: Product) => prod.name)}
             initialValue={product.productName}
             onChange={(prod: string, amount: number) => {
               updateNeededProduct(index, prod, amount);
@@ -56,7 +54,12 @@ const AddProducts: React.FC<AddProductsProps> = ({ onChange }) => {
             onRemove={() => {
               removeNeededProductAt(index);
             }}
-            getUnitOf={(product: string) => availableProducts[product]}
+            getUnitOf={(product: string) => {
+              return (
+                availableProducts.find((prod: Product) => prod.name === product)
+                  ?.unit || ""
+              );
+            }}
           />
         );
       })}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddProducts from "../components/AddProducts";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
@@ -7,7 +7,8 @@ import LabelInput from "../components/LabelInput";
 import TextArea from "../components/TextArea";
 import "../style/CreateRecipeView.css";
 import { CreateRecipe } from "../types/Recipes";
-import { NeededProduct } from "../types/Products";
+import { NeededProduct, Product } from "../types/Products";
+import { ProductsService } from "../services/ProductService";
 
 function CreateRecipeView() {
   const emptyRecipe: CreateRecipe = {
@@ -17,6 +18,13 @@ function CreateRecipeView() {
     products: [],
   };
   const [state, setState] = useState(emptyRecipe);
+  const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    ProductsService.getAll().then((products: Product[]) =>
+      setAvailableProducts(products)
+    );
+  }, []);
 
   return (
     <div className="createRecipeView">
@@ -37,6 +45,7 @@ function CreateRecipeView() {
         onChange={(products: NeededProduct[]) => {
           setState({ ...state, products: products });
         }}
+        availableProducts={availableProducts}
       />
       <Heading headingText="Zubereitung" />
       <TextArea

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AddProducts from "../components/AddProducts";
-import Button from "../components/Button";
+import Button from "react-bootstrap/Button";
 import Heading from "../components/Heading";
 import ImageUpload from "../components/ImageUpload";
 import LabelInput from "../components/LabelInput";
@@ -55,17 +55,19 @@ function CreateRecipeView() {
         }}
       />
       <Button
-        text="verwerfen"
         onClick={() => {
           console.log("verwerfen");
         }}
-      />
+      >
+        verwerfen
+      </Button>
       <Button
-        text="speichern"
         onClick={() => {
           console.log(state);
         }}
-      />
+      >
+        speichern
+      </Button>
     </div>
   );
 }

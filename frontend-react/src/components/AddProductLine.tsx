@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Dropdown from "./Dropdown";
-import Button from "./Button";
+import Button from "react-bootstrap/Button";
 
 interface AddProductLineProps {
   products: string[];
@@ -42,11 +42,12 @@ const AddProductLine: React.FC<AddProductLineProps> = ({
       />
       <label>{unit}</label>
       <Button
-        text="entfernen"
         onClick={() => {
           onRemove();
         }}
-      />
+      >
+        entfernen
+      </Button>
     </div>
   );
 };

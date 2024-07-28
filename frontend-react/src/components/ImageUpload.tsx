@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
+import Button from "react-bootstrap/Button";
 
 interface ImageUploadProps {
   onChange: (img: File | null) => void;
@@ -45,7 +46,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange }) => {
             alt="Selected"
             style={{ width: "300px", height: "auto" }}
           />
-          <button onClick={handleRemoveImage}>Remove Image</button>
+          <Button onClick={handleRemoveImage}>Remove Image</Button>
         </div>
       )}
     </div>

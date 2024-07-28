@@ -1,4 +1,5 @@
 import CreateRecipeView from "./views/CreateRecipeView";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

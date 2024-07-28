@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AddProductLine from "./AddProductLine";
-import Button from "./Button";
+import Button from "react-bootstrap/Button";
 import { NeededProduct, Product } from "../types/Products";
 
 interface AddProductsProps {
@@ -65,7 +65,6 @@ const AddProducts: React.FC<AddProductsProps> = ({
       })}
 
       <Button
-        text="+"
         onClick={() => {
           const neededProductsNew: NeededProduct[] = [
             ...neededProducts,
@@ -74,7 +73,9 @@ const AddProducts: React.FC<AddProductsProps> = ({
           setNeededProducts(neededProductsNew);
           onChange(neededProductsNew);
         }}
-      />
+      >
+        +
+      </Button>
     </div>
   );
 };

@@ -7,6 +7,7 @@ interface AddProductLineProps {
   initialValue: string;
   onChange: (product: string, amount: number) => void;
   onRemove: () => void;
+  getUnitOf: (product: string) => string;
 }
 
 const AddProductLine: React.FC<AddProductLineProps> = ({
@@ -14,8 +15,9 @@ const AddProductLine: React.FC<AddProductLineProps> = ({
   initialValue,
   onChange,
   onRemove,
+  getUnitOf
 }) => {
-  const [unit, setUnit] = useState("g");
+  const [unit, setUnit] = useState("");
   const [amount, setAmount] = useState(0);
   const [product, setProduct] = useState(initialValue);
 
@@ -26,6 +28,7 @@ const AddProductLine: React.FC<AddProductLineProps> = ({
         initialValue={product}
         onChange={(val: string) => {
           setProduct(val);
+          setUnit(getUnitOf(val));
           onChange(val, amount);
         }}
       />

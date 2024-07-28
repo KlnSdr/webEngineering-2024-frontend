@@ -14,7 +14,7 @@ const AddProducts: React.FC<AddProductsProps> = () => {
     },
   ]);
   const emptyNeededProduct: NeededProduct = {id: -1, productName: "", amount: 0 };
-  const availableProducts: string[] = ["", "one", "two", "three"];
+  const availableProducts: {[product: string]: string} = {"": "", "one": "g", "two": "ml", "three": "stk"};
 
   const updateNeededProduct = (
     index: number,
@@ -32,7 +32,7 @@ const AddProducts: React.FC<AddProductsProps> = () => {
   };
 
   const removeNeededProductAt = (index: number) => {
-    const filtered = neededProducts.filter((_, i: number) => i != index);
+    const filtered = neededProducts.filter((_, i: number) => i !== index);
     console.log(filtered);
     setNeededProducts(filtered);
   };
@@ -43,7 +43,7 @@ const AddProducts: React.FC<AddProductsProps> = () => {
         return (
           <AddProductLine
             key={product.id}
-            products={availableProducts}
+            products={Object.keys(availableProducts)}
             initialValue={product.productName}
             onChange={(prod: string, amount: number) => {
               updateNeededProduct(index, prod, amount);
@@ -52,6 +52,7 @@ const AddProducts: React.FC<AddProductsProps> = () => {
               console.log(index);
               removeNeededProductAt(index);
             }}
+          getUnitOf={(product: string) => availableProducts[product]}
           />
         );
       })}

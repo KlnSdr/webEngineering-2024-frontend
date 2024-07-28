@@ -1,12 +1,23 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 
 interface ImageUploadProps {
-  onChange: (img: File | null) => void;
+  initialValue: string | null;
+  onChange: (img: string | null) => void;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ onChange }) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({
+  initialValue,
+  onChange,
+}) => {
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  useEffect(() => {
+    setSelectedImage(initialValue);
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+  }, [initialValue]);
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -14,9 +25,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange }) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSelectedImage(reader.result as string);
+        onChange(reader.result as string);
       };
       reader.readAsDataURL(file);
-      onChange(file);
     }
   };
 
@@ -27,8 +38,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange }) => {
     }
     onChange(null);
   };
-
-  const inputRef = React.useRef<HTMLInputElement>(null);
 
   return (
     <div>

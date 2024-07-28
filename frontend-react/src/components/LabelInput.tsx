@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Heading from "./Heading";
 
 interface LabelInputProps {
@@ -13,6 +13,10 @@ const LabelInput: React.FC<LabelInputProps> = ({
   onChange,
 }) => {
   const [value, setValue] = useState(initialValue);
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
+
   return (
     <div>
       <Heading headingText={labelText} />

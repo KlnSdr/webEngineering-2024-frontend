@@ -23,7 +23,7 @@ function CreateRecipeView() {
 
   useEffect(() => {
     ProductsService.getAll().then((products: Product[]) =>
-      setAvailableProducts([{name: "", unit: ""}, ...products])
+      setAvailableProducts([{ name: "", unit: "" }, ...products])
     );
   }, []);
 
@@ -31,18 +31,20 @@ function CreateRecipeView() {
     <div className="createRecipeView">
       <LabelInput
         labelText="Title"
-        initialValue=""
+        initialValue={state.title}
         onChange={(val: string) => {
           setState({ ...state, title: val });
         }}
       />
       <ImageUpload
-        onChange={(img: File | null) => {
+        initialValue={state.image}
+        onChange={(img: string | null) => {
           setState({ ...state, image: img });
         }}
       />
       <Heading headingText="Zutaten" />
       <AddProducts
+        initialValue={state.products}
         onChange={(products: NeededProduct[]) => {
           setState({ ...state, products: products });
         }}
@@ -50,25 +52,23 @@ function CreateRecipeView() {
       />
       <Heading headingText="Zubereitung" />
       <TextArea
-        initialValue=""
+        initialValue={state.description}
         onChange={(content: string) => {
           setState({ ...state, description: content });
         }}
       />
-          <Stack
-          direction="horizontal"
-      >
+      <Stack direction="horizontal">
         <Button
           variant="secondary"
           onClick={() => {
-            console.log("verwerfen");
+            setState(emptyRecipe);
           }}
-        className="ms-auto"
+          className="ms-auto"
         >
           verwerfen
         </Button>
         <Button
-        variant="primary"
+          variant="primary"
           onClick={() => {
             console.log(state);
           }}

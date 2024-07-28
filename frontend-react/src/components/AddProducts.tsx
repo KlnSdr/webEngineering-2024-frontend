@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddProductLine from "./AddProductLine";
 import Button from "react-bootstrap/Button";
 import { NeededProduct, Product } from "../types/Products";
 
 interface AddProductsProps {
+  initialValue: NeededProduct[];
   onChange: (products: NeededProduct[]) => void;
   availableProducts: Product[];
 }
 
 const AddProducts: React.FC<AddProductsProps> = ({
+  initialValue,
   onChange,
   availableProducts,
 }) => {
@@ -18,6 +20,10 @@ const AddProducts: React.FC<AddProductsProps> = ({
     productName: "",
     amount: 0,
   };
+
+  useEffect(() => {
+    setNeededProducts(initialValue);
+  }, [initialValue]);
 
   const updateNeededProduct = (
     index: number,

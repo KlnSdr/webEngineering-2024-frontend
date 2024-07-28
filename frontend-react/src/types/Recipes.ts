@@ -2,7 +2,7 @@ import { NeededProduct } from "./Products";
 
 interface CreateRecipe {
   title: string;
-  image: File | null;
+  image: string | null;
   description: string;
   products: NeededProduct[];
 }

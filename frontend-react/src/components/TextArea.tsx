@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface TextAreaProps {
   initialValue: string;
@@ -6,7 +6,9 @@ interface TextAreaProps {
 }
 
 const TextArea: React.FC<TextAreaProps> = ({ initialValue, onChange }) => {
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState("");
+  useEffect(() => setValue(initialValue), [initialValue]);
+
   return (
     <textarea
       value={value}

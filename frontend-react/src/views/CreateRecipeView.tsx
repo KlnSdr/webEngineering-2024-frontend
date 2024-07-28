@@ -23,7 +23,7 @@ function CreateRecipeView() {
 
   useEffect(() => {
     ProductsService.getAll().then((products: Product[]) =>
-      setAvailableProducts(products)
+      setAvailableProducts([{name: "", unit: ""}, ...products])
     );
   }, []);
 
@@ -68,6 +68,7 @@ function CreateRecipeView() {
           verwerfen
         </Button>
         <Button
+        variant="primary"
           onClick={() => {
             console.log(state);
           }}

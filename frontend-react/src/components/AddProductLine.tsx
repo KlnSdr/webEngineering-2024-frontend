@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Dropdown from "./Dropdown";
 import Button from "react-bootstrap/Button";
+import Stack from "react-bootstrap/Stack";
 
 interface AddProductLineProps {
   products: string[];
@@ -22,7 +23,7 @@ const AddProductLine: React.FC<AddProductLineProps> = ({
   const [product, setProduct] = useState(initialValue);
 
   return (
-    <div>
+    <Stack direction="horizontal">
       <Dropdown
         options={products}
         initialValue={product}
@@ -39,16 +40,16 @@ const AddProductLine: React.FC<AddProductLineProps> = ({
           setAmount(parseInt(e.target.value));
           onChange(product, parseInt(e.target.value));
         }}
+        className="form-control"
       />
       <label>{unit}</label>
       <Button
         onClick={() => {
           onRemove();
         }}
-      >
-        entfernen
-      </Button>
-    </div>
+        className="bi bi-x"
+      ></Button>
+    </Stack>
   );
 };
 

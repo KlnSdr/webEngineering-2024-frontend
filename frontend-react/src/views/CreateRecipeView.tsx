@@ -9,6 +9,7 @@ import "../style/CreateRecipeView.css";
 import { CreateRecipe } from "../types/Recipes";
 import { NeededProduct, Product } from "../types/Products";
 import { ProductsService } from "../services/ProductService";
+import Stack from "react-bootstrap/Stack";
 
 function CreateRecipeView() {
   const emptyRecipe: CreateRecipe = {
@@ -54,20 +55,26 @@ function CreateRecipeView() {
           setState({ ...state, description: content });
         }}
       />
-      <Button
-        onClick={() => {
-          console.log("verwerfen");
-        }}
+          <Stack
+          direction="horizontal"
       >
-        verwerfen
-      </Button>
-      <Button
-        onClick={() => {
-          console.log(state);
-        }}
-      >
-        speichern
-      </Button>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            console.log("verwerfen");
+          }}
+        className="ms-auto"
+        >
+          verwerfen
+        </Button>
+        <Button
+          onClick={() => {
+            console.log(state);
+          }}
+        >
+          speichern
+        </Button>
+      </Stack>
     </div>
   );
 }

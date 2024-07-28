@@ -22,6 +22,7 @@ const LabelInput: React.FC<LabelInputProps> = ({
           setValue(e.target.value);
           onChange(e.target.value);
         }}
+        className="form-control"
       />
     </div>
   );

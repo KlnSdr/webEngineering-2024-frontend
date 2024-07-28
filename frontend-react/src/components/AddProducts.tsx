@@ -73,9 +73,8 @@ const AddProducts: React.FC<AddProductsProps> = ({
           setNeededProducts(neededProductsNew);
           onChange(neededProductsNew);
         }}
-      >
-        +
-      </Button>
+        className="bi bi-plus"
+      ></Button>
     </div>
   );
 };

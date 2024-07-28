@@ -1,8 +1,10 @@
 import React, { ChangeEvent, useState } from "react";
 
-interface ImageUploadProps {}
+interface ImageUploadProps {
+    onChange: (img: File | null) => void;
+}
 
-const ImageUpload: React.FC<ImageUploadProps> = () => {
+const ImageUpload: React.FC<ImageUploadProps> = ({onChange}) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -13,6 +15,7 @@ const ImageUpload: React.FC<ImageUploadProps> = () => {
         setSelectedImage(reader.result as string);
       };
       reader.readAsDataURL(file);
+      onChange(file);
     }
   };
 
@@ -21,6 +24,7 @@ const ImageUpload: React.FC<ImageUploadProps> = () => {
     if (inputRef.current) {
       inputRef.current.value = "";
     }
+    onChange(null);
   };
 
   const inputRef = React.useRef<HTMLInputElement>(null);

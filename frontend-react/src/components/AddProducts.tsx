@@ -3,16 +3,12 @@ import AddProductLine from "./AddProductLine";
 import Button from "./Button";
 import { NeededProduct } from "../types/Products";
 
-interface AddProductsProps {}
+interface AddProductsProps {
+    onChange: (products: NeededProduct[]) => void;
+}
 
-const AddProducts: React.FC<AddProductsProps> = () => {
-  const [neededProducts, setNeededProducts] = useState<NeededProduct[]>([
-    {
-        id: 1,
-      productName: "",
-      amount: 42,
-    },
-  ]);
+const AddProducts: React.FC<AddProductsProps> = ({onChange}) => {
+  const [neededProducts, setNeededProducts] = useState<NeededProduct[]>([]);
   const emptyNeededProduct: NeededProduct = {id: -1, productName: "", amount: 0 };
   const availableProducts: {[product: string]: string} = {"": "", "one": "g", "two": "ml", "three": "stk"};
 
@@ -27,14 +23,14 @@ const AddProducts: React.FC<AddProductsProps> = () => {
       productName: productName,
       amount: amount,
     };
-    console.log(neededProductsCopy);
     setNeededProducts(neededProductsCopy);
+    onChange(neededProductsCopy);
   };
 
   const removeNeededProductAt = (index: number) => {
     const filtered = neededProducts.filter((_, i: number) => i !== index);
-    console.log(filtered);
     setNeededProducts(filtered);
+    onChange(filtered);
   };
 
   return (
@@ -49,7 +45,6 @@ const AddProducts: React.FC<AddProductsProps> = () => {
               updateNeededProduct(index, prod, amount);
             }}
             onRemove={() => {
-              console.log(index);
               removeNeededProductAt(index);
             }}
           getUnitOf={(product: string) => availableProducts[product]}
@@ -60,7 +55,9 @@ const AddProducts: React.FC<AddProductsProps> = () => {
       <Button
         text="+"
         onClick={() => {
-            setNeededProducts([...neededProducts, {...emptyNeededProduct, id: Date.now()}]);
+            const neededProductsNew: NeededProduct[] = [...neededProducts, {...emptyNeededProduct, id: Date.now()}];
+            setNeededProducts(neededProductsNew);
+            onChange(neededProductsNew);
         }}
       />
     </div>

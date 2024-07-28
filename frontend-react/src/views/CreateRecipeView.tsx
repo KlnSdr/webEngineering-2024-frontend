@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import AddProducts from "../components/AddProducts";
 import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
 import Heading from "../components/Heading";
 import ImageUpload from "../components/ImageUpload";
 import LabelInput from "../components/LabelInput";
@@ -10,6 +11,7 @@ import { CreateRecipe } from "../types/Recipes";
 import { NeededProduct, Product } from "../types/Products";
 import { ProductsService } from "../services/ProductService";
 import Stack from "react-bootstrap/Stack";
+import { RecipeService } from "../services/RecipeService";
 
 function CreateRecipeView() {
   const emptyRecipe: CreateRecipe = {
@@ -18,6 +20,7 @@ function CreateRecipeView() {
     description: "",
     products: [],
   };
+  const [showAlert, setShowAlert] = useState(false);
   const [state, setState] = useState(emptyRecipe);
   const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
 
@@ -27,8 +30,25 @@ function CreateRecipeView() {
     );
   }, []);
 
+  const saveRecipe = () => {
+    // TODO validation
+    RecipeService.save(state).then((_) => {
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 5000);
+    });
+  };
+
   return (
     <div className="createRecipeView">
+      {showAlert && (
+        <Alert
+          variant="success"
+          onClose={() => setShowAlert(false)}
+          dismissible
+        >
+          Recipe saved successfully!
+        </Alert>
+      )}
       <LabelInput
         labelText="Title"
         initialValue={state.title}
@@ -67,12 +87,7 @@ function CreateRecipeView() {
         >
           verwerfen
         </Button>
-        <Button
-          variant="primary"
-          onClick={() => {
-            console.log(state);
-          }}
-        >
+        <Button variant="primary" onClick={saveRecipe}>
           speichern
         </Button>
       </Stack>

@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useState } from "react";
 
 interface ImageUploadProps {
-    onChange: (img: File | null) => void;
+  onChange: (img: File | null) => void;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({onChange}) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({ onChange }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {

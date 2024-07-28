@@ -27,7 +27,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             </option>
           );
         } else {
-            return <option value={option}>{option}</option>;
+          return <option value={option}>{option}</option>;
         }
       })}
     </select>

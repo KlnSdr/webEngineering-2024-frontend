@@ -4,13 +4,22 @@ import Button from "./Button";
 import { NeededProduct } from "../types/Products";
 
 interface AddProductsProps {
-    onChange: (products: NeededProduct[]) => void;
+  onChange: (products: NeededProduct[]) => void;
 }
 
-const AddProducts: React.FC<AddProductsProps> = ({onChange}) => {
+const AddProducts: React.FC<AddProductsProps> = ({ onChange }) => {
   const [neededProducts, setNeededProducts] = useState<NeededProduct[]>([]);
-  const emptyNeededProduct: NeededProduct = {id: -1, productName: "", amount: 0 };
-  const availableProducts: {[product: string]: string} = {"": "", "one": "g", "two": "ml", "three": "stk"};
+  const emptyNeededProduct: NeededProduct = {
+    id: -1,
+    productName: "",
+    amount: 0,
+  };
+  const availableProducts: { [product: string]: string } = {
+    "": "",
+    one: "g",
+    two: "ml",
+    three: "stk",
+  };
 
   const updateNeededProduct = (
     index: number,
@@ -19,7 +28,7 @@ const AddProducts: React.FC<AddProductsProps> = ({onChange}) => {
   ) => {
     const neededProductsCopy: NeededProduct[] = [...neededProducts];
     neededProductsCopy[index] = {
-        ...neededProductsCopy[index],
+      ...neededProductsCopy[index],
       productName: productName,
       amount: amount,
     };
@@ -47,7 +56,7 @@ const AddProducts: React.FC<AddProductsProps> = ({onChange}) => {
             onRemove={() => {
               removeNeededProductAt(index);
             }}
-          getUnitOf={(product: string) => availableProducts[product]}
+            getUnitOf={(product: string) => availableProducts[product]}
           />
         );
       })}
@@ -55,9 +64,12 @@ const AddProducts: React.FC<AddProductsProps> = ({onChange}) => {
       <Button
         text="+"
         onClick={() => {
-            const neededProductsNew: NeededProduct[] = [...neededProducts, {...emptyNeededProduct, id: Date.now()}];
-            setNeededProducts(neededProductsNew);
-            onChange(neededProductsNew);
+          const neededProductsNew: NeededProduct[] = [
+            ...neededProducts,
+            { ...emptyNeededProduct, id: Date.now() },
+          ];
+          setNeededProducts(neededProductsNew);
+          onChange(neededProductsNew);
         }}
       />
     </div>

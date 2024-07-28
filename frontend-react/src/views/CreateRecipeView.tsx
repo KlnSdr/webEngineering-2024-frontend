@@ -46,7 +46,7 @@ function CreateRecipeView() {
           onClose={() => setShowAlert(false)}
           dismissible
         >
-          Recipe saved successfully!
+          Rezept erfolgreich gespeichert!
         </Alert>
       )}
       <LabelInput

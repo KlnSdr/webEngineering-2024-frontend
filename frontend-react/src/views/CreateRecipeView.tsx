@@ -20,7 +20,8 @@ function CreateRecipeView() {
     description: "",
     products: [],
   };
-  const [showAlert, setShowAlert] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showFailAlert, setShowFailAlert] = useState(false);
   const [state, setState] = useState(emptyRecipe);
   const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
 
@@ -30,23 +31,56 @@ function CreateRecipeView() {
     );
   }, []);
 
+  const validate: () => boolean = () => {
+    if (state.title.trim() === "") {
+      return false;
+    }
+
+    if (state.description.trim() === "") {
+      return false;
+    }
+
+    if (
+      state.products.filter(
+        (product: NeededProduct) => product.productName === ""
+      ).length > 0
+    ) {
+      return false;
+    }
+
+    return true;
+  };
+
   const saveRecipe = () => {
-    // TODO validation
-    RecipeService.save(state).then((_) => {
-      setShowAlert(true);
-      setTimeout(() => setShowAlert(false), 5000);
-    });
+    if (validate()) {
+      RecipeService.save(state).then((_) => {
+        setShowSuccessAlert(true);
+        setTimeout(() => setShowSuccessAlert(false), 5000);
+      });
+    } else {
+      setShowFailAlert(true);
+      setTimeout(() => setShowFailAlert(false), 5000);
+    }
   };
 
   return (
     <div className="createRecipeView">
-      {showAlert && (
+      {showSuccessAlert && (
         <Alert
           variant="success"
-          onClose={() => setShowAlert(false)}
+          onClose={() => setShowSuccessAlert(false)}
           dismissible
         >
           Rezept erfolgreich gespeichert!
+        </Alert>
+      )}
+      {showFailAlert && (
+        <Alert
+          variant="danger"
+          onClose={() => setShowFailAlert(false)}
+          dismissible
+        >
+          Rezept konnte nicht gespeichert werden.
         </Alert>
       )}
       <LabelInput

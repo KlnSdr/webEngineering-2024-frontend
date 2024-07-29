@@ -27,7 +27,7 @@ function CreateRecipeView() {
 
   useEffect(() => {
     ProductsService.getAll().then((products: Product[]) =>
-      setAvailableProducts([{ name: "", unit: "" }, ...products])
+      setAvailableProducts([/*{ name: "", unit: "" },*/ ...products])
     );
   }, []);
 

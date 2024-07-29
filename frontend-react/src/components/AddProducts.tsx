@@ -80,6 +80,7 @@ const AddProducts: React.FC<AddProductsProps> = ({
           onChange(neededProductsNew);
         }}
         className="bi bi-plus"
+        data-testid="add-product"
       ></Button>
     </div>
   );

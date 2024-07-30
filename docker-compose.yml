@@ -1,0 +1,8 @@
+services:
+  frontend:
+    build:
+      context: ./frontend-react
+      dockerfile: Dockerfile
+    container_name: webEng_frontend
+    ports:
+      - 13080:80

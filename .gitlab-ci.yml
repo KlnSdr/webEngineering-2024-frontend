@@ -1,0 +1,45 @@
+stages:
+  - build
+  - test
+
+variables:
+  NODE_ENV: production
+
+cache:
+  paths:
+    - frontend-react/node_modules/
+    - frontend-react/build/
+
+image: node:20-alpine
+
+# build -----------------------------------------
+build_job:
+  stage: build
+  script:
+    - echo "Installing dependencies"
+    - cd frontend-react
+    - npm install
+    - echo "Running build"
+    - npm run build
+  artifacts:
+    paths:
+      - frontend-react/build/
+    expire_in: 1 week
+
+# test ------------------------------------------
+test_job:
+  stage: test
+  script:
+    - echo "Installing dependencies"
+    - cd frontend-react
+    - npm install
+    - echo "Running tests"
+    - npm test
+  artifacts:
+    when: always
+    reports:
+      junit: frontend-react/reports/junit.xml
+    paths:
+      - frontend-react/reports/
+    expire_in: 1 week
+

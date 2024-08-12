@@ -3,7 +3,6 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import '@testing-library/jest-dom/extend-expect';
 import LabelInput from "../../components/LabelInput";
-import Heading from "../../components/Heading";
 
 jest.mock("../../components/Heading", () => ({ headingText }: { headingText: string }) => <div>{headingText}</div>);
 

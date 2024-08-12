@@ -5,12 +5,10 @@ import AddProducts from "../../components/AddProducts"; // Adjust the import if 
 import { NeededProduct, Product } from "../../types/Products"; // Adjust the import if the path is different
 
 jest.mock("../../components/AddProductLine", () => ({
-                                         products,
-                                         initialValue,
-                                         onChange,
-                                         onRemove,
-                                         getUnitOf
-                                     }: any) => (
+                                                        initialValue,
+                                                        onChange,
+                                                        onRemove
+                                                    }: any) => (
     <div>
         <input
             data-testid="product-input"

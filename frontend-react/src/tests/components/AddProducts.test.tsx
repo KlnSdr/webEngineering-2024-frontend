@@ -50,7 +50,7 @@ describe("AddProducts Component", () => {
         expect(productInputs).toHaveLength(initialValue.length + 1);
         expect(handleChange).toHaveBeenCalledWith(expect.arrayContaining([
             ...initialValue,
-            expect.objectContaining({ productName: "", amount: 0 })
+            expect.objectContaining({ productName: "Product 1", amount: 0 })
         ]));
     });
 

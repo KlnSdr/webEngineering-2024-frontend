@@ -18,7 +18,7 @@ const AddProductLine: React.FC<AddProductLineProps> = ({
   onRemove,
   getUnitOf,
 }) => {
-  const [unit, setUnit] = useState("");
+  const [unit, setUnit] = useState(getUnitOf(initialValue));
   const [amount, setAmount] = useState(0);
   const [product, setProduct] = useState(initialValue);
 

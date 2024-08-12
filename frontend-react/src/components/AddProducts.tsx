@@ -17,7 +17,7 @@ const AddProducts: React.FC<AddProductsProps> = ({
   const [neededProducts, setNeededProducts] = useState<NeededProduct[]>([]);
   const emptyNeededProduct: NeededProduct = {
     id: -1,
-    productName: "",
+    productName: availableProducts.length > 0 ? availableProducts[0].name : "",
     amount: 0,
   };
 

@@ -17,6 +17,7 @@ const TextArea: React.FC<TextAreaProps> = ({ initialValue, onChange }) => {
         onChange(e.target.value);
       }}
       className="form-control"
+    rows={10}
     ></textarea>
   );
 };

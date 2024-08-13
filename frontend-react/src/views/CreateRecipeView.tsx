@@ -70,6 +70,7 @@ function CreateRecipeView() {
     if (validate()) {
       RecipeService.save(state)
         .then((_) => {
+            // TODO redirect to detail view
           showPopUpSuccess();
         })
         .catch((reason: any) => {

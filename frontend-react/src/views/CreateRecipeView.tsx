@@ -56,21 +56,28 @@ function CreateRecipeView() {
     return true;
   };
 
+  const showPopUpSuccess = () => {
+    setShowSuccessAlert(true);
+    setTimeout(() => setShowSuccessAlert(false), 5000);
+  };
+
+  const showPopUpFail = () => {
+    setShowFailAlert(true);
+    setTimeout(() => setShowFailAlert(false), 5000);
+  };
+
   const saveRecipe = () => {
     if (validate()) {
       RecipeService.save(state)
         .then((_) => {
-          setShowSuccessAlert(true);
-          setTimeout(() => setShowSuccessAlert(false), 5000);
+          showPopUpSuccess();
         })
         .catch((reason: any) => {
           console.log(reason);
-          setShowFailAlert(true);
-          setTimeout(() => setShowFailAlert(false), 5000);
+          showPopUpFail();
         });
     } else {
-      setShowFailAlert(true);
-      setTimeout(() => setShowFailAlert(false), 5000);
+      showPopUpFail();
     }
   };
 

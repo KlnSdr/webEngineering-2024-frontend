@@ -58,10 +58,16 @@ function CreateRecipeView() {
 
   const saveRecipe = () => {
     if (validate()) {
-      RecipeService.save(state).then((_) => {
-        setShowSuccessAlert(true);
-        setTimeout(() => setShowSuccessAlert(false), 5000);
-      });
+      RecipeService.save(state)
+        .then((_) => {
+          setShowSuccessAlert(true);
+          setTimeout(() => setShowSuccessAlert(false), 5000);
+        })
+        .catch((reason: any) => {
+          console.log(reason);
+          setShowFailAlert(true);
+          setTimeout(() => setShowFailAlert(false), 5000);
+        });
     } else {
       setShowFailAlert(true);
       setTimeout(() => setShowFailAlert(false), 5000);

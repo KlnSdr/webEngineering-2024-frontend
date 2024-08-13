@@ -26,9 +26,14 @@ function CreateRecipeView() {
   const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    ProductsService.getAll().then((products: Product[]) =>
-      setAvailableProducts([/*{ name: "", unit: "" },*/ ...products])
-    );
+    ProductsService.getAll()
+      .then((products: Product[]) =>
+        setAvailableProducts([/*{ name: "", unit: "" },*/ ...products])
+      )
+      .catch((reason: any) => {
+        console.error(reason);
+        // TODO display error popup
+      });
   }, []);
 
   const validate: () => boolean = () => {

@@ -1,5 +1,5 @@
 function Home() {
-  return <div className="createRecipeView"></div>;
+  return <div>Hello Home</div>;
 }
 
 export default Home;

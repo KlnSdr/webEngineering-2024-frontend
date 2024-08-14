@@ -12,7 +12,16 @@ function Layout() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/recipe">neues Rezeot</Link>
+            <Link to="/recipe">neues Rezept</Link>
+          </li>
+          <li>
+            <Link to="/search">Suche</Link>
+          </li>
+          <li>
+            <Link to="/survey">Umfrage</Link>
+          </li>
+          <li>
+            <Link to="/logout">Abmelden</Link>
           </li>
         </ul>
       </nav>

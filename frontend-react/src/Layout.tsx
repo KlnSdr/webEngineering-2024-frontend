@@ -7,7 +7,7 @@ import "./style/App.css";
 function Layout() {
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
         <button
           className="navbar-toggler"
           type="button"

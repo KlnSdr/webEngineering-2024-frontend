@@ -50,4 +50,32 @@ describe("RecipeService", () => {
 
         await expect(RecipeService.save(recipe)).resolves.toBeUndefined();
     });
+    test("getAll resolves successfully", async () => {
+        await expect(RecipeService.getAll()).resolves.toEqual([
+            {
+                title: "Käsesoße 1",
+                image: null,
+                description: "Description 1",
+                products: [],
+            },
+            {
+                title: "Käsesoße 2",
+                image: null,
+                description: "Description 2",
+                products: [],
+            },
+            {
+                title: "Käsesosse 3",
+                image: null,
+                description: "Description 3",
+                products: [],
+            },
+            {
+                title: "Käsesosse 4",
+                image: null,
+                description: "Description 3",
+                products: [],
+            },
+        ]);
+    });
 });

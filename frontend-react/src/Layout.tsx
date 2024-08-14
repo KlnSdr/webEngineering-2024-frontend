@@ -1,6 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
 import "./style/boostrapOverride.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "./style/App.css";
 
 function Layout() {

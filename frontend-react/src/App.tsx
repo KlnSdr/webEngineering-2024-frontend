@@ -1,15 +1,18 @@
-//import CreateRecipeView from "./views/CreateRecipeView";
-import HomePage from "./views/HomePage";
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import "./style/boostrapOverride.scss";
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import "./style/App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./Layout";
+import CreateRecipeView from "./views/CreateRecipeView";
+import Home from "./views/Home";
 
 function App() {
   return (
-    <div className="App">
-      <HomePage/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="recipe" element={<CreateRecipeView />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

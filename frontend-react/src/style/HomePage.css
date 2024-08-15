@@ -32,10 +32,9 @@ h1{
 .RowArea{
     height: 16.3vh;
     width: 65.21vh;
-    display : flex;
-    margin-bottom: 2.17vh;
+
 }
 
 .EditButton{
- padding-left: 1vh;
+    padding-left: 1vh;
 }

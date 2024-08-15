@@ -1,5 +1,6 @@
 import React from "react";
 import {CreateRecipe} from "../types/Recipes";
+import {Heading2} from "./Heading";
 
 interface MyRecipeBarProps {
     CreateRecipe: CreateRecipe;
@@ -9,7 +10,7 @@ interface MyRecipeBarProps {
 const MyRecipeBar: React.FC<MyRecipeBarProps> = ({CreateRecipe}) => {
     return (
             <div className="TextArea">
-                <h2 className="FoodTitle">{CreateRecipe.title}</h2>
+                <Heading2 headingText={CreateRecipe.title}/>
             </div>
     );
 };

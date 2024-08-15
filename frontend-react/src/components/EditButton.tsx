@@ -1,5 +1,6 @@
 import React from "react";
 import {CreateRecipe} from "../types/Recipes";
+import Button from "react-bootstrap/Button";
 
 interface EditButtonProps {
     CreateRecipe: CreateRecipe;
@@ -8,7 +9,7 @@ interface EditButtonProps {
 const EditButton: React.FC<EditButtonProps> = ({CreateRecipe}) => {
     return (
         <div className="EditButton">
-            <button className="bi bi-pencil" onClick={() => console.log(CreateRecipe)}>Edit</button>
+            <Button className="bi bi-pencil" onClick={() => console.log(CreateRecipe)}>Edit</Button>
         </div>
     );
 };

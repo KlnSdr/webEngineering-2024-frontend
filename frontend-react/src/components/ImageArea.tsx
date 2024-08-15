@@ -8,7 +8,7 @@ interface ImageSrc{
 const ImageArea: React.FC<ImageSrc> = ({origin}) => {
   return (
     <div className="ImageArea">
-      <img src={origin} alt="Picture"/>
+      <img src={origin}/>
     </div>
   );
 }

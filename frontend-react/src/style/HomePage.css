@@ -1,11 +1,7 @@
 .ImageArea{
-    height: 150px;
-    width: 150px;
+    height: 16.3vh;
+    width: 16.3vh;
     border: solid 1px black;
-}
-h1{
-    padding-top: 20px;
-    padding-bottom: 40px;
 }
 
 img{
@@ -13,27 +9,33 @@ img{
     width: 100%;
     height: 100%;
 }
+h1{
+    padding-top: 2.17vh;
+    padding-bottom: 4.34vh;
+}
+
+
 
 .TextArea {
-    height:150px;
-    width: 450px;
+    height: 16.3vh;
+    width: 48.92vh;
     border: solid 1px black;
 }
 
 .FoodTitle{
-    font-size: 30px;
+    font-size: 3.26vh;
     text-align: center;
     font-weight: bold;
-    padding: 50px 0;
+    padding: 5.43vh 0;
 }
 
 .RowArea{
-    height: 150px;
-    width: 600px;
+    height: 16.3vh;
+    width: 65.21vh;
     display : flex;
-    margin-bottom: 20px;
+    margin-bottom: 2.17vh;
 }
 
 .EditButton{
- padding-left: 10px;
+ padding-left: 1vh;
 }

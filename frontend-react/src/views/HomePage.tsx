@@ -1,8 +1,10 @@
 import "../style/HomePage.css";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageArea from "../components/ImageArea";
 import { RecipeService } from "../services/RecipeService";
 import {CreateRecipe} from "../types/Recipes";
+import MyRecipeBar from "../components/MyRecipeBar";
+import EditButton from "../components/EditButton";
 
 function HomePage() {
   const [myRecipes, setMyRecipe] = useState<CreateRecipe[]>([]);
@@ -14,22 +16,17 @@ function HomePage() {
     });
     }, []);
 
-    let realPage = [];
-for (let i = 0; i < myRecipes.length; i++) {
-    realPage[i] = <div className="RowArea">
-      <ImageArea origin="https://www.gluthelden.de/wp-content/uploads/2018/06/K%C3%A4seso%C3%9Fe-.jpg"/>
-      <div className="TextArea">
-        <h2 className="FoodTitle">{myRecipes[i].title}</h2>
-      </div>
-      <div className="EditButton">
-        <button className="bi bi-pencil" onClick={() => console.log(myRecipes[i])}>Edit</button>
-      </div>
-    </div>
-}
+    const realPage = myRecipes.map((recipe, index) => (
+        <div key={index} className="RowArea">
+            <ImageArea origin="https://www.gluthelden.de/wp-content/uploads/2018/06/K%C3%A4seso%C3%9Fe-.jpg" />
+            <MyRecipeBar CreateRecipe={recipe} />
+            <EditButton CreateRecipe={recipe} />
+        </div>
+    ));
     return (
-       <div> <h1>Meine Rezepte</h1>
-        {realPage}
-       </div>
+        <div><h1>Meine Rezepte</h1>
+            {realPage}
+        </div>
     );
 
 

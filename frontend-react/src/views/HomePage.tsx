@@ -18,7 +18,7 @@ function HomePage() {
 
     const realPage = myRecipes.map((recipe, index) => (
         <div key={index} className="RowArea">
-            <ImageArea origin="https://www.gluthelden.de/wp-content/uploads/2018/06/K%C3%A4seso%C3%9Fe-.jpg" />
+            <ImageArea origin="https://www.gluthelden.de/wp-co1ntent/uploads/2018/06/K%C3%A4seso%C3%9Fe-.jpg" />
             <MyRecipeBar CreateRecipe={recipe} />
             <EditButton CreateRecipe={recipe} />
         </div>

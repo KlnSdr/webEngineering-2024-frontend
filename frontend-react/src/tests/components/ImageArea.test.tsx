@@ -11,6 +11,6 @@ describe("ImageArea Component", () => {
 
         const imageElement = screen.getByRole("img");
         expect(imageElement).toHaveAttribute("src", origin);
-        expect(imageElement).toHaveAttribute("alt", "Picture");
+        expect(imageElement).toHaveAttribute("alt", "dish");
     });
 });

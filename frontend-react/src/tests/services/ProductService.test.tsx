@@ -1,24 +1,72 @@
 import { ProductsService } from "../../services/ProductService";
 import { Product } from "../../types/Products";
 
+// Mocking the global fetch function
+global.fetch = jest.fn();
+
 describe("ProductsService", () => {
-    test("getAll returns a list of products", async () => {
-        const expectedProducts: Product[] = [
-            { name: "One", unit: "g" },
-            { name: "Two", unit: "ml" },
-            { name: "Three", unit: "stk" },
-        ];
+  const mockProducts: Product[] = [
+    { name: "One", unit: "g" },
+    { name: "Two", unit: "ml" },
+    { name: "Three", unit: "stk" },
+  ];
 
-        const products = await ProductsService.getAll();
-        expect(products).toEqual(expectedProducts);
+  beforeEach(() => {
+    // Clear the mock before each test to avoid any interference between tests
+    (fetch as jest.Mock).mockClear();
+  });
+
+  test("getAll returns a list of products", async () => {
+    // Mock the response from the fetch call
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockProducts,
     });
 
-    test("getAll returns products with correct properties", async () => {
-        const products = await ProductsService.getAll();
+    const products = await ProductsService.getAll();
+    expect(products).toEqual(mockProducts);
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products");
+  });
 
-        products.forEach(product => {
-            expect(product).toHaveProperty("name");
-            expect(product).toHaveProperty("unit");
-        });
+  test("getAll returns products with correct properties", async () => {
+    // Mock the response from the fetch call
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockProducts,
     });
+
+    const products = await ProductsService.getAll();
+
+    products.forEach((product) => {
+      expect(product).toHaveProperty("name");
+      expect(product).toHaveProperty("unit");
+    });
+
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products");
+  });
+
+  test("getAll throws an error if the network request fails", async () => {
+    // Mock a failed network request
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+    });
+
+    await expect(ProductsService.getAll()).rejects.toThrow(
+      "Failed to load products."
+    );
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products");
+  });
+
+  test("getAll throws an error if fetch rejects", async () => {
+    // Mock a network error (fetch rejects)
+    const mockError = new Error("Network Error");
+    (fetch as jest.Mock).mockRejectedValueOnce(mockError);
+
+    await expect(ProductsService.getAll()).rejects.toThrow(mockError);
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products");
+  });
 });

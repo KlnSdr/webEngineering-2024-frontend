@@ -26,9 +26,14 @@ function CreateRecipeView() {
   const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    ProductsService.getAll().then((products: Product[]) =>
-      setAvailableProducts([/*{ name: "", unit: "" },*/ ...products])
-    );
+    ProductsService.getAll()
+      .then((products: Product[]) =>
+        setAvailableProducts([/*{ name: "", unit: "" },*/ ...products])
+      )
+      .catch((reason: any) => {
+        console.error(reason);
+        // TODO display error popup
+      });
   }, []);
 
   const validate: () => boolean = () => {
@@ -51,15 +56,29 @@ function CreateRecipeView() {
     return true;
   };
 
+  const showPopUpSuccess = () => {
+    setShowSuccessAlert(true);
+    setTimeout(() => setShowSuccessAlert(false), 5000);
+  };
+
+  const showPopUpFail = () => {
+    setShowFailAlert(true);
+    setTimeout(() => setShowFailAlert(false), 5000);
+  };
+
   const saveRecipe = () => {
     if (validate()) {
-      RecipeService.save(state).then((_) => {
-        setShowSuccessAlert(true);
-        setTimeout(() => setShowSuccessAlert(false), 5000);
-      });
+      RecipeService.save(state)
+        .then((_) => {
+            // TODO redirect to detail view
+          showPopUpSuccess();
+        })
+        .catch((reason: any) => {
+          console.log(reason);
+          showPopUpFail();
+        });
     } else {
-      setShowFailAlert(true);
-      setTimeout(() => setShowFailAlert(false), 5000);
+      showPopUpFail();
     }
   };
 

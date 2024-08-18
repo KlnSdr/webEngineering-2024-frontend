@@ -6,6 +6,7 @@ import HomePage from "./views/HomePage";
 import SearchView from "./views/SearchView";
 import SurveyView from "./views/SurveyView";
 import LogoutView from "./views/LogoutView";
+import LoginView from "./views/LoginView";
 import PageTitle from "./components/PageTitle";
 
 function App() {
@@ -54,6 +55,15 @@ function App() {
             <>
               <PageTitle title="Abmelden..." />
               <LogoutView />
+            </>
+          }
+        />
+        <Route
+          path="login"
+          element={
+            <>
+              <PageTitle title="Anmelden" />
+              <LoginView />
             </>
           }
         />

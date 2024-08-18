@@ -8,7 +8,7 @@ import { UserService } from "../services/UserService";
 
 const UserInfo = () => {
   const [image, setImage] = useState(
-    "https://upload.wikimedia.org/wikipedia/commons/e/ef/Pluto_in_True_Color_-_High-Res.jpg"
+    "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
   );
   const [displayName, setDisplayName] = useState("...");
   const [showTooltip, setShowTooltip] = useState(false);
@@ -18,7 +18,9 @@ const UserInfo = () => {
     UserService.getUserInfo()
       .then((data: any) => {
         console.log(data);
-        setImage(data.principal.attributes.avatar_url);
+        if(data.principal.attributes.avatar_url !== null) {
+            setImage(data.principal.attributes.avatar_url);
+        }
         setDisplayName(data.principal.attributes.name);
       })
       .catch((_) => {

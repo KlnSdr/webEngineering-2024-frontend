@@ -1,15 +1,73 @@
-//import CreateRecipeView from "./views/CreateRecipeView";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./Layout";
+import CreateRecipeView from "./views/CreateRecipeView";
+import NotFoundView from "./views/NotFoundView";
 import HomePage from "./views/HomePage";
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import "./style/boostrapOverride.scss";
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import "./style/App.css";
+import SearchView from "./views/SearchView";
+import SurveyView from "./views/SurveyView";
+import LogoutView from "./views/LogoutView";
+import PageTitle from "./components/PageTitle";
 
 function App() {
   return (
-    <div className="App">
-      <HomePage/>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route
+          index
+          element={
+            <>
+              <PageTitle title="Home" />
+              <HomePage />
+            </>
+          }
+        />
+        <Route
+          path="recipe"
+          element={
+            <>
+              <PageTitle title="Neues Rezept" />
+              <CreateRecipeView />
+            </>
+          }
+        />
+        <Route
+          path="search"
+          element={
+            <>
+              <PageTitle title="Suche" />
+              <SearchView />
+            </>
+          }
+        />
+        <Route
+          path="survey"
+          element={
+            <>
+              <PageTitle title="Umfragen" />
+              <SurveyView />
+            </>
+          }
+        />
+        <Route
+          path="logout"
+          element={
+            <>
+              <PageTitle title="Abmelden..." />
+              <LogoutView />
+            </>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <>
+              <PageTitle title="404 - Not Found" />
+              <NotFoundView />
+            </>
+          }
+        />
+      </Route>
+    </Routes>
   );
 }
 

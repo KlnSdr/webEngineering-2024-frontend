@@ -51,6 +51,8 @@ function Layout() {
                 Umfrage
               </Link>
             </li>
+          </ul>
+          <ul className="navbar-nav ms-auto">
             {user ? (
               <li className="nav-item">
                 <Link className="nav-link" to="/logout">

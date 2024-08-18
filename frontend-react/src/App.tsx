@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
 import CreateRecipeView from "./views/CreateRecipeView";
 import NotFoundView from "./views/NotFoundView";
-import Home from "./views/Home";
+import HomePage from "./views/HomePage";
 import SearchView from "./views/SearchView";
 import SurveyView from "./views/SurveyView";
 import LogoutView from "./views/LogoutView";
@@ -17,7 +17,7 @@ function App() {
           element={
             <>
               <PageTitle title="Home" />
-              <Home />
+              <HomePage />
             </>
           }
         />

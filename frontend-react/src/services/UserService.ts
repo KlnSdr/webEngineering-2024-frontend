@@ -42,7 +42,7 @@ class UserService {
 
   static isLoggedIn(): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
-      UserService.init().then((_) => resolve(UserService.userInfo === null));
+      UserService.init().then((_) => resolve(UserService.userInfo !== null));
     });
   }
 

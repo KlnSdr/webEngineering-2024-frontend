@@ -37,6 +37,7 @@ describe("RecipeService", () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(recipe),
+      credentials: "include",
     });
   });
 
@@ -62,6 +63,7 @@ describe("RecipeService", () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(recipe),
+      credentials: "include",
     });
   });
 
@@ -87,6 +89,7 @@ describe("RecipeService", () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(recipe),
+      credentials: "include",
     });
   });
 
@@ -112,6 +115,7 @@ describe("RecipeService", () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(recipe),
+      credentials: "include",
     });
   });
 
@@ -141,6 +145,7 @@ describe("RecipeService", () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(recipe),
+      credentials: "include",
     });
   });
 
@@ -167,6 +172,7 @@ describe("RecipeService", () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(recipe),
+      credentials: "include",
     });
   });
     test("getAll resolves successfully", async () => {

@@ -5,6 +5,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./style/App.css";
 import { useEffect, useState } from "react";
 import { UserService } from "./services/UserService";
+import UserInfo from "./components/UserInfo";
 
 function Layout() {
   const [user, setUser] = useState(null);
@@ -55,9 +56,7 @@ function Layout() {
           <ul className="navbar-nav ms-auto">
             {user ? (
               <li className="nav-item">
-                <Link className="nav-link" to="/logout">
-                  Abmelden
-                </Link>
+                  <UserInfo />
               </li>
             ) : (
               <li className="nav-item">

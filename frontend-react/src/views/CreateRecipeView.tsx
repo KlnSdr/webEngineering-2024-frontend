@@ -43,7 +43,7 @@ function CreateRecipeView() {
         console.error(reason);
         // TODO display error popup
       });
-  }, []);
+  }, [navigate]);
 
   const validate: () => boolean = () => {
     if (state.title.trim() === "") {

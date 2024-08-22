@@ -27,6 +27,11 @@ function SearchView() {
         setNeededProducts(updatedProducts);
     };
 
+    const handleRemoveProduct = (index: number) => {
+        const filteredProducts = neededProducts.filter((_, i) => i !== index);
+        setNeededProducts(filteredProducts);
+    };
+
 }
 
 export default SearchView;

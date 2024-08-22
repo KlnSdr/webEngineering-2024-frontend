@@ -39,6 +39,49 @@ function SearchView() {
         });
     };
 
+    return (
+        <div className="search-view">
+            <Heading headingText="Suche" />
+            <Heading2 headingText="Produkte:" />
+
+            {neededProducts.map((product, index) => (
+                <AddProductLine
+                    key={index}
+                    products={productsData.map((prod: Product) => prod.name)}
+                    initialValue={product.productName}
+                    onChange={(prod: string, amount: number) => handleProductChange(index, prod, amount)}
+                    onRemove={() => handleRemoveProduct(index)}
+                    getUnitOf={(product: string) => {
+                        return productsData.find((prod: Product) => prod.name === product)?.unit || "";
+                    }}
+                />
+            ))}
+
+            <Stack gap={2} className="col-md-4 mx-auto">
+                <Button
+                    onClick={() => setNeededProducts([...neededProducts, { id: Date.now(), productName: "", amount: 0 }])}
+                    className="bi bi-plus"
+                >
+                    Produkt hinzufügen
+                </Button>
+
+                <Button  variant="primary" onClick={handleSearch} className="mt-3 bi bi-search">
+                    Suchen
+                </Button>
+            </Stack>
+
+            <Heading2 headingText="Ergebnisse:" />
+            <ListGroup>
+                {searchResults.map((result, index) => (
+                    <ListGroup.Item key={index} className="d-flex align-items-center">
+                        <ImageArea origin={result.image} />
+                        <span className="ms-3">{result.title}</span>
+                    </ListGroup.Item>
+                ))}
+            </ListGroup>
+        </div>
+    );
+
 }
 
 export default SearchView;

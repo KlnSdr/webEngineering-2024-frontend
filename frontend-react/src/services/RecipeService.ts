@@ -1,4 +1,5 @@
 import { CreateRecipe } from "../types/Recipes";
+import { Recipe } from "../types/Recipes";
 
 class RecipeService {
   public static save(recipe: CreateRecipe): Promise<void> {
@@ -26,7 +27,7 @@ class RecipeService {
         });
     });
   }
-  public static getAll(): Promise<CreateRecipe[]> {
+  public static getAll1(): Promise<CreateRecipe[]> {
     return new Promise((resolve, reject) => {
       resolve([
         {
@@ -54,6 +55,22 @@ class RecipeService {
           products: [],
         },
       ]);
+    });
+  }
+
+  public static getAll():Promise<Recipe[]> {
+    return new Promise((resolve, reject) => {
+      fetch("http://localhost:13000/recipes").then((response: Response) => {
+          if (!response.ok) {
+            throw new Error("Failed to load recipes.");
+          }
+          return response.json();
+        }).then((data: Recipe[]) => {
+          resolve(data);
+        })
+        .catch((reason: any) => {
+          reject(reason);
+        });
     });
   }
 }

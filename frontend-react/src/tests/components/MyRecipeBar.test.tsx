@@ -2,20 +2,25 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import MyRecipeBar from "../../components/MyRecipeBar";
-import {CreateRecipe} from "../../types/Recipes";
+import {CreateRecipe, Recipe} from "../../types/Recipes";
 
 describe("MyRecipeBar Component", () => {
-    const recipe: CreateRecipe = {
+    const recipe: Recipe = {
+        id: 1,
         title: "Test Recipe",
-        image: null,
-        description: "This is a test recipe",
-        products: [],
+        description: "Test Description",
+        image: "test.jpg",
+        isPrivate: false,
+        creationDate: new Date(),
+        ownerUri: "test",
+        likedByUserUris: [],
+        products:[]
 
 
     };
 
     test("renders with correct recipe title", () => {
-        render(<MyRecipeBar CreateRecipe={recipe} />);
+        render(<MyRecipeBar Recipe={recipe} />);
 
         const titleElement = screen.getByRole("heading", { level: 2 });
         expect(titleElement).toHaveTextContent(recipe.title);

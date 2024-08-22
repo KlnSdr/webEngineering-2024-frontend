@@ -8,6 +8,7 @@ import SurveyView from "./views/SurveyView";
 import LogoutView from "./views/LogoutView";
 import LoginView from "./views/LoginView";
 import PageTitle from "./components/PageTitle";
+import RecipeDetailView from "./views/RecipeDetailView";
 
 function App() {
   return (
@@ -25,12 +26,31 @@ function App() {
         <Route
           path="recipe"
           element={
-            <>
-              <PageTitle title="Neues Rezept" />
-              <CreateRecipeView />
-            </>
+              <>
+                  <PageTitle title="404 - Not Found" />
+                  <NotFoundView />
+              </>
           }
-        />
+        >
+            <Route
+                path="new"
+                element={
+                    <>
+                        <PageTitle title="Neues Rezept" />
+                        <CreateRecipeView />
+                    </>
+                }
+            />
+            <Route
+                path="view/:id"
+                element={
+                    <>
+                        <PageTitle title="Rezeptedetailansicht" />
+                        <RecipeDetailView/>
+                    </>
+                }
+            />
+            </Route>
         <Route
           path="search"
           element={

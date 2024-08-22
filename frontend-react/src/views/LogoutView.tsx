@@ -1,5 +1,11 @@
+import { useEffect } from "react";
+import { UserService } from "../services/UserService";
+
 function LogoutView() {
-  return <div>Hello Logout</div>;
+  useEffect(() => {
+    UserService.doLogout();
+  }, []);
+  return null;
 }
 
 export default LogoutView;

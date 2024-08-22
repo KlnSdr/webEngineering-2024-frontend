@@ -1,10 +1,21 @@
 import { Outlet, Link } from "react-router-dom";
 import "./style/boostrapOverride.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./style/App.css";
+import { useEffect, useState } from "react";
+import { UserService } from "./services/UserService";
+import UserInfo from "./components/UserInfo";
 
 function Layout() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    UserService.getUserInfo()
+      .then((userInfo: any) => setUser(userInfo))
+      .catch((reason) => console.error(reason));
+  }, []);
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -41,11 +52,19 @@ function Layout() {
                 Umfrage
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/logout">
-                Abmelden
-              </Link>
-            </li>
+          </ul>
+          <ul className="navbar-nav ms-auto">
+            {user ? (
+              <li className="nav-item">
+                  <UserInfo />
+              </li>
+            ) : (
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">
+                  Anmelden
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </nav>

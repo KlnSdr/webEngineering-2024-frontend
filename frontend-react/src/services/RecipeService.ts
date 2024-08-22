@@ -5,6 +5,7 @@ class RecipeService {
     return new Promise((resolve, reject) => {
       fetch("http://localhost:13000/recipes", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

@@ -40,15 +40,6 @@ describe("Root component Test", () => {
     expect(screen.getByText("Hello Survey")).toBeInTheDocument();
   });
 
-  it("renders LogoutView on /logout route", () => {
-    render(
-        <MemoryRouter initialEntries={["/logout"]}>
-          <App/>
-        </MemoryRouter>
-    );
-    expect(screen.getByText("Hello Logout")).toBeInTheDocument();
-  });
-
   it("renders NotFoundView on unknown route", () => {
     render(
         <MemoryRouter initialEntries={["/unknown"]}>

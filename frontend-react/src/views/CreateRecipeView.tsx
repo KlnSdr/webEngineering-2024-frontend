@@ -12,6 +12,8 @@ import { NeededProduct, Product } from "../types/Products";
 import { ProductsService } from "../services/ProductService";
 import Stack from "react-bootstrap/Stack";
 import { RecipeService } from "../services/RecipeService";
+import {UserService} from "../services/UserService";
+import {useNavigate} from "react-router-dom";
 
 function CreateRecipeView() {
   const emptyRecipe: CreateRecipe = {
@@ -25,7 +27,14 @@ function CreateRecipeView() {
   const [state, setState] = useState(emptyRecipe);
   const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
 
+  const navigate = useNavigate();
   useEffect(() => {
+      UserService.isLoggedIn().then((isLoggedIn: boolean) => {
+          if (!isLoggedIn) {
+              navigate("/login");
+          }
+      });
+
     ProductsService.getAll()
       .then((products: Product[]) =>
         setAvailableProducts([/*{ name: "", unit: "" },*/ ...products])
@@ -34,7 +43,7 @@ function CreateRecipeView() {
         console.error(reason);
         // TODO display error popup
       });
-  }, []);
+  }, [navigate]);
 
   const validate: () => boolean = () => {
     if (state.title.trim() === "") {

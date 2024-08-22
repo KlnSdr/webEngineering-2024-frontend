@@ -1,5 +1,6 @@
 import { CreateRecipe } from "../types/Recipes";
 import { Recipe } from "../types/Recipes";
+import {NeededProduct} from "../types/Products";
 
 class RecipeService {
   private static backendURL: string =
@@ -76,6 +77,53 @@ class RecipeService {
         });
     });
   }
+
+    public static getAll(): Promise<CreateRecipe[]> {
+        return new Promise((resolve, reject) => {
+            resolve([
+                {
+                    title: "Butter cheese Sauce",
+                    image: null,
+                    description: "A delicious cheese sauce.",
+                    products: [
+                        { id: 7, productName: "Cheese", amount: 1 },
+                        { id: 4, productName: "Milk", amount: 1 },
+                        { id: 6, productName: "Butter", amount: 1 },
+                    ],
+                },
+                {
+                    title: "Salty cheese Sauce",
+                    image: null,
+                    description: "Cheese sauce with salt.",
+                    products: [
+                        { id: 7, productName: "Cheese", amount: 2 },
+                        { id: 10, productName: "Salt", amount: 1 },
+                        { id: 4, productName: "Milk", amount: 2 },
+                    ],
+                },
+                {
+                    title: "Spicy Cheese Sauce",
+                    image: null,
+                    description: "A spicy cheese sauce.",
+                    products: [
+                        { id: 7, productName: "Cheese", amount: 2 },
+                        { id: 11, productName: "Pepper", amount: 1 },
+                        { id: 2, productName: "Milk", amount: 1 },
+                    ],
+                },
+                {
+                    title: "Mild Cheese Sauce",
+                    image: null,
+                    description: "A mild cheese sauce.",
+                    products: [
+                        { id: 7, productName: "Cheese", amount: 3 },
+                        { id: 2, productName: "Milk", amount: 2 }
+                    ],
+                },
+            ]);
+        });
+    }
+
 }
 
 export { RecipeService };

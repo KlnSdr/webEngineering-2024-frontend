@@ -21,6 +21,12 @@ function SearchView() {
             });
     }, []);
 
+    const handleProductChange = (index: number, product: string, amount: number) => {
+        const updatedProducts = [...neededProducts];
+        updatedProducts[index] = { id: index, productName: product, amount: amount };
+        setNeededProducts(updatedProducts);
+    };
+
 }
 
 export default SearchView;

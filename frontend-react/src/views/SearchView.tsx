@@ -32,6 +32,13 @@ function SearchView() {
         setNeededProducts(filteredProducts);
     };
 
+    //Fetch all the recipes that contain the specified products
+    const handleSearch = () => {
+        RecipeService.searchRecipesByProducts(neededProducts).then((results) => {
+            setSearchResults(results);
+        });
+    };
+
 }
 
 export default SearchView;

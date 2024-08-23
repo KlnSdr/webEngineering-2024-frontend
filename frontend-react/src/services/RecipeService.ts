@@ -82,7 +82,7 @@ class RecipeService {
         return new Promise((resolve, reject) => {
             resolve([
                 {
-                    title: "Butter cheese Sauce",
+                    title: "Käsesoße 1",
                     image: null,
                     description: "A delicious cheese sauce.",
                     products: [
@@ -92,7 +92,7 @@ class RecipeService {
                     ],
                 },
                 {
-                    title: "Salty cheese Sauce",
+                    title: "Käsesoße 2",
                     image: null,
                     description: "Cheese sauce with salt.",
                     products: [
@@ -102,7 +102,7 @@ class RecipeService {
                     ],
                 },
                 {
-                    title: "Spicy Cheese Sauce",
+                    title: "Käsesoße 3",
                     image: null,
                     description: "A spicy cheese sauce.",
                     products: [
@@ -112,7 +112,7 @@ class RecipeService {
                     ],
                 },
                 {
-                    title: "Mild Cheese Sauce",
+                    title: "Käsesoße 4",
                     image: null,
                     description: "A mild cheese sauce.",
                     products: [
@@ -124,6 +124,7 @@ class RecipeService {
         });
     }
 
+
     public static searchRecipesByProducts(neededProducts: NeededProduct[]): Promise<CreateRecipe[]> {
         return new Promise((resolve, reject) => {
             this.getAll()
@@ -131,7 +132,7 @@ class RecipeService {
 
                     const staticRecipes: CreateRecipe[] = [
                         {
-                            title: "Butter cheese Sauce",
+                            title: "Käsesoße 1",
                             image: null,
                             description: "A delicious cheese sauce.",
                             products: [
@@ -141,7 +142,7 @@ class RecipeService {
                             ],
                         },
                         {
-                            title: "Salty cheese Sauce",
+                            title: "Käsesoße 2",
                             image: null,
                             description: "Cheese sauce with salt.",
                             products: [
@@ -151,7 +152,7 @@ class RecipeService {
                             ],
                         },
                         {
-                            title: "Spicy Cheese Sauce",
+                            title: "Käsesoße 3",
                             image: null,
                             description: "A spicy cheese sauce.",
                             products: [
@@ -161,7 +162,7 @@ class RecipeService {
                             ],
                         },
                         {
-                            title: "Mild Cheese Sauce",
+                            title: "Käsesoße 4",
                             image: null,
                             description: "A mild cheese sauce.",
                             products: [

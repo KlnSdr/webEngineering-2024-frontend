@@ -1,5 +1,4 @@
 import React from "react";
-import * as timers from "node:timers";
 import Stack from "react-bootstrap/Stack";
 
 interface FooterProps {

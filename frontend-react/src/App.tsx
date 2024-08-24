@@ -57,7 +57,7 @@ function App() {
           element={
             <>
               <PageTitle title="Suche" />
-              <RecipeDetailView />
+              <SearchView/>
             </>
           }
         />

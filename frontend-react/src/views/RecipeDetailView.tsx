@@ -12,8 +12,8 @@ function RecipeDetailView() {
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const {id} = useParams<{id:string}>();
 
-    useEffect(() => {
-        const fetchRecipe = async () => {
+    useEffect( () =>  {
+        (async ()=> {
             try {
                 const response = await fetch(`http://localhost:13000/recipes/${id}`);
                 if (!response.ok) {
@@ -25,7 +25,8 @@ function RecipeDetailView() {
             } catch (error) {
                 console.error(error);
             }
-        };
+        })();
+
     }, [id]);
 
     if (!recipe) {

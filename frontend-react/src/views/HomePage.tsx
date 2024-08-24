@@ -6,7 +6,7 @@ import {Recipe} from "../types/Recipes";
 import MyRecipeBar from "../components/MyRecipeBar";
 import EditButton from "../components/EditButton";
 import Stack from "react-bootstrap/Stack";
-import {Link, Route, Routes} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 function HomePage() {
   const [myRecipes, setMyRecipe] = useState<Recipe[]>([]);

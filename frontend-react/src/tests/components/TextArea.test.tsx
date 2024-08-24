@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import '@testing-library/jest-dom/extend-expect';
 import TextArea from "../../components/TextArea";
+import {TextArea2} from "../../components/TextArea";
 
 describe("TextArea Component", () => {
     test("renders with initial value", () => {
@@ -51,3 +52,23 @@ describe("TextArea Component", () => {
         expect(textarea).toHaveValue(newValue);
     });
 });
+
+describe("TextArea2 Component", () => {
+    test("renders with initial value", () => {
+        const initialValue = "Initial Text";
+
+
+        render(<TextArea2 initialValue={initialValue}   Header={"Überschrift"}/>);
+
+        const textarea = screen.getByRole("textbox");
+        expect(textarea).toHaveValue(initialValue);
+
+        const header = screen.getByText("Überschrift");
+        expect(header).toBeInTheDocument();
+        expect(header).toHaveTextContent("Überschrift");
+    });
+});
+
+
+
+

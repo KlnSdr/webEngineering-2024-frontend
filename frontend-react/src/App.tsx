@@ -23,40 +23,41 @@ function App() {
             </>
           }
         />
-        <Route
-          path="recipe"
-          element={
-              <>
-                  <PageTitle title="404 - Not Found" />
-                  <NotFoundView />
-              </>
-          }
-        >
-            <Route
-                path="new"
-                element={
-                    <>
-                        <PageTitle title="Neues Rezept" />
-                        <CreateRecipeView />
-                    </>
-                }
-            />
-            <Route
-                path="view/:id"
-                element={
-                    <>
-                        <PageTitle title="Rezeptedetailansicht" />
-                        <RecipeDetailView/>
-                    </>
-                }
-            />
-            </Route>
+        <Route path="recipe" >
+              <Route
+                  path="new"
+                  element={
+                      <>
+                          <PageTitle title="Neues Rezept" />
+                          <CreateRecipeView />
+                      </>
+                  }
+              />
+              <Route
+                  path="view/:id"
+                  element={
+                      <>
+                          <PageTitle title="Rezeptedetailansicht" />
+                          <RecipeDetailView />
+                      </>
+                  }
+              />
+              <Route
+                  path="*"
+                  element={
+                      <>
+                          <PageTitle title="404 - Not Found" />
+                          <NotFoundView />
+                      </>
+                  }
+              />
+        </Route>
         <Route
           path="search"
           element={
             <>
               <PageTitle title="Suche" />
-              <SearchView />
+              <RecipeDetailView />
             </>
           }
         />

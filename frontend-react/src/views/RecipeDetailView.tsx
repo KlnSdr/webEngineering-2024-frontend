@@ -29,9 +29,18 @@ function RecipeDetailView() {
     }, [id]);
 
     if (!recipe) {
-        return( <div>Recipe not found</div>);
-    }else{
-    return (
+        return<div>
+            <Stack direction={"vertical"}>
+                <Heading headingText={"Rezept nicht gefunden"}/>
+                <img src="https://www.gluthelden.de/wp-content/uploads/2018/06/K%C3%A4seso%C3%9Fe-.jpg" className="img-fluid" alt={"dish"}/>
+                <Heading headingText={"Zutaten"}/>
+                <IngredientsTable ingredients={[{name: "Käse", amount: 3, unit: "g"}, {name:"Teig", amount:100, unit:"g"}]}/>
+                <TextArea2 initialValue={"Rezept nicht gefunden"} Header={"Zuberitung"}/>
+                <Footer owner={"unknown"} timestamp={"unknown"}/>
+            </Stack>
+        </div>
+    } else {
+        return (
         <div>
             <Stack direction={"vertical"}>
                 <Heading2 headingText={recipe.title}/>

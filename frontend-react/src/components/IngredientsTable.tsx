@@ -23,8 +23,7 @@ const IngredientsTable: React.FC<IngredientsTableProps> = ({ ingredients }) => {
         {ingredients.map((ingredient, index) => (
           <tr key={index}>
             <td>{ingredient.name}</td>
-            <td>{ingredient.amount}</td>
-            <td>{ingredient.unit}</td>
+            <td>{ingredient.amount} {ingredient.unit}</td>
           </tr>
         ))}
       </tbody>

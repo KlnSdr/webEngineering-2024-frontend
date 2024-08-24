@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import EditButton from "../../components/EditButton";
-import {CreateRecipe, Recipe} from "../../types/Recipes";
+import {Recipe} from "../../types/Recipes";
 
 describe("EditButton Component", () => {
     const recipe: Recipe = {

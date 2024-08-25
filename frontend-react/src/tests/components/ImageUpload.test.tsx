@@ -12,9 +12,10 @@ describe("ImageUpload Component", () => {
     });
 
     test("renders with initial value", () => {
-        render(<ImageUpload initialValue={initialValue} onChange={handleChange} />);
+        const {asFragment} = render(<ImageUpload initialValue={initialValue} onChange={handleChange} />);
 
         expect(screen.getByAltText("Selected")).toHaveAttribute("src", initialValue);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test("uploads an image and displays the preview", async () => {

@@ -13,7 +13,7 @@ describe("IngredientsTable Component", () => {
     ];
 
     test("renders the correct ingredients", () => {
-        render(<IngredientsTable ingredients={ingredients} />);
+        const {asFragment} = render(<IngredientsTable ingredients={ingredients} />);
 
         const tableElement = screen.getByRole("table");
         expect(tableElement).toBeInTheDocument();
@@ -33,5 +33,7 @@ describe("IngredientsTable Component", () => {
         expect(bodyDataElements).toHaveLength(2);
         expect(bodyDataElements[0]).toHaveTextContent("Test Ingredient");
         expect(bodyDataElements[1]).toHaveTextContent("1 kg");
+        
+        expect(asFragment()).toMatchSnapshot();
     });
 });

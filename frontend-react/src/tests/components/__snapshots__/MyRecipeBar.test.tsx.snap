@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyRecipeBar Component renders with correct recipe title 1`] = `
+<DocumentFragment>
+  <div
+    class="TextArea"
+  >
+    <h2
+      class="FoodTitle"
+    >
+      Test Recipe
+    </h2>
+  </div>
+</DocumentFragment>
+`;

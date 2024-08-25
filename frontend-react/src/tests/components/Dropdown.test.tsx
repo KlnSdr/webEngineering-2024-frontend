@@ -10,7 +10,7 @@ describe("Dropdown Component", () => {
         const initialValue = "Option 2";
         const handleChange = jest.fn();
 
-        render(<Dropdown options={options} initialValue={initialValue} onChange={handleChange} />);
+        const {asFragment} = render(<Dropdown options={options} initialValue={initialValue} onChange={handleChange} />);
 
         const selectElement = screen.getByRole("combobox");
         expect(selectElement).toHaveValue(initialValue);
@@ -20,6 +20,7 @@ describe("Dropdown Component", () => {
         optionElements.forEach((option, index) => {
             expect(option).toHaveTextContent(options[index]);
         });
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test("calls onChange callback when value changes", () => {

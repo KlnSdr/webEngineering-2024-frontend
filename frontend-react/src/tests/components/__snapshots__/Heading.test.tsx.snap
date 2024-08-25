@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Heading Component renders with correct heading text 1`] = `
+<DocumentFragment>
+  <h1
+    class="headline-with-lines"
+  >
+    Test Heading
+  </h1>
+</DocumentFragment>
+`;

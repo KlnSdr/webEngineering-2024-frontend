@@ -20,10 +20,10 @@ describe("MyRecipeBar Component", () => {
     };
 
     test("renders with correct recipe title", () => {
-        render(<MyRecipeBar Recipe={recipe} />);
+        const {asFragment} = render(<MyRecipeBar Recipe={recipe} />);
 
         const titleElement = screen.getByRole("heading", { level: 2 });
         expect(titleElement).toHaveTextContent(recipe.title);
-
+        expect(asFragment()).toMatchSnapshot();
     });
 });

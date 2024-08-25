@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ImageUpload Component renders with initial value 1`] = `
+<DocumentFragment>
+  <div>
+    <label
+      for="image-upload"
+    >
+      Wähle ein Bild aus:
+    </label>
+    <input
+      accept="image/*"
+      id="image-upload"
+      type="file"
+    />
+    <div>
+      <h2>
+        Image Preview:
+      </h2>
+      <img
+        alt="Selected"
+        src="data:image/png;base64,initialImage"
+        style="width: 300px; height: auto;"
+      />
+      <button
+        class="btn btn-primary"
+        type="button"
+      >
+        Remove Image
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ImageArea Component renders with correct image 1`] = `
+<DocumentFragment>
+  <div
+    class="ImageArea"
+  >
+    <img
+      alt="dish"
+      src="https://via.placeholder.com/150"
+    />
+  </div>
+</DocumentFragment>
+`;

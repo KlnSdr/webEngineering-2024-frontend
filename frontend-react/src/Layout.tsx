@@ -38,7 +38,7 @@ function Layout() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/recipe">
+              <Link className="nav-link" to="/recipe/new">
                 neues Rezept
               </Link>
             </li>

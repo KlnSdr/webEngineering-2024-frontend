@@ -9,4 +9,10 @@ interface Product {
     unit: string;
 }
 
-export type { NeededProduct, Product };
+interface DetailedProduct {
+    name: string;
+    amount: number;
+    unit: string;
+}
+
+export type { NeededProduct, Product, DetailedProduct };

@@ -1,16 +1,16 @@
 import React from "react";
-import {CreateRecipe} from "../types/Recipes";
+import {Recipe} from "../types/Recipes";
 import {Heading2} from "./Heading";
 
 interface MyRecipeBarProps {
-    CreateRecipe: CreateRecipe;
+    Recipe: Recipe;
 
 }
 
-const MyRecipeBar: React.FC<MyRecipeBarProps> = ({CreateRecipe}) => {
+const MyRecipeBar: React.FC<MyRecipeBarProps> = ({Recipe}) => {
     return (
             <div className="TextArea">
-                <Heading2 headingText={CreateRecipe.title}/>
+                <Heading2 headingText={Recipe.title}/>
             </div>
     );
 };

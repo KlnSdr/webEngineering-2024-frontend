@@ -15,7 +15,7 @@ describe("Root component Test", () => {
 
   it("renders CreateRecipeView on /recipe route", () => {
     render(
-        <MemoryRouter initialEntries={["/recipe"]}>
+        <MemoryRouter initialEntries={["/recipe/new"]}>
           <App/>
         </MemoryRouter>
     );

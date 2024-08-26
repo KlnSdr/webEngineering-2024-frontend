@@ -10,10 +10,11 @@ describe("TextArea Component", () => {
         const initialValue = "Initial Text";
         const handleChange = jest.fn();
 
-        render(<TextArea initialValue={initialValue} onChange={handleChange} />);
+        const {asFragment} = render(<TextArea initialValue={initialValue} onChange={handleChange} />);
 
         const textarea = screen.getByRole("textbox");
         expect(textarea).toHaveValue(initialValue);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test("calls onChange callback when value changes", () => {

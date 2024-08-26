@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer Component renders the correct text 1`] = `
+<DocumentFragment>
+  <footer
+    class="text-center bg-body-tertiary pt-3"
+  >
+    <div
+      class="hstack gap-5"
+    >
+      <text>
+         Erstellt von: user 
+      </text>
+      <text>
+         Datum: 01.01.1999 
+      </text>
+    </div>
+  </footer>
+</DocumentFragment>
+`;

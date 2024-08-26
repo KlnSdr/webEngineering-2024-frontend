@@ -5,7 +5,7 @@ import Footer from "../../components/Footer";
 
 describe("Footer Component", () => {
     test("renders the correct text", () => {
-        render(<Footer  owner={"user"} timestamp={"01.01.1999"}/>);
+        const {asFragment} = render(<Footer  owner={"user"} timestamp={"01.01.1999"}/>);
 
         const footerElement = screen.getByText(/user/);
         expect(footerElement).toBeInTheDocument();
@@ -14,5 +14,6 @@ describe("Footer Component", () => {
         const timestampElement = screen.getByText(/01.01.1999/);
         expect(timestampElement).toBeInTheDocument();
         expect(timestampElement).toHaveTextContent("01.01.1999");
+        expect(asFragment()).toMatchSnapshot();
     });
 });

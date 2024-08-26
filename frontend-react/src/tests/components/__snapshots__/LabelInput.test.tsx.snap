@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LabelInput Component renders with initial value and label text 1`] = `
+<DocumentFragment>
+  <div>
+    <div>
+      Test Label
+    </div>
+    <input
+      class="form-control"
+      type="text"
+      value="Initial Text"
+    />
+  </div>
+</DocumentFragment>
+`;

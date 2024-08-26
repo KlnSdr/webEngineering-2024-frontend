@@ -7,10 +7,11 @@ describe("Heading Component", () => {
     test("renders with correct heading text", () => {
         const headingText = "Test Heading";
 
-        render(<Heading headingText={headingText} />);
+        const {asFragment} = render(<Heading headingText={headingText} />);
 
         const headingElement = screen.getByRole("heading", { level: 1 });
         expect(headingElement).toHaveTextContent(headingText);
         expect(headingElement).toHaveClass("headline-with-lines");
+        expect(asFragment()).toMatchSnapshot();
     });
 });

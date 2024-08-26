@@ -12,13 +12,14 @@ describe("LabelInput Component", () => {
         const initialValue = "Initial Text";
         const handleChange = jest.fn();
 
-        render(<LabelInput labelText={labelText} initialValue={initialValue} onChange={handleChange} />);
+        const {asFragment} = render(<LabelInput labelText={labelText} initialValue={initialValue} onChange={handleChange} />);
 
         const heading = screen.getByText(labelText);
         const input = screen.getByRole("textbox");
 
         expect(heading).toBeInTheDocument();
         expect(input).toHaveValue(initialValue);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test("calls onChange callback when value changes", () => {

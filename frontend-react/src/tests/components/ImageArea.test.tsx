@@ -7,10 +7,11 @@ describe("ImageArea Component", () => {
     test("renders with correct image", () => {
         const origin = "https://via.placeholder.com/150";
 
-       render( <ImageArea origin={origin} />);
+       const {asFragment} = render( <ImageArea origin={origin} />);
 
         const imageElement = screen.getByRole("img");
         expect(imageElement).toHaveAttribute("src", origin);
         expect(imageElement).toHaveAttribute("alt", "dish");
+        expect(asFragment()).toMatchSnapshot();
     });
 });

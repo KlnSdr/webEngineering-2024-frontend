@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IngredientsTable Component renders the correct ingredients 1`] = `
+<DocumentFragment>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Zutat
+        </th>
+        <th>
+          Menge
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          Test Ingredient
+        </td>
+        <td>
+          1 kg
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</DocumentFragment>
+`;

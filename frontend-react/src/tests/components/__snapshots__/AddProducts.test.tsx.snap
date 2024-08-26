@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddProducts Component renders with initial values 1`] = `
+<DocumentFragment>
+  <div>
+    <div>
+      <input
+        data-testid="product-input"
+        value="Product 1"
+      />
+      <button
+        data-testid="remove-button"
+      >
+        Remove
+      </button>
+    </div>
+    <button
+      class="bi bi-plus btn btn-primary"
+      data-testid="add-product"
+      type="button"
+    />
+  </div>
+</DocumentFragment>
+`;

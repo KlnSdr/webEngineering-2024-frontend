@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import AddProducts from "../../components/AddProducts"; // Adjust the import if the path is different
 import { NeededProduct, Product } from "../../types/Products"; // Adjust the import if the path is different
+import exp from "constants";
 
 jest.mock("../../components/AddProductLine", () => ({
                                                         initialValue,
@@ -32,10 +33,11 @@ describe("AddProducts Component", () => {
     test("renders with initial values", () => {
         const handleChange = jest.fn();
 
-        render(<AddProducts initialValue={initialValue} onChange={handleChange} availableProducts={availableProducts} />);
+        const {asFragment} = render(<AddProducts initialValue={initialValue} onChange={handleChange} availableProducts={availableProducts} />);
 
         const productInput = screen.getByTestId("product-input");
         expect(productInput).toHaveValue(initialValue[0].productName);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test("adds a new product line", () => {

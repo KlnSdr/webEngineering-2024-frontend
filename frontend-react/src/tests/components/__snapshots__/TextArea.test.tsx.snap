@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextArea Component renders with initial value 1`] = `
+<DocumentFragment>
+  <textarea
+    class="form-control"
+    rows="10"
+  >
+    Initial Text
+  </textarea>
+</DocumentFragment>
+`;

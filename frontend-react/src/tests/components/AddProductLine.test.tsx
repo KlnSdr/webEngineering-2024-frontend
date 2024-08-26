@@ -28,7 +28,7 @@ describe("AddProductLine Component", () => {
         const handleChange = jest.fn();
         const handleRemove = jest.fn();
 
-        render(
+        const {asFragment} = render(
             <AddProductLine
                 products={products}
                 initialValue={initialValue}
@@ -40,6 +40,7 @@ describe("AddProductLine Component", () => {
 
         expect(screen.getByTestId("dropdown")).toHaveValue(initialValue);
         expect(screen.getByRole("spinbutton")).toHaveValue(0);
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test("updates product selection", () => {

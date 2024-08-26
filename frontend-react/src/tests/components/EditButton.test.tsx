@@ -21,11 +21,12 @@ describe("EditButton Component", () => {
     test("logs the correct recipe on click", () => {
         console.log = jest.fn();
 
-        render(<EditButton Recipe={recipe} />);
+        const {asFragment} = render(<EditButton Recipe={recipe} />);
 
         const buttonElement = screen.getByRole("button");
         fireEvent.click(buttonElement);
 
         expect(console.log).toHaveBeenCalledWith(recipe);
+        expect(asFragment()).toMatchSnapshot();
     });
 });

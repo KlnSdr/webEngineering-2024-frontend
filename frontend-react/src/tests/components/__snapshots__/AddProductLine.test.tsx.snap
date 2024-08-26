@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddProductLine Component renders with initial values 1`] = `
+<DocumentFragment>
+  <div
+    class="hstack"
+  >
+    <select
+      data-testid="dropdown"
+    >
+      <option
+        selected=""
+        value="Product 1"
+      >
+        Product 1
+      </option>
+      <option
+        value="Product 2"
+      >
+        Product 2
+      </option>
+      <option
+        value="Product 3"
+      >
+        Product 3
+      </option>
+    </select>
+    <input
+      class="form-control"
+      type="number"
+      value="0"
+    />
+    <label>
+      kg
+    </label>
+    <button
+      class="bi bi-x btn btn-primary"
+      type="button"
+    />
+  </div>
+</DocumentFragment>
+`;

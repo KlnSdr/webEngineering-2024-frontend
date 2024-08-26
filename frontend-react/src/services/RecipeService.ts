@@ -2,9 +2,12 @@ import { CreateRecipe } from "../types/Recipes";
 import { Recipe } from "../types/Recipes";
 
 class RecipeService {
+  private static backendURL: string =
+    process.env.REACT_APP_BACKEND_URL || "http://localhost:13000";
+
   public static save(recipe: CreateRecipe): Promise<void> {
     return new Promise((resolve, reject) => {
-      fetch("http://localhost:13000/recipes", {
+      fetch(`${this.backendURL}/recipes`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -60,7 +63,7 @@ class RecipeService {
 
   public static getAll():Promise<Recipe[]> {
     return new Promise((resolve, reject) => {
-      fetch("http://localhost:13000/recipes").then((response: Response) => {
+      fetch(`${this.backendURL}/recipes`).then((response: Response) => {
           if (!response.ok) {
             throw new Error("Failed to load recipes.");
           }

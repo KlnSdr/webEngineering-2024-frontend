@@ -22,6 +22,7 @@ function CreateRecipeView() {
     description: "",
     products: [],
   };
+  const popUpTimeout: number = parseInt(process.env.REACT_APP_POPUP_TIMEOUT || "5000");
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showFailAlert, setShowFailAlert] = useState(false);
   const [state, setState] = useState(emptyRecipe);
@@ -67,12 +68,12 @@ function CreateRecipeView() {
 
   const showPopUpSuccess = () => {
     setShowSuccessAlert(true);
-    setTimeout(() => setShowSuccessAlert(false), 5000);
+    setTimeout(() => setShowSuccessAlert(false), popUpTimeout);
   };
 
   const showPopUpFail = () => {
     setShowFailAlert(true);
-    setTimeout(() => setShowFailAlert(false), 5000);
+    setTimeout(() => setShowFailAlert(false), popUpTimeout);
   };
 
   const saveRecipe = () => {

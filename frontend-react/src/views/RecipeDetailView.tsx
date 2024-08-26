@@ -8,6 +8,8 @@ import {Recipe} from "../types/Recipes";
 import {useParams} from "react-router-dom";
 
 function RecipeDetailView() {
+  const backendURL: string =
+    process.env.REACT_APP_BACKEND_URL || "http://localhost:13000";
 
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const {id} = useParams<{id:string}>();
@@ -15,7 +17,7 @@ function RecipeDetailView() {
     useEffect( () =>  {
         (async ()=> {
             try {
-                const response = await fetch(`http://localhost:13000/recipes/${id}`);
+                const response = await fetch(`${backendURL}/recipes/${id}`);
                 if (!response.ok) {
                     throw new Error("Failed to load recipe.");
                 }

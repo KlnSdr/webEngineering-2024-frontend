@@ -29,7 +29,7 @@ function RecipeDetailView() {
             }
         })();
 
-    }, [id]);
+    }, [id, backendURL]);
 
     if (!recipe) {
         return<div>

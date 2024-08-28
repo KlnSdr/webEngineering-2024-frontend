@@ -8,7 +8,7 @@ import { UserService } from "../services/UserService";
 
 const UserInfo = () => {
   const [image, setImage] = useState(
-    "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
+      process.env.REACT_APP_USER_DEFAULT_IMAGE
   );
   const [displayName, setDisplayName] = useState("...");
   const [showTooltip, setShowTooltip] = useState(false);

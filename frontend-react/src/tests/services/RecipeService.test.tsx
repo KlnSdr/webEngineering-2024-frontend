@@ -1,5 +1,6 @@
 import { RecipeService } from "../../services/RecipeService";
 import { CreateRecipe } from "../../types/Recipes";
+import {NeededProduct} from "../../types/Products";
 
 // Mocking the global fetch function
 global.fetch = jest.fn();
@@ -191,30 +192,45 @@ describe("RecipeService", () => {
   });
     test("getAll resolves successfully", async () => {
         await expect(RecipeService.getAll1()).resolves.toEqual([
-            {
-                title: "Käsesoße 1",
-                image: null,
-                description: "Description 1",
-                products: [],
-            },
-            {
-                title: "Käsesoße 2",
-                image: null,
-                description: "Description 2",
-                products: [],
-            },
-            {
-                title: "Käsesosse 3",
-                image: null,
-                description: "Description 3",
-                products: [],
-            },
-            {
-                title: "Käsesosse 4",
-                image: null,
-                description: "Description 3",
-                products: [],
-            },
+          {
+            title: "Käsesosse 1",
+            image: null,
+            description: "A delicious cheese sauce.",
+            products: [
+              { id: 7, productName: "Cheese", amount: 1 },
+              { id: 4, productName: "Milk", amount: 1 },
+              { id: 6, productName: "Butter", amount: 1 },
+            ],
+          },
+          {
+            title: "Käsesosse 2",
+            image: null,
+            description: "Cheese sauce with salt.",
+            products: [
+              { id: 7, productName: "Cheese", amount: 2 },
+              { id: 10, productName: "Salt", amount: 1 },
+              { id: 4, productName: "Milk", amount: 2 },
+            ],
+          },
+          {
+            title: "Käsesosse 3",
+            image: null,
+            description: "A spicy cheese sauce.",
+            products: [
+              { id: 7, productName: "Cheese", amount: 2 },
+              { id: 11, productName: "Pepper", amount: 1 },
+              { id: 2, productName: "Milk", amount: 1 },
+            ],
+          },
+          {
+            title: "Käsesosse 4",
+            image: null,
+            description: "A mild cheese sauce.",
+            products: [
+              { id: 7, productName: "Cheese", amount: 3 },
+              { id: 2, productName: "Milk", amount: 2 }
+            ],
+          },
         ]);
     });
 
@@ -274,5 +290,65 @@ describe("RecipeService", () => {
     expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes");
   });
 
+  //Static recipes for testing
+  const staticRecipes = [
+    {
+      title: "Käsesosse 1",
+      image: null,
+      description: "A delicious cheese sauce.",
+      products: [
+        { id: 7, productName: "Cheese", amount: 1 },
+        { id: 4, productName: "Milk", amount: 1 },
+        { id: 6, productName: "Butter", amount: 1 },
+      ],
+    },
+    {
+      title: "Käsesosse 2",
+      image: null,
+      description: "Cheese sauce with salt.",
+      products: [
+        { id: 7, productName: "Cheese", amount: 2 },
+        { id: 10, productName: "Salt", amount: 1 },
+        { id: 4, productName: "Milk", amount: 2 },
+      ],
+    },
+    {
+      title: "Käsesosse 3",
+      image: null,
+      description: "A spicy cheese sauce.",
+      products: [
+        { id: 7, productName: "Cheese", amount: 2 },
+        { id: 11, productName: "Pepper", amount: 1 },
+        { id: 2, productName: "Milk", amount: 1 },
+      ],
+    },
+    {
+      title: "Käsesosse 4",
+      image: null,
+      description: "A mild cheese sauce.",
+      products: [
+        { id: 7, productName: "Cheese", amount: 3 },
+        { id: 2, productName: "Milk", amount: 2 }
+      ],
+    },
+  ];
+
+  //The static recipes should always be returned (the needed products are not relevant yet)
+  test("searchRecipesByProducts returns all static recipes", async () => {
+    const neededProducts: NeededProduct[] = [
+      { id: 1, productName: "Cheese", amount: 1 },
+      { id: 2, productName: "Milk", amount: 1 },
+    ];
+
+    const results = await RecipeService.searchRecipesByProducts(neededProducts);
+    expect(results).toEqual(staticRecipes);
+  });
+
+  test("searchRecipesByProducts handles empty neededProducts array", async () => {
+    const neededProducts: NeededProduct[] = [];
+
+    const results = await RecipeService.searchRecipesByProducts(neededProducts);
+    expect(results).toEqual(staticRecipes);
+  });
 
 });

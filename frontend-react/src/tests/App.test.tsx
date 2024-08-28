@@ -28,7 +28,9 @@ describe("Root component Test", () => {
           <App/>
         </MemoryRouter>
     );
-    expect(screen.getByText("Suche")).toBeInTheDocument();
+    // Getting all elements with the text "Suche"
+    const searchElements = screen.getAllByText("Suche");
+    expect(searchElements.length).toBeGreaterThan(0);
   });
 
   it("renders SurveyView on /survey route", () => {

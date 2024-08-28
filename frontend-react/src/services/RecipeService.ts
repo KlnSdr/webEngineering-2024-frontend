@@ -34,30 +34,45 @@ class RecipeService {
   public static getAll1(): Promise<CreateRecipe[]> {
     return new Promise((resolve, reject) => {
       resolve([
-        {
-          title: "Käsesoße 1",
-          image: null,
-          description: "Description 1",
-          products: [],
-        },
-        {
-          title: "Käsesoße 2",
-          image: null,
-          description: "Description 2",
-          products: [],
-        },
-        {
-          title: "Käsesosse 3",
-          image: null,
-          description: "Description 3",
-          products: [],
-        },
-        {
-          title: "Käsesosse 4",
-          image: null,
-          description: "Description 3",
-          products: [],
-        },
+          {
+              title: "Käsesosse 1",
+              image: null,
+              description: "A delicious cheese sauce.",
+              products: [
+                  { id: 7, productName: "Cheese", amount: 1 },
+                  { id: 4, productName: "Milk", amount: 1 },
+                  { id: 6, productName: "Butter", amount: 1 },
+              ],
+          },
+          {
+              title: "Käsesosse 2",
+              image: null,
+              description: "Cheese sauce with salt.",
+              products: [
+                  { id: 7, productName: "Cheese", amount: 2 },
+                  { id: 10, productName: "Salt", amount: 1 },
+                  { id: 4, productName: "Milk", amount: 2 },
+              ],
+          },
+          {
+              title: "Käsesosse 3",
+              image: null,
+              description: "A spicy cheese sauce.",
+              products: [
+                  { id: 7, productName: "Cheese", amount: 2 },
+                  { id: 11, productName: "Pepper", amount: 1 },
+                  { id: 2, productName: "Milk", amount: 1 },
+              ],
+          },
+          {
+              title: "Käsesosse 4",
+              image: null,
+              description: "A mild cheese sauce.",
+              products: [
+                  { id: 7, productName: "Cheese", amount: 3 },
+                  { id: 2, productName: "Milk", amount: 2 }
+              ],
+          },
       ]);
     });
   }
@@ -78,61 +93,14 @@ class RecipeService {
     });
   }
 
-    public static getAll(): Promise<CreateRecipe[]> {
-        return new Promise((resolve, reject) => {
-            resolve([
-                {
-                    title: "Käsesoße 1",
-                    image: null,
-                    description: "A delicious cheese sauce.",
-                    products: [
-                        { id: 7, productName: "Cheese", amount: 1 },
-                        { id: 4, productName: "Milk", amount: 1 },
-                        { id: 6, productName: "Butter", amount: 1 },
-                    ],
-                },
-                {
-                    title: "Käsesoße 2",
-                    image: null,
-                    description: "Cheese sauce with salt.",
-                    products: [
-                        { id: 7, productName: "Cheese", amount: 2 },
-                        { id: 10, productName: "Salt", amount: 1 },
-                        { id: 4, productName: "Milk", amount: 2 },
-                    ],
-                },
-                {
-                    title: "Käsesoße 3",
-                    image: null,
-                    description: "A spicy cheese sauce.",
-                    products: [
-                        { id: 7, productName: "Cheese", amount: 2 },
-                        { id: 11, productName: "Pepper", amount: 1 },
-                        { id: 2, productName: "Milk", amount: 1 },
-                    ],
-                },
-                {
-                    title: "Käsesoße 4",
-                    image: null,
-                    description: "A mild cheese sauce.",
-                    products: [
-                        { id: 7, productName: "Cheese", amount: 3 },
-                        { id: 2, productName: "Milk", amount: 2 }
-                    ],
-                },
-            ]);
-        });
-    }
-
-
     public static searchRecipesByProducts(neededProducts: NeededProduct[]): Promise<CreateRecipe[]> {
         return new Promise((resolve, reject) => {
-            this.getAll()
+            this.getAll1()
                 .then((recipes) => {
 
                     const staticRecipes: CreateRecipe[] = [
                         {
-                            title: "Käsesoße 1",
+                            title: "Käsesosse 1",
                             image: null,
                             description: "A delicious cheese sauce.",
                             products: [
@@ -142,7 +110,7 @@ class RecipeService {
                             ],
                         },
                         {
-                            title: "Käsesoße 2",
+                            title: "Käsesosse 2",
                             image: null,
                             description: "Cheese sauce with salt.",
                             products: [
@@ -152,7 +120,7 @@ class RecipeService {
                             ],
                         },
                         {
-                            title: "Käsesoße 3",
+                            title: "Käsesosse 3",
                             image: null,
                             description: "A spicy cheese sauce.",
                             products: [
@@ -162,7 +130,7 @@ class RecipeService {
                             ],
                         },
                         {
-                            title: "Käsesoße 4",
+                            title: "Käsesosse 4",
                             image: null,
                             description: "A mild cheese sauce.",
                             products: [
@@ -179,7 +147,6 @@ class RecipeService {
                 });
         });
     }
-
 }
 
 export { RecipeService };

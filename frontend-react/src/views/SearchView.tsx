@@ -10,15 +10,15 @@ import {ProductsService} from "../services/ProductService";
 import {RecipeService} from "../services/RecipeService";
 
 function SearchView() {
-  const [neededProducts, setNeededProducts] = useState<NeededProduct[]>([]);
-  const [searchResults, setSearchResults] = useState<any[]>([]);
-  const [productsData, setProductsData] = useState<Product[]>([]);
+    const [neededProducts, setNeededProducts] = useState<NeededProduct[]>([]);
+    const [searchResults, setSearchResults] = useState<any[]>([]);
+    const [productsData, setProductsData] = useState<Product[]>([]);
 
     //Fetch products from the backend
     useEffect(() => {
         ProductsService.getAll().then((products) => {
-                setProductsData(products);
-            });
+            setProductsData(products);
+        });
     }, []);
 
     const handleProductChange = (index: number, product: string, amount: number) => {
@@ -39,23 +39,29 @@ function SearchView() {
         });
     };
 
+    const getUnitOfProduct = (product: string): string => {
+        return productsData.find((prod: Product) => prod.name === product)?.unit || "";
+    };
+
+    const renderProductLines = () => {
+        return neededProducts.map((product, index) => (
+            <AddProductLine
+                key={index}
+                products={productsData.map((prod: Product) => prod.name)}
+                initialValue={product.productName}
+                onChange={(prod: string, amount: number) => handleProductChange(index, prod, amount)}
+                onRemove={() => handleRemoveProduct(index)}
+                getUnitOf={getUnitOfProduct}
+            />
+        ));
+    };
+
     return (
         <div className="search-view">
             <Heading headingText="Suche" />
             <Heading2 headingText="Produkte:" />
 
-            {neededProducts.map((product, index) => (
-                <AddProductLine
-                    key={index}
-                    products={productsData.map((prod: Product) => prod.name)}
-                    initialValue={product.productName}
-                    onChange={(prod: string, amount: number) => handleProductChange(index, prod, amount)}
-                    onRemove={() => handleRemoveProduct(index)}
-                    getUnitOf={(product: string) => {
-                        return productsData.find((prod: Product) => prod.name === product)?.unit || "";
-                    }}
-                />
-            ))}
+            {renderProductLines()}
 
             <Stack gap={2} className="col-md-4 mx-auto">
                 <Button
@@ -65,7 +71,7 @@ function SearchView() {
                     Produkt hinzufügen
                 </Button>
 
-                <Button  variant="primary" onClick={handleSearch} className="mt-3 bi bi-search">
+                <Button variant="primary" onClick={handleSearch} className="mt-3 bi bi-search">
                     Suchen
                 </Button>
             </Stack>
@@ -81,7 +87,6 @@ function SearchView() {
             </ListGroup>
         </div>
     );
-
 }
 
 export default SearchView;

@@ -43,6 +43,16 @@ function SearchView() {
         return productsData.find((prod: Product) => prod.name === product)?.unit || "";
     };
 
+    const addProduct = () => {
+        const emptyNeededProduct: NeededProduct = {
+            id: Date.now(),
+            productName: productsData.length > 0 ? productsData[0].name : "",
+            amount: 0,
+        };
+
+        setNeededProducts([...neededProducts, emptyNeededProduct]);
+    };
+
     const renderProductLines = () => {
         return neededProducts.map((product, index) => (
             <AddProductLine
@@ -64,10 +74,7 @@ function SearchView() {
             {renderProductLines()}
 
             <Stack gap={2} className="col-md-4 mx-auto">
-                <Button
-                    onClick={() => setNeededProducts([...neededProducts, { id: Date.now(), productName: "", amount: 0 }])}
-                    className="bi bi-plus"
-                >
+                <Button onClick={addProduct} className="bi bi-plus">
                     Produkt hinzufügen
                 </Button>
 

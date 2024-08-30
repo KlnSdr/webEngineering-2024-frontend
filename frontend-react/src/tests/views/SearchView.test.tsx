@@ -41,4 +41,35 @@ describe('SearchView', () => {
         expect(selectInput).toBeInTheDocument();
     });
 
+    it('removes a product line when "Remove" button is clicked', async () => {
+        render(
+            <MemoryRouter initialEntries={['/search']}>
+                <SearchView />
+            </MemoryRouter>
+        );
+
+        // Add a product line to ensure there's something to remove
+        const addButton = screen.getByRole('button', { name: /Produkt hinzufügen/i });
+        fireEvent.click(addButton);
+
+        // Ensure the product line is rendered
+        const selectInput = screen.getByRole('combobox');
+        expect(selectInput).toBeInTheDocument();
+
+        // Locate the remove button
+        const removeButtons = screen.getAllByRole('button');
+        expect(removeButtons.length).toBeGreaterThan(0);
+
+        // Find and click the remove button
+        const removeButton = removeButtons.find(button => button.classList.contains('bi-x'));
+        if (removeButton) {
+            fireEvent.click(removeButton);
+        } else {
+            throw new Error('Remove button not found');
+        }
+
+        // Verify that the product line has been removed
+        expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
+    });
+
 });

@@ -72,4 +72,36 @@ describe('SearchView', () => {
         expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
     });
 
+    it('displays static recipes when "Suchen" button is clicked', async () => {
+        // Mocking fetch response with static recipes
+        jest.mock('../../services/RecipeService', () => ({
+            RecipeService: {
+                searchRecipesByProducts: jest.fn().mockResolvedValue([
+                    { id: 1, title: "Käsesosse 1", description: "A delicious cheese sauce.", image: "https://example.com/image1.jpg" },
+                    { id: 2, title: "Käsesosse 2", description: "Cheese sauce with salt.", image: "https://example.com/image2.jpg" },
+                    { id: 3, title: "Käsesosse 3", description: "A spicy cheese sauce.", image: "https://example.com/image3.jpg" },
+                    { id: 4, title: "Käsesosse 4", description: "A mild cheese sauce.", image: "https://example.com/image4.jpg" },
+                ]),
+            },
+        }));
+
+        render(
+            <MemoryRouter initialEntries={['/search']}>
+                <SearchView />
+            </MemoryRouter>
+        );
+
+        // Simulate clicking the search button
+        const searchButton = screen.getByRole('button', { name: /Suchen/i });
+        fireEvent.click(searchButton);
+
+        // Wait for recipes to be displayed
+        await waitFor(() => {
+            expect(screen.getByText("Käsesosse 1")).toBeInTheDocument();
+            expect(screen.getByText("Käsesosse 2")).toBeInTheDocument();
+            expect(screen.getByText("Käsesosse 3")).toBeInTheDocument();
+            expect(screen.getByText("Käsesosse 4")).toBeInTheDocument();
+        });
+    });
+
 });

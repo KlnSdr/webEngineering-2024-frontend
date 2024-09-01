@@ -101,7 +101,7 @@ function SearchView() {
             <ListGroup>
                 {searchResults.map((result, index) => (
                     <ListGroup.Item key={index} className="d-flex align-items-center" onClick={() => openRecipeDetails(result.id)}>
-                        <ImageArea origin={result.image} />
+                        <ImageArea origin={result.imgUri} />
                         <span className="ms-3">{result.title}</span>
                     </ListGroup.Item>
                 ))}

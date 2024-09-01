@@ -42,6 +42,7 @@ function SearchView() {
                 amount: product.amount,
             }
         })).then((results) => {
+            console.log(results);
             setSearchResults(results);
         }).catch((_) => {
             setSearchResults([])
@@ -75,6 +76,10 @@ function SearchView() {
         ));
     };
 
+    const openRecipeDetails = (id: number) => {
+        window.location.assign(`/recipe/view/${id}`);
+    };
+
     return (
         <div className="search-view">
             <Heading headingText="Suche" />
@@ -95,7 +100,7 @@ function SearchView() {
             <Heading2 headingText="Ergebnisse:" />
             <ListGroup>
                 {searchResults.map((result, index) => (
-                    <ListGroup.Item key={index} className="d-flex align-items-center">
+                    <ListGroup.Item key={index} className="d-flex align-items-center" onClick={() => openRecipeDetails(result.id)}>
                         <ImageArea origin={result.image} />
                         <span className="ms-3">{result.title}</span>
                     </ListGroup.Item>

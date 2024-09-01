@@ -5,12 +5,17 @@ import '@testing-library/jest-dom/extend-expect';
 import SearchView from "../../views/SearchView";
 
 describe('SearchView', () => {
-    it('renders correctly', () => {
-        render(
+
+    const renderSearchView = () => {
+        return render(
             <MemoryRouter initialEntries={['/search']}>
                 <SearchView />
             </MemoryRouter>
         );
+    };
+
+    it('renders correctly', () => {
+        renderSearchView();
 
         // Check for static text elements
         expect(screen.getByText('Suche')).toBeInTheDocument();
@@ -23,11 +28,7 @@ describe('SearchView', () => {
     });
 
     it('adds a product line when "Produkt hinzufügen" button is clicked', () => {
-        render(
-            <MemoryRouter initialEntries={['/search']}>
-                <SearchView />
-            </MemoryRouter>
-        );
+        renderSearchView();
 
         // Initially, there should be no product line elements
         expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
@@ -42,11 +43,7 @@ describe('SearchView', () => {
     });
 
     it('removes a product line when "Remove" button is clicked', async () => {
-        render(
-            <MemoryRouter initialEntries={['/search']}>
-                <SearchView />
-            </MemoryRouter>
-        );
+        renderSearchView();
 
         // Add a product line to ensure there's something to remove
         const addButton = screen.getByRole('button', { name: /Produkt hinzufügen/i });
@@ -85,11 +82,7 @@ describe('SearchView', () => {
             },
         }));
 
-        render(
-            <MemoryRouter initialEntries={['/search']}>
-                <SearchView />
-            </MemoryRouter>
-        );
+        renderSearchView();
 
         // Simulate clicking the search button
         const searchButton = screen.getByRole('button', { name: /Suchen/i });

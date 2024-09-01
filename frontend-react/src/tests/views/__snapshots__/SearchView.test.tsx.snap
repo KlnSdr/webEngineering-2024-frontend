@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchView renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="search-view"
+  >
+    <h1
+      class="headline-with-lines"
+    >
+      Suche
+    </h1>
+    <h2
+      class="FoodTitle"
+    >
+      Produkte:
+    </h2>
+    <div
+      class="col-md-4 mx-auto vstack gap-2"
+    >
+      <button
+        class="bi bi-plus btn btn-primary"
+        type="button"
+      >
+        Produkt hinzufügen
+      </button>
+      <button
+        class="mt-3 bi bi-search btn btn-primary"
+        type="button"
+      >
+        Suchen
+      </button>
+    </div>
+    <h2
+      class="FoodTitle"
+    >
+      Ergebnisse:
+    </h2>
+    <div
+      class="list-group"
+    />
+  </div>
+</DocumentFragment>
+`;

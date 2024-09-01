@@ -15,7 +15,7 @@ describe('SearchView', () => {
     };
 
     it('renders correctly', () => {
-        renderSearchView();
+        const { asFragment } = renderSearchView();
 
         // Check for static text elements
         expect(screen.getByText('Suche')).toBeInTheDocument();
@@ -25,6 +25,9 @@ describe('SearchView', () => {
         // Check for buttons
         expect(screen.getByRole('button', { name: /Produkt hinzufügen/i })).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /Suchen/i })).toBeInTheDocument();
+
+        // Snapshot test
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('adds a product line when "Produkt hinzufügen" button is clicked', () => {

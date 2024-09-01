@@ -12,6 +12,7 @@ class ProductsService {
             }
             return response.json();
         }).then((data: Product[]) => {
+            console.log(data);
             resolve(data);
         }).catch((reason: any) => {
             reject(reason);

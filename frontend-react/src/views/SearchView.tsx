@@ -34,8 +34,17 @@ function SearchView() {
 
     //Fetch all the recipes that contain the specified products
     const handleSearch = () => {
-        RecipeService.searchRecipesByProducts(neededProducts).then((results) => {
+        RecipeService.searchRecipesByProducts(neededProducts.map((product: NeededProduct) => {
+            // replace ids needed for rendering with the actual product ids from the backend before passing the data to the recipe service
+            return {
+                id: productsData.find((prod: Product) => prod.name === product.productName)?.id || 0,
+                productName: product.productName,
+                amount: product.amount,
+            }
+        })).then((results) => {
             setSearchResults(results);
+        }).catch((_) => {
+            setSearchResults([])
         });
     };
 
@@ -91,6 +100,11 @@ function SearchView() {
                         <span className="ms-3">{result.title}</span>
                     </ListGroup.Item>
                 ))}
+                {searchResults.length === 0 && (
+                    <ListGroup.Item className="d-flex align-items-center">
+                        <span>Keine Rezepte gefunden</span>
+                    </ListGroup.Item>
+                )}
             </ListGroup>
         </div>
     );

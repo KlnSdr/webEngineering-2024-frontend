@@ -7,6 +7,7 @@ interface NeededProduct {
 interface Product {
     name: string;
     unit: string;
+    id: number;
 }
 
 interface DetailedProduct {

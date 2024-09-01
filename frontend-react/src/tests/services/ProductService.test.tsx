@@ -6,9 +6,9 @@ global.fetch = jest.fn();
 
 describe("ProductsService", () => {
   const mockProducts: Product[] = [
-    { name: "One", unit: "g" },
-    { name: "Two", unit: "ml" },
-    { name: "Three", unit: "stk" },
+    { name: "One", unit: "g", id: 0 },
+    { name: "Two", unit: "ml", id: 1 },
+    { name: "Three", unit: "stk", id: 2 },
   ];
 
   beforeEach(() => {

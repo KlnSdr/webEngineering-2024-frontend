@@ -22,8 +22,8 @@ jest.mock("../../components/AddProductLine", () => ({
 
 describe("AddProducts Component", () => {
     const availableProducts: Product[] = [
-        { name: "Product 1", unit: "kg" },
-        { name: "Product 2", unit: "ltr" },
+        { name: "Product 1", unit: "kg", id: 0 },
+        { name: "Product 2", unit: "ltr", id: 1 },
     ];
 
     const initialValue: NeededProduct[] = [

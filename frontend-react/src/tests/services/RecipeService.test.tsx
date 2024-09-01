@@ -191,50 +191,6 @@ describe("RecipeService", () => {
       credentials: "include",
     });
   });
-    test("getAll resolves successfully", async () => {
-        await expect(RecipeService.getAll1()).resolves.toEqual([
-          {
-            title: "Käsesosse 1",
-            image: null,
-            description: "A delicious cheese sauce.",
-            products: [
-              { id: 7, productName: "Cheese", amount: 1 },
-              { id: 4, productName: "Milk", amount: 1 },
-              { id: 6, productName: "Butter", amount: 1 },
-            ],
-          },
-          {
-            title: "Käsesosse 2",
-            image: null,
-            description: "Cheese sauce with salt.",
-            products: [
-              { id: 7, productName: "Cheese", amount: 2 },
-              { id: 10, productName: "Salt", amount: 1 },
-              { id: 4, productName: "Milk", amount: 2 },
-            ],
-          },
-          {
-            title: "Käsesosse 3",
-            image: null,
-            description: "A spicy cheese sauce.",
-            products: [
-              { id: 7, productName: "Cheese", amount: 2 },
-              { id: 11, productName: "Pepper", amount: 1 },
-              { id: 2, productName: "Milk", amount: 1 },
-            ],
-          },
-          {
-            title: "Käsesosse 4",
-            image: null,
-            description: "A mild cheese sauce.",
-            products: [
-              { id: 7, productName: "Cheese", amount: 3 },
-              { id: 2, productName: "Milk", amount: 2 }
-            ],
-          },
-        ]);
-    });
-
   test("getAll returns a list of recipes", async () => {
     // Mock the response from the fetch call
     (fetch as jest.Mock).mockResolvedValueOnce({

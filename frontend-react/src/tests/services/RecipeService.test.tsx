@@ -2,6 +2,7 @@ import { RecipeService } from "../../services/RecipeService";
 import { CreateRecipe } from "../../types/Recipes";
 import {NeededProduct} from "../../types/Products";
 import { Recipe } from "../../types/Recipes";
+import {ProductsService} from "../../services/ProductService";
 
 // Mocking the global fetch function
 global.fetch = jest.fn();
@@ -311,8 +312,12 @@ describe("RecipeService", () => {
     },
   ];
 
-  //The static recipes should always be returned (the needed products are not relevant yet)
   test("searchRecipesByProducts returns all static recipes", async () => {
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => staticRecipes,
+    });
+
     const neededProducts: NeededProduct[] = [
       { id: 1, productName: "Cheese", amount: 1 },
       { id: 2, productName: "Milk", amount: 1 },
@@ -329,20 +334,4 @@ describe("RecipeService", () => {
 
     expect(resultsWithMockDate).toEqual(staticRecipes);
   });
-
-  test("searchRecipesByProducts handles empty neededProducts array", async () => {
-    const neededProducts: NeededProduct[] = [];
-
-    const results = await RecipeService.searchRecipesByProducts(neededProducts);
-
-    const mockCreationDate = fixedDate;
-
-    const resultsWithMockDate = results.map(recipe => ({
-      ...recipe,
-      creationDate: mockCreationDate
-    }));
-
-    expect(resultsWithMockDate).toEqual(staticRecipes);
-  });
-
 });

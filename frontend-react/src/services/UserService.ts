@@ -33,7 +33,7 @@ class UserService {
         })
         .then((data: any) => {
           if (
-            Object.keys(data).filter((key) => data[key] !== null).length == 0
+            Object.keys(data).filter((key) => data[key] !== null).length === 0
           ) {
             resolve(null);
           }

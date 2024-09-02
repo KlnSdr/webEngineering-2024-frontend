@@ -6,6 +6,8 @@ import IngredientsTable from "../components/IngredientsTable";
 import Footer from "../components/Footer";
 import {Recipe} from "../types/Recipes";
 import {useParams} from "react-router-dom";
+import {ProductsService} from "../services/ProductService";
+import {Product} from "../types/Products";
 
 function RecipeDetailView() {
   const backendURL: string =
@@ -15,19 +17,41 @@ function RecipeDetailView() {
     const {id} = useParams<{id:string}>();
 
     useEffect( () =>  {
+        ProductsService.getAll().then((productDetails: Product[]) => {
         (async ()=> {
             try {
                 const response = await fetch(`${backendURL}/recipes/${id}`);
                 if (!response.ok) {
                     throw new Error("Failed to load recipe.");
                 }
-                const data: Recipe = await response.json();
-                console.log(data);
-                setRecipe(data);
+                const data: any = await response.json();
+                const recipe: Recipe = {
+                    id: data.id,
+                    title: data.title,
+                    description: data.description,
+                    image: data.imgUri,
+                    isPrivate: data.isPrivate,
+                    creationDate: new Date(data.creationDate),
+                    ownerUri: data.ownerUri,
+                    likedByUserUris: data.likedByUserUris,
+                    products: Object.keys(data.productQuantities).map((key: string) => {
+                        console.log(key);
+                        const productId: number = parseInt(key.replace("/products/", ""));
+                        const productDetail: Product | undefined = productDetails.find((val: Product) => val.id === productId);
+                        console.log(productId);
+                        console.log(productDetail);
+                        return {
+                            name: productDetail?.name || "---",
+                            amount: data.productQuantities[key],
+                            unit: productDetail?.unit || "---"
+                        }
+                    })
+                };
+                setRecipe(recipe);
             } catch (error) {
                 console.error(error);
             }
-        })();
+        })();});
 
     }, [id, backendURL]);
 
@@ -38,7 +62,7 @@ function RecipeDetailView() {
                 <img src="https://www.gluthelden.de/wp-content/uploads/2018/06/K%C3%A4seso%C3%9Fe-.jpg" className="img-fluid" alt={"dish"}/>
                 <Heading headingText={"Zutaten"}/>
                 <IngredientsTable ingredients={[{name: "Käse", amount: 3, unit: "g"}, {name:"Teig", amount:100, unit:"g"}]}/>
-                <TextArea2 initialValue={"Rezept nicht gefunden"} Header={"Zuberitung"}/>
+                <TextArea2 initialValue={"Rezept nicht gefunden"} Header={"Zubereitung"}/>
                 <Footer owner={"unknown"} timestamp={"unknown"}/>
             </Stack>
         </div>
@@ -50,7 +74,7 @@ function RecipeDetailView() {
                 <img src={recipe.image} className="img-fluid" alt={"dish"}/>
                 <Heading headingText={"Zutaten"}/>
                 <IngredientsTable ingredients={recipe.products}/>
-                <TextArea2 initialValue={recipe.description} Header={"Zuberitung"}/>
+                <TextArea2 initialValue={recipe.description} Header={"Zubereitung"}/>
                 <Footer owner={recipe.ownerUri} timestamp={recipe.creationDate.toString()}/>
             </Stack>
 

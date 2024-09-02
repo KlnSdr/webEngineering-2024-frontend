@@ -35,11 +35,8 @@ function RecipeDetailView() {
                     ownerUri: data.ownerUri,
                     likedByUserUris: data.likedByUserUris,
                     products: Object.keys(data.productQuantities).map((key: string) => {
-                        console.log(key);
                         const productId: number = parseInt(key.replace("/products/", ""));
                         const productDetail: Product | undefined = productDetails.find((val: Product) => val.id === productId);
-                        console.log(productId);
-                        console.log(productDetail);
                         return {
                             name: productDetail?.name || "---",
                             amount: data.productQuantities[key],

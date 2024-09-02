@@ -38,7 +38,15 @@ exports[`SearchView renders correctly 1`] = `
     </h2>
     <div
       class="list-group"
-    />
+    >
+      <div
+        class="d-flex align-items-center list-group-item"
+      >
+        <span>
+          Keine Rezepte gefunden
+        </span>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;

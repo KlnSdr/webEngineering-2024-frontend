@@ -32,6 +32,11 @@ class UserService {
           return response.json();
         })
         .then((data: any) => {
+          if (
+            Object.keys(data).filter((key) => data[key] !== null).length == 0
+          ) {
+            resolve(null);
+          }
           UserService.userInfo = data;
           resolve(UserService.userInfo);
         })

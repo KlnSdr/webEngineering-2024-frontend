@@ -3,8 +3,23 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
 import SearchView from "../../views/SearchView";
+import {ProductsService} from "../../services/ProductService";
+import {RecipeService} from "../../services/RecipeService";
+
+// Mocking services
+jest.mock("../../services/ProductService");
+jest.mock("../../services/RecipeService");
 
 describe('SearchView', () => {
+    const mockProducts = [
+        { id: 1, name: "Milk", unit: "liters" },
+        { id: 2, name: "Eggs", unit: "pieces" },
+    ];
+
+    const mockRecipes = [
+        { id: 1, title: "Käsesosse 1", imgUri: "image1.jpg" },
+        { id: 2, title: "Käsesosse 2", imgUri: "image2.jpg" },
+    ];
 
     const renderSearchView = () => {
         return render(
@@ -13,6 +28,11 @@ describe('SearchView', () => {
             </MemoryRouter>
         );
     };
+
+    beforeEach(() => {
+        (ProductsService.getAll as jest.Mock).mockResolvedValue(mockProducts);
+        (RecipeService.searchRecipesByProducts as jest.Mock).mockResolvedValue(mockRecipes);
+    });
 
     it('renders correctly', () => {
         const { asFragment } = renderSearchView();
@@ -28,6 +48,11 @@ describe('SearchView', () => {
 
         // Snapshot test
         expect(asFragment()).toMatchSnapshot();
+    });
+
+    it('displays no products initially', () => {
+        renderSearchView();
+        expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
     });
 
     it('adds a product line when "Produkt hinzufügen" button is clicked', () => {
@@ -72,19 +97,7 @@ describe('SearchView', () => {
         expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
     });
 
-    it('displays static recipes when "Suchen" button is clicked', async () => {
-        // Mocking fetch response with static recipes
-        jest.mock('../../services/RecipeService', () => ({
-            RecipeService: {
-                searchRecipesByProducts: jest.fn().mockResolvedValue([
-                    { id: 1, title: "Käsesosse 1", description: "A delicious cheese sauce.", image: "https://example.com/image1.jpg" },
-                    { id: 2, title: "Käsesosse 2", description: "Cheese sauce with salt.", image: "https://example.com/image2.jpg" },
-                    { id: 3, title: "Käsesosse 3", description: "A spicy cheese sauce.", image: "https://example.com/image3.jpg" },
-                    { id: 4, title: "Käsesosse 4", description: "A mild cheese sauce.", image: "https://example.com/image4.jpg" },
-                ]),
-            },
-        }));
-
+    it('renderes recipes when searching + when clicking on a recipe the detail view is opened', async () => {
         renderSearchView();
 
         // Simulate clicking the search button
@@ -95,9 +108,24 @@ describe('SearchView', () => {
         await waitFor(() => {
             expect(screen.getByText("Käsesosse 1")).toBeInTheDocument();
             expect(screen.getByText("Käsesosse 2")).toBeInTheDocument();
-            expect(screen.getByText("Käsesosse 3")).toBeInTheDocument();
-            expect(screen.getByText("Käsesosse 4")).toBeInTheDocument();
         });
+
+        const originalLocation = window.location;
+        delete (window as any).location;  // Necessary to override the window.location object
+
+        window.location = {
+            ...originalLocation,
+            assign: jest.fn(),  // Mock the assign method
+        };
+
+        const firstRecipeItem = screen.getByText("Käsesosse 1");
+        fireEvent.click(firstRecipeItem);
+
+        // Check if window.location.assign was called with the correct URL
+        expect(window.location.assign).toHaveBeenCalledWith("/recipe/view/1");
+
+        // Restore the original window.location object
+        window.location = originalLocation;
     });
 
 });

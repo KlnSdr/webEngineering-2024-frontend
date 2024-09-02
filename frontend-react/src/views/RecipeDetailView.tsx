@@ -8,17 +8,20 @@ import {Recipe} from "../types/Recipes";
 import {useParams} from "react-router-dom";
 import {ProductsService} from "../services/ProductService";
 import {Product} from "../types/Products";
+import {User} from "../types/Users";
+import {UserService} from "../services/UserService";
 
 function RecipeDetailView() {
   const backendURL: string =
     process.env.REACT_APP_BACKEND_URL || "http://localhost:13000";
 
     const [recipe, setRecipe] = useState<Recipe | null>(null);
+    const [owner, setOwner] = useState<User | null>(null);
     const {id} = useParams<{id:string}>();
 
     useEffect( () =>  {
         ProductsService.getAll().then((productDetails: Product[]) => {
-        (async ()=> {
+        (async () => {
             try {
                 const response = await fetch(`${backendURL}/recipes/${id}`);
                 if (!response.ok) {
@@ -44,6 +47,15 @@ function RecipeDetailView() {
                         }
                     })
                 };
+
+                UserService.getUser(data.ownerUri)
+                .then(setOwner)
+                .catch(_ => {
+                    setOwner({
+                        userName: "could not load username",
+                        id: -1
+                    });
+                });
                 setRecipe(recipe);
             } catch (error) {
                 console.error(error);
@@ -72,7 +84,7 @@ function RecipeDetailView() {
                 <Heading headingText={"Zutaten"}/>
                 <IngredientsTable ingredients={recipe.products}/>
                 <TextArea2 initialValue={recipe.description} Header={"Zubereitung"}/>
-                <Footer owner={recipe.ownerUri} timestamp={recipe.creationDate.toString()}/>
+                <Footer owner={owner?.userName || ""} timestamp={recipe.creationDate.toString()}/>
             </Stack>
 
         </div>

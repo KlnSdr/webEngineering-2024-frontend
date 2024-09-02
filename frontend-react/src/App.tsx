@@ -9,6 +9,7 @@ import LogoutView from "./views/LogoutView";
 import LoginView from "./views/LoginView";
 import PageTitle from "./components/PageTitle";
 import RecipeDetailView from "./views/RecipeDetailView";
+import CreateSurveyView from "./views/CreateSurveyView";
 
 function App() {
   return (
@@ -66,8 +67,8 @@ function App() {
               path="new"
               element={
                   <>
-                      <PageTitle title="404 - Not Found" />
-                      <NotFoundView />
+                      <PageTitle title="Neue Umfragen" />
+                      <CreateSurveyView />
                   </>
               }
           />

@@ -30,7 +30,7 @@ describe("SurveyService", () => {
     });
 
     test("getSurveyById resolves successfully with valid survey", async () => {
-        const surveyId = 1;
+        const surveyId = "1";
         (fetch as jest.Mock).mockResolvedValueOnce({
             ok: true,
             json: async () => mockSurveys[0],
@@ -41,7 +41,7 @@ describe("SurveyService", () => {
     });
 
     test("getSurveyById throws error with invalid survey", async () => {
-        const surveyId = 999;
+        const surveyId = "999";
         (fetch as jest.Mock).mockResolvedValueOnce({
             ok: false,
             statusText: "Not Found",

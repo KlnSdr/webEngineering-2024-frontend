@@ -10,11 +10,14 @@ import UncheckCheckbox from "../components/UncheckCheckbox";
 import {Survey} from "../types/Surveys";
 import SurveyService from "../services/SurveyService";
 import {useParams} from "react-router-dom";
+import {User} from "../types/Users";
+import {UserService} from "../services/UserService";
 
 
 function SurveyDetailView() {
 
     const [recipes, setRecipe] = useState<Recipe[]>([]);
+    const [creator, setCreator] = useState<User | null>(null);
     const [survey, setSurvey] = useState<Survey | undefined>(undefined);
     const {id} = useParams<{id: string}>();
 
@@ -24,6 +27,14 @@ function SurveyDetailView() {
                 console.log("Survey data:", survey);
                 setSurvey(survey);
                 recipeSet(survey);
+                UserService.getUser(survey.creator)
+                    .then(setCreator)
+                    .catch(_ => {
+                        setCreator({
+                            userName: "could not load username",
+                            id: -1
+                        });
+                });
             }
         }).catch ((error) => {
             console.error("Failed", error);
@@ -73,7 +84,7 @@ if (!survey) {
         <Heading2 headingText={"Survey"}/>
             <div>
                 <h1>{survey.title}</h1>
-                Erstellt von {survey.creator} am {formatDate(survey.creationDate)}
+                Erstellt von {creator?.userName || ""} am {formatDate(survey.creationDate)}
             </div>
 
             <div className="container">

@@ -9,7 +9,7 @@ describe("EditButton Component", () => {
         id: 1,
         title: "Test Recipe",
         description: "Test Description",
-        image: "test.jpg",
+        imgUri: "test.jpg",
         isPrivate: false,
         creationDate: new Date(),
         ownerUri: "test",

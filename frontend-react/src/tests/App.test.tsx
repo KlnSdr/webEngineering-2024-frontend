@@ -33,13 +33,13 @@ describe("Root component Test", () => {
     expect(searchElements.length).toBeGreaterThan(0);
   });
 
-  it("renders SurveyView on /survey route", () => {
+  it("renders SurveyDetailView on /survey/view/1 route", () => {
     render(
-        <MemoryRouter initialEntries={["/survey"]}>
+        <MemoryRouter initialEntries={["/survey/view/1"]}>
           <App/>
         </MemoryRouter>
     );
-    expect(screen.getByText("Hello Survey")).toBeInTheDocument();
+    expect(screen.getByText("Survey")).toBeInTheDocument();
   });
 
   it("renders NotFoundView on unknown route", () => {

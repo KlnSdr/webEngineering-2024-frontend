@@ -12,7 +12,7 @@ interface Recipe {
     id: number;
     title: string;
     description: string;
-    image: string;
+    imgUri: string;
     isPrivate: boolean;
     creationDate: Date;
     ownerUri: string;

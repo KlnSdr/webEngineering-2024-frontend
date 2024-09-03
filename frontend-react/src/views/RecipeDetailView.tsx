@@ -32,7 +32,7 @@ function RecipeDetailView() {
                     id: data.id,
                     title: data.title,
                     description: data.description,
-                    image: data.imgUri,
+                    imgUri: data.imgUri,
                     isPrivate: data.isPrivate,
                     creationDate: new Date(data.creationDate),
                     ownerUri: data.ownerUri,
@@ -80,7 +80,7 @@ function RecipeDetailView() {
         <div>
             <Stack direction={"vertical"}>
                 <Heading2 headingText={recipe.title}/>
-                <img src={recipe.image} className="img-fluid" alt={"dish"}/>
+                <img src={recipe.imgUri} className="img-fluid" alt={"dish"}/>
                 <Heading headingText={"Zutaten"}/>
                 <IngredientsTable ingredients={recipe.products}/>
                 <TextArea2 initialValue={recipe.description} Header={"Zubereitung"}/>

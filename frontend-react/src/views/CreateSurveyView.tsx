@@ -10,6 +10,7 @@ import Heading from "../components/Heading";
 import ImageArea from "../components/ImageArea";
 import MyRecipeBar from "../components/MyRecipeBar";
 import {CreateSurvey} from "../types/Surveys";
+import {Recipe} from "../types/Recipes";
 
 function CreateSurveyView() {
     const emptySurvey: CreateSurvey = {
@@ -26,6 +27,10 @@ function CreateSurveyView() {
         });
     }, [navigate]);
 
+    const addRecipeToOptions = (recipe: Recipe) => {
+        setState({...state, options: [...state.options, recipe]});
+    };
+
     return (<div>
         <LabelInput
             labelText="Title"
@@ -34,7 +39,7 @@ function CreateSurveyView() {
                 setState({...state, title: val});
             }}
         />
-        <RecipeSearch/>
+        <RecipeSearch onAdd={addRecipeToOptions}/>
         <Heading headingText={"Rezepte"}/>
         {state.options.map((recipe) => {
             return (<Stack direction={"horizontal"}>
@@ -48,6 +53,7 @@ function CreateSurveyView() {
             <Button
                 variant="secondary"
                 onClick={() => {
+                    setState(emptySurvey);
                 }}
                 className="ms-auto"
             >

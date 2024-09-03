@@ -48,6 +48,22 @@ class RecipeService {
     });
   }
 
+  public static searchRecipesByText(searchString: string): Promise<Recipe[]> {
+      return new Promise((resolve, reject) => {
+          fetch(`${this.backendURL}/search/recipes?searchString=${searchString}`).then((response: Response) => {
+                if (!response.ok) {
+                    throw new Error("Failed to search recipes.");
+                }
+                return response.json();
+          })
+            .then((data: Recipe[]) => {
+                resolve(data);
+            }).catch((reason: any) => {
+              reject(reason);
+          });
+      });
+  }
+
     public static searchRecipesByProducts(neededProducts: NeededProduct[]): Promise<Recipe[]> {
         return new Promise((resolve, reject) => {
             const productUris: string[] = neededProducts.map((product: NeededProduct) => `/products/${product.id}`);

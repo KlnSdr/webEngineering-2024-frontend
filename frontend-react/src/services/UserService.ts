@@ -36,6 +36,7 @@ class UserService {
             Object.keys(data).filter((key) => data[key] !== null).length === 0
           ) {
             resolve(null);
+            return;
           }
           UserService.userInfo = data;
           resolve(UserService.userInfo);

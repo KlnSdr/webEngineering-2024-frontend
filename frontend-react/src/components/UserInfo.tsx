@@ -18,10 +18,10 @@ const UserInfo = () => {
     UserService.getUserInfo()
       .then((data: any) => {
         console.log(data);
-        if(data.principal.attributes.avatar_url !== null) {
-            setImage(data.principal.attributes.avatar_url);
+        if(data.principal.principal.attributes.avatar_url !== null) {
+            setImage(data.principal.principal.attributes.avatar_url);
         }
-        setDisplayName(data.principal.attributes.name);
+        setDisplayName(data.internalUser.userName);
       })
       .catch((_) => {
         // todo

@@ -2,7 +2,6 @@ import { RecipeService } from "../../services/RecipeService";
 import { CreateRecipe } from "../../types/Recipes";
 import {NeededProduct} from "../../types/Products";
 import { Recipe } from "../../types/Recipes";
-import {ProductsService} from "../../services/ProductService";
 
 // Mocking the global fetch function
 global.fetch = jest.fn();
@@ -255,7 +254,7 @@ describe("RecipeService", () => {
       id: 1,
       title: "Käsesosse 1",
       description: "A delicious cheese sauce.",
-      image: "https://elavegan.com/de/wp-content/uploads/sites/5/2018/03/vegane-K%C3%A4sesauce-einfaches-Rezept-paleo-glutenfrei.jpg",
+      imgUri: "https://elavegan.com/de/wp-content/uploads/sites/5/2018/03/vegane-K%C3%A4sesauce-einfaches-Rezept-paleo-glutenfrei.jpg",
       isPrivate: false,
       creationDate: fixedDate,
       ownerUri: "",
@@ -270,7 +269,7 @@ describe("RecipeService", () => {
       id: 2,
       title: "Käsesosse 2",
       description: "Cheese sauce with salt.",
-      image: "https://elavegan.com/de/wp-content/uploads/sites/5/2018/03/vegane-K%C3%A4sesauce-einfaches-Rezept-paleo-glutenfrei.jpg",
+      imgUri: "https://elavegan.com/de/wp-content/uploads/sites/5/2018/03/vegane-K%C3%A4sesauce-einfaches-Rezept-paleo-glutenfrei.jpg",
       isPrivate: false,
       creationDate: fixedDate,
       ownerUri: "",
@@ -285,7 +284,7 @@ describe("RecipeService", () => {
       id: 3,
       title: "Käsesosse 3",
       description: "A spicy cheese sauce.",
-      image: "https://elavegan.com/de/wp-content/uploads/sites/5/2018/03/vegane-K%C3%A4sesauce-einfaches-Rezept-paleo-glutenfrei.jpg",
+      imgUri: "https://elavegan.com/de/wp-content/uploads/sites/5/2018/03/vegane-K%C3%A4sesauce-einfaches-Rezept-paleo-glutenfrei.jpg",
       isPrivate: false,
       creationDate: fixedDate,
       ownerUri: "",
@@ -300,7 +299,7 @@ describe("RecipeService", () => {
       id: 4,
       title: "Käsesosse 4",
       description: "A mild cheese sauce.",
-      image: "https://elavegan.com/de/wp-content/uploads/sites/5/2018/03/vegane-K%C3%A4sesauce-einfaches-Rezept-paleo-glutenfrei.jpg",
+      imgUri: "https://elavegan.com/de/wp-content/uploads/sites/5/2018/03/vegane-K%C3%A4sesauce-einfaches-Rezept-paleo-glutenfrei.jpg",
       isPrivate: false,
       creationDate: fixedDate,
       ownerUri: "",
@@ -317,17 +316,6 @@ describe("RecipeService", () => {
       ok: true,
       json: async () => staticRecipes,
     });
-  test("getRecipeById resolves successfully with valid recipe", async () => {
-    const recipeId = "1";
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockRecipes[0],
-    });
-
-    const recipe = await RecipeService.getRecipeById(recipeId);
-    expect(recipe).toEqual(mockRecipes[0]);
-  });
-
 
     const neededProducts: NeededProduct[] = [
       { id: 1, productName: "Cheese", amount: 1 },
@@ -344,5 +332,16 @@ describe("RecipeService", () => {
     }));
 
     expect(resultsWithMockDate).toEqual(staticRecipes);
+  });
+
+  test("getRecipeById resolves successfully with valid recipe", async () => {
+    const recipeId = "1";
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockRecipes[0],
+    });
+
+    const recipe = await RecipeService.getRecipeById(recipeId);
+    expect(recipe).toEqual(mockRecipes[0]);
   });
 });

@@ -32,7 +32,7 @@ function RecipeDetailView() {
                     id: data.id,
                     title: data.title,
                     description: data.description,
-                    image: data.imgUri,
+                    imgUri: data.imgUri,
                     isPrivate: data.isPrivate,
                     creationDate: new Date(data.creationDate),
                     ownerUri: data.ownerUri,

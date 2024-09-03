@@ -61,15 +61,35 @@ function App() {
             </>
           }
         />
-        <Route
-          path="survey"
-          element={
-            <>
-              <PageTitle title="Umfragen" />
-              <SurveyDetailView />
-            </>
-          }
-        />
+      <Route path="survey" >
+          <Route
+              path="new"
+              element={
+                  <>
+                      <PageTitle title="404 - Not Found" />
+                      <NotFoundView />
+                  </>
+              }
+          />
+          <Route
+              path="view/:id"
+              element={
+                  <>
+                      <PageTitle title="Umfragen" />
+                      <SurveyDetailView />
+                  </>
+              }
+          />
+          <Route
+              path="*"
+              element={
+                  <>
+                      <PageTitle title="404 - Not Found" />
+                      <NotFoundView />
+                  </>
+              }
+          />
+      </Route>
         <Route
           path="logout"
           element={

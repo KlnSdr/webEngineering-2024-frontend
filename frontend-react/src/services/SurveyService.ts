@@ -55,7 +55,7 @@ class SurveyService {
         });
     }
 
-    public static createSurvey(survey: CreateSurvey): Promise<void> {
+    public static createSurvey(survey: CreateSurvey): Promise<Survey> {
         const surveyToSend = {
             title: survey.title,
             options: survey.options.map((recipe: any) => `/recipes/${recipe.id}`),
@@ -74,9 +74,8 @@ class SurveyService {
                     throw new Error("Could not save survey.");
                 }
                 return response.json();
-            }).then((data: any) => {
-                console.log(data);
-                resolve();
+            }).then((data: Survey) => {
+                resolve(data);
             }).catch((reason: any) => {
                 reject(reason);
             });

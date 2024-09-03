@@ -9,7 +9,7 @@ import RecipeSearch from "../components/RecipeSearch";
 import Heading from "../components/Heading";
 import ImageArea from "../components/ImageArea";
 import MyRecipeBar from "../components/MyRecipeBar";
-import {CreateSurvey} from "../types/Surveys";
+import {CreateSurvey, Survey} from "../types/Surveys";
 import {Recipe} from "../types/Recipes";
 import Alert from "react-bootstrap/Alert";
 import SurveyService from "../services/SurveyService";
@@ -56,9 +56,8 @@ function CreateSurveyView() {
             return;
         }
         SurveyService.createSurvey(state)
-            .then(() => {
-                showPopUpSuccess();
-                setState(emptySurvey);
+            .then((createdSurvey: Survey) => {
+                window.location.assign(`/survey/view/${createdSurvey.id}`);
             })
             .catch(() => {
                 showPopUpFail();

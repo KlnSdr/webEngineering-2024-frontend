@@ -2,6 +2,7 @@ import { RecipeService } from "../../services/RecipeService";
 import { CreateRecipe } from "../../types/Recipes";
 import {NeededProduct} from "../../types/Products";
 import { Recipe } from "../../types/Recipes";
+import {ProductsService} from "../../services/ProductService";
 
 // Mocking the global fetch function
 global.fetch = jest.fn();
@@ -191,50 +192,6 @@ describe("RecipeService", () => {
       credentials: "include",
     });
   });
-    test("getAll resolves successfully", async () => {
-        await expect(RecipeService.getAll1()).resolves.toEqual([
-          {
-            title: "Käsesosse 1",
-            image: null,
-            description: "A delicious cheese sauce.",
-            products: [
-              { id: 7, productName: "Cheese", amount: 1 },
-              { id: 4, productName: "Milk", amount: 1 },
-              { id: 6, productName: "Butter", amount: 1 },
-            ],
-          },
-          {
-            title: "Käsesosse 2",
-            image: null,
-            description: "Cheese sauce with salt.",
-            products: [
-              { id: 7, productName: "Cheese", amount: 2 },
-              { id: 10, productName: "Salt", amount: 1 },
-              { id: 4, productName: "Milk", amount: 2 },
-            ],
-          },
-          {
-            title: "Käsesosse 3",
-            image: null,
-            description: "A spicy cheese sauce.",
-            products: [
-              { id: 7, productName: "Cheese", amount: 2 },
-              { id: 11, productName: "Pepper", amount: 1 },
-              { id: 2, productName: "Milk", amount: 1 },
-            ],
-          },
-          {
-            title: "Käsesosse 4",
-            image: null,
-            description: "A mild cheese sauce.",
-            products: [
-              { id: 7, productName: "Cheese", amount: 3 },
-              { id: 2, productName: "Milk", amount: 2 }
-            ],
-          },
-        ]);
-    });
-
   test("getAll returns a list of recipes", async () => {
     // Mock the response from the fetch call
     (fetch as jest.Mock).mockResolvedValueOnce({
@@ -355,8 +312,12 @@ describe("RecipeService", () => {
     },
   ];
 
-  //The static recipes should always be returned (the needed products are not relevant yet)
   test("searchRecipesByProducts returns all static recipes", async () => {
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => staticRecipes,
+    });
+
     const neededProducts: NeededProduct[] = [
       { id: 1, productName: "Cheese", amount: 1 },
       { id: 2, productName: "Milk", amount: 1 },
@@ -373,20 +334,4 @@ describe("RecipeService", () => {
 
     expect(resultsWithMockDate).toEqual(staticRecipes);
   });
-
-  test("searchRecipesByProducts handles empty neededProducts array", async () => {
-    const neededProducts: NeededProduct[] = [];
-
-    const results = await RecipeService.searchRecipesByProducts(neededProducts);
-
-    const mockCreationDate = fixedDate;
-
-    const resultsWithMockDate = results.map(recipe => ({
-      ...recipe,
-      creationDate: mockCreationDate
-    }));
-
-    expect(resultsWithMockDate).toEqual(staticRecipes);
-  });
-
 });

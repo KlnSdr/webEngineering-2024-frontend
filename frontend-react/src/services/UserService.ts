@@ -1,3 +1,5 @@
+import {User} from "../types/Users";
+
 class UserService {
   private static backendURL: string =
     process.env.REACT_APP_BACKEND_URL || "http://localhost:13000";
@@ -38,6 +40,20 @@ class UserService {
           reject(reason);
         });
     });
+  }
+
+  static getUser(uri: string): Promise<User> {
+      return new Promise((resolve, reject) => {
+          fetch(`${this.backendURL}${uri}`, {})
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error("could not get user with uri " + uri);
+              }
+              return response.json();
+          })
+          .then(resolve)
+          .catch(_ => {reject()});
+      });
   }
 
   static isLoggedIn(): Promise<boolean> {

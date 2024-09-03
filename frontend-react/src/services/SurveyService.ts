@@ -1,4 +1,4 @@
-import {Survey} from "../types/Surveys";;
+import {CreateSurvey, Survey} from "../types/Surveys";;
 
 class SurveyService {
     private static backendURL: string =
@@ -49,6 +49,34 @@ class SurveyService {
                 return response.json();
             }).then((data: Survey) => {
                 resolve(data);
+            }).catch((reason: any) => {
+                reject(reason);
+            });
+        });
+    }
+
+    public static createSurvey(survey: CreateSurvey): Promise<void> {
+        const surveyToSend = {
+            title: survey.title,
+            options: survey.options.map((recipe: any) => `/recipes/${recipe.id}`),
+        };
+
+        return new Promise((resolve, reject) => {
+            fetch(`${this.backendURL}/surveys`, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(surveyToSend),
+            }).then((response: Response) => {
+                if (!response.ok) {
+                    throw new Error("Could not save survey.");
+                }
+                return response.json();
+            }).then((data: any) => {
+                console.log(data);
+                resolve();
             }).catch((reason: any) => {
                 reject(reason);
             });

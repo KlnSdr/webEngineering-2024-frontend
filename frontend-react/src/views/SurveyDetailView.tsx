@@ -28,7 +28,7 @@ function SurveyDetailView() {
         }).catch ((error) => {
             console.error("Failed", error);
         });
-    }, []);
+    }, [id]);
 
     function recipeSet(survey: Survey) {
         let recipeIds = survey.options.map(option => option.replace("/recipes/", ""));

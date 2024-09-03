@@ -70,6 +70,22 @@ class RecipeService {
             });
         });
     }
+
+  public static getRecipeById(id: string): Promise<Recipe> {
+    return new Promise((resolve, reject) => {
+      fetch(`${this.backendURL}/recipes/${id}`).then((response: Response) => {
+          if (!response.ok) {
+            throw new Error("Failed to load recipe.");
+          }
+          return response.json();
+        }).then((data: Recipe) => {
+          resolve(data);
+        })
+        .catch((reason: any) => {
+          reject(reason);
+        });
+    });
+  }
 }
 
 export { RecipeService };

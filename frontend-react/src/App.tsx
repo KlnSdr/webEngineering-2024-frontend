@@ -10,6 +10,7 @@ import LoginView from "./views/LoginView";
 import PageTitle from "./components/PageTitle";
 import RecipeDetailView from "./views/RecipeDetailView";
 import CreateSurveyView from "./views/CreateSurveyView";
+import SurveyHub from "./views/SurveyHub";
 
 function App() {
   return (
@@ -63,6 +64,16 @@ function App() {
           }
         />
       <Route path="survey" >
+        <Route
+            index
+            element={
+                <>
+                    <PageTitle title="Umfragen" />
+                    <SurveyHub />
+                </>
+        }
+        />
+
           <Route
               path="new"
               element={

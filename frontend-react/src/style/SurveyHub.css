@@ -1,0 +1,7 @@
+.TextArea {
+    height: 16.3vh;
+    width: 48.92vh;
+    border: solid 1px black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

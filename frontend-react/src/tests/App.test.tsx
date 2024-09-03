@@ -39,7 +39,7 @@ describe("Root component Test", () => {
           <App/>
         </MemoryRouter>
     );
-    expect(screen.getByText("Hello Survey")).toBeInTheDocument();
+    expect(screen.getByText("Survey")).toBeInTheDocument();
   });
 
   it("renders NotFoundView on unknown route", () => {

@@ -1,12 +1,12 @@
-import {CreateSurvey, Survey} from "../types/Surveys";;
+import {CreateSurvey, Survey} from "../types/Surveys";
 
 class SurveyService {
     private static backendURL: string =
         process.env.REACT_APP_BACKEND_URL || "http://localhost:13000";
 
-    public static getSurveysByUserId(userId: string): Promise<any[]> {
+    public static getSurveysByUserId(): Promise<any[]> {
         return new Promise((resolve, reject) => {
-            fetch(`${this.backendURL}/surveys/user/${userId}`).then((response: Response) => {
+            fetch(`${this.backendURL}/surveys/my`, {credentials: "include"}).then((response: Response) => {
                 if (!response.ok) {
                     throw new Error("Failed to load surveys.");
                 }

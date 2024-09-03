@@ -7,7 +7,6 @@ import {Survey} from "../types/Surveys";
 
 interface UncheckCheckboxProps {
     voteChange: ()=> void;
-
 }
 
 const  UncheckCheckbox: React.FC<UncheckCheckboxProps> = ({ voteChange}) => {

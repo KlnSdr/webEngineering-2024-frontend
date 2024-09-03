@@ -1,10 +1,4 @@
 import React from "react";
-import Stack from "react-bootstrap/Stack";
-import {Simulate} from "react-dom/test-utils";
-import change = Simulate.change;
-import SurveyService from "../services/SurveyService";
-import {Survey} from "../types/Surveys";
-
 interface UncheckCheckboxProps {
     voteChange: ()=> void;
 }

@@ -1,5 +1,4 @@
-import {Survey} from "../types/Surveys";
-import {Product} from "../types/Products";
+import {Survey} from "../types/Surveys";;
 
 class SurveyService {
     private static backendURL: string =

@@ -9,11 +9,9 @@ import {Heading2} from "../components/Heading";
 import UncheckCheckbox from "../components/UncheckCheckbox";
 import {Survey} from "../types/Surveys";
 import SurveyService from "../services/SurveyService";
-import Footer from "../components/Footer";
+
 
 function SurveyView() {
-
-    const backendURL: string = process.env.REACT_APP_BACKEND_URL || "http://localhost:13000";
 
     const [recipes, setRecipe] = useState<Recipe[]>([]);
     const [survey, setSurvey] = useState<Survey | undefined>(undefined);

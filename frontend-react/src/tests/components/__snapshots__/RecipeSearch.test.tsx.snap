@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecipeSearch Component renders without crashing 1`] = `
+<DocumentFragment>
+  <div>
+    <div>
+      <h1
+        class="headline-with-lines"
+      >
+        Rezepte suchen
+      </h1>
+      <input
+        class="form-control"
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

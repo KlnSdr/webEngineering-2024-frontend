@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import ImageUpload from "../../components/ImageUpload";
 
 describe("ImageUpload Component", () => {
-    const initialValue = "data:imgUri/png;base64,initialImage";
+    const initialValue = "data:image/png;base64,initialImage";
     const handleChange = jest.fn();
 
     beforeEach(() => {
@@ -18,10 +18,10 @@ describe("ImageUpload Component", () => {
         expect(asFragment()).toMatchSnapshot();
     });
 
-    test("uploads an imgUri and displays the preview", async () => {
+    test("uploads an image and displays the preview", async () => {
         render(<ImageUpload initialValue={null} onChange={handleChange} />);
 
-        const file = new File(["dummy content"], "example.png", { type: "imgUri/png" });
+        const file = new File(["dummy content"], "example.png", { type: "image/png" });
         const input = screen.getByLabelText("Wähle ein Bild aus:");
 
         Object.defineProperty(input, "files", {
@@ -35,7 +35,7 @@ describe("ImageUpload Component", () => {
         expect(screen.getByAltText("Selected")).toBeInTheDocument();
     });
 
-    test("removes the uploaded imgUri", async () => {
+    test("removes the uploaded image", async () => {
         render(<ImageUpload initialValue={initialValue} onChange={handleChange} />);
 
         expect(screen.getByAltText("Selected")).toHaveAttribute("src", initialValue);

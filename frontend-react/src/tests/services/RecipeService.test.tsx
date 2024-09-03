@@ -32,7 +32,7 @@ describe("RecipeService", () => {
   test("save resolves successfully with valid recipe", async () => {
     const recipe: CreateRecipe = {
       title: "Test Recipe",
-      image: "data:imgUri/png;base64,testImage",
+      image: "data:image/png;base64,testImage",
       description: "Test description",
       products: [
         { id: 1, productName: "Product 1", amount: 100 },
@@ -58,11 +58,11 @@ describe("RecipeService", () => {
     });
   });
 
-  test("save handles recipe with null imgUri", async () => {
+  test("save handles recipe with null image", async () => {
     const recipe: CreateRecipe = {
       title: "Recipe with No Image",
       image: null,
-      description: "Description with no imgUri",
+      description: "Description with no image",
       products: [{ id: 3, productName: "Product 3", amount: 150 }],
     };
 
@@ -113,7 +113,7 @@ describe("RecipeService", () => {
   test("save handles large input", async () => {
     const recipe: CreateRecipe = {
       title: "A".repeat(1000),
-      image: "data:imgUri/png;base64," + "B".repeat(1000),
+      image: "data:image/png;base64," + "B".repeat(1000),
       description: "C".repeat(1000),
       products: Array(1000).fill({ id: 1, productName: "Product", amount: 1 }),
     };
@@ -139,7 +139,7 @@ describe("RecipeService", () => {
   test("save throws an error if the network request fails", async () => {
     const recipe: CreateRecipe = {
       title: "Test Recipe",
-      image: "data:imgUri/png;base64,testImage",
+      image: "data:image/png;base64,testImage",
       description: "Test description",
       products: [
         { id: 1, productName: "Product 1", amount: 100 },
@@ -169,7 +169,7 @@ describe("RecipeService", () => {
   test("save throws an error if fetch rejects", async () => {
     const recipe: CreateRecipe = {
       title: "Test Recipe",
-      image: "data:imgUri/png;base64,testImage",
+      image: "data:image/png;base64,testImage",
       description: "Test description",
       products: [
         { id: 1, productName: "Product 1", amount: 100 },

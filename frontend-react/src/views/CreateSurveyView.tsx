@@ -31,6 +31,12 @@ function CreateSurveyView() {
         setState({...state, options: [...state.options, recipe]});
     };
 
+    const removeFromOptions = (index: number) => {
+        const newOptions = [...state.options];
+        newOptions.splice(index, 1);
+        setState({...state, options: newOptions});
+    };
+
     return (<div>
         <LabelInput
             labelText="Title"
@@ -41,12 +47,13 @@ function CreateSurveyView() {
         />
         <RecipeSearch onAdd={addRecipeToOptions}/>
         <Heading headingText={"Rezepte"}/>
-        {state.options.map((recipe) => {
+        {state.options.map((recipe, index) => {
             return (<Stack direction={"horizontal"}>
                 <ImageArea origin={recipe.imgUri}/>
                 <Link to={`/recipe/view/${recipe.id}`}>
                     <MyRecipeBar Recipe={recipe}/>
                 </Link>
+                <Button variant="danger" className={"bi bi-x"} onClick={() => removeFromOptions(index)}></Button>
             </Stack>);
         })}
         <Stack direction="horizontal">

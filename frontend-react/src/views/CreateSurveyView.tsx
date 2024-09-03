@@ -64,11 +64,6 @@ function CreateSurveyView() {
             });
     };
 
-    const showPopUpSuccess = () => {
-        setShowSuccessAlert(true);
-        setTimeout(() => setShowSuccessAlert(false), popUpTimeout);
-    };
-
     const showPopUpFail = () => {
         setShowFailAlert(true);
         setTimeout(() => setShowFailAlert(false), popUpTimeout);

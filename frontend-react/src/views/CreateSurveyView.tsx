@@ -1,17 +1,21 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import "../style/CreateRecipeView.css";
 import {UserService} from "../services/UserService";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import LabelInput from "../components/LabelInput";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import RecipeSearch from "../components/RecipeSearch";
+import Heading from "../components/Heading";
+import ImageArea from "../components/ImageArea";
+import MyRecipeBar from "../components/MyRecipeBar";
+import {CreateSurvey} from "../types/Surveys";
 
 function CreateSurveyView() {
-    const emptySurvey = {
+    const emptySurvey: CreateSurvey = {
         title: "", options: []
     };
-    const [state, setState] = useState(emptySurvey);
+    const [state, setState] = useState<CreateSurvey>(emptySurvey);
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -31,6 +35,15 @@ function CreateSurveyView() {
             }}
         />
         <RecipeSearch/>
+        <Heading headingText={"Rezepte"}/>
+        {state.options.map((recipe) => {
+            return (<Stack direction={"horizontal"}>
+                <ImageArea origin={recipe.imgUri}/>
+                <Link to={`/recipe/view/${recipe.id}`}>
+                    <MyRecipeBar Recipe={recipe}/>
+                </Link>
+            </Stack>);
+        })}
         <Stack direction="horizontal">
             <Button
                 variant="secondary"

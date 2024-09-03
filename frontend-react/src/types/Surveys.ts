@@ -1,3 +1,5 @@
+import {Recipe} from "./Recipes";
+
 interface Survey{
     id: number;
     title: string;
@@ -8,5 +10,10 @@ interface Survey{
     creationDate: Date;
 }
 
-export type {Survey};
+interface CreateSurvey {
+    title: string;
+    options: Recipe[];
+}
+
+export type {Survey, CreateSurvey};
 

@@ -41,13 +41,13 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   return (
     <div>
-      <label htmlFor={"image-upload"}>Wähle ein Bild aus:</label>
+      <label htmlFor={"imgUri-upload"}>Wähle ein Bild aus:</label>
       <input
         type="file"
-        accept="image/*"
+        accept="imgUri/*"
         onChange={handleImageChange}
         ref={inputRef}
-        id={"image-upload"}
+        id={"imgUri-upload"}
       />
       {selectedImage && (
         <div>

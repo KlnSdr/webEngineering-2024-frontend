@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ImageArea Component renders with correct image 1`] = `
+exports[`ImageArea Component renders with correct imgUri 1`] = `
 <DocumentFragment>
   <div
     class="ImageArea"

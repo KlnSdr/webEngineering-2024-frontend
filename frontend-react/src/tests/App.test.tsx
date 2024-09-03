@@ -33,7 +33,7 @@ describe("Root component Test", () => {
     expect(searchElements.length).toBeGreaterThan(0);
   });
 
-  it("renders SurveyView on /survey route", () => {
+  it("renders SurveyDetailView on /survey route", () => {
     render(
         <MemoryRouter initialEntries={["/survey"]}>
           <App/>

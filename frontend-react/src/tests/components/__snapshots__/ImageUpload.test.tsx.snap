@@ -4,13 +4,13 @@ exports[`ImageUpload Component renders with initial value 1`] = `
 <DocumentFragment>
   <div>
     <label
-      for="image-upload"
+      for="imgUri-upload"
     >
       Wähle ein Bild aus:
     </label>
     <input
-      accept="image/*"
-      id="image-upload"
+      accept="imgUri/*"
+      id="imgUri-upload"
       type="file"
     />
     <div>
@@ -19,7 +19,7 @@ exports[`ImageUpload Component renders with initial value 1`] = `
       </h2>
       <img
         alt="Selected"
-        src="data:image/png;base64,initialImage"
+        src="data:imgUri/png;base64,initialImage"
         style="width: 300px; height: auto;"
       />
       <button

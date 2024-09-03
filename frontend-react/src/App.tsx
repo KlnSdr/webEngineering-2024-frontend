@@ -4,7 +4,7 @@ import CreateRecipeView from "./views/CreateRecipeView";
 import NotFoundView from "./views/NotFoundView";
 import HomePage from "./views/HomePage";
 import SearchView from "./views/SearchView";
-import SurveyView from "./views/SurveyView";
+import SurveyDetailView from "./views/SurveyDetailView";
 import LogoutView from "./views/LogoutView";
 import LoginView from "./views/LoginView";
 import PageTitle from "./components/PageTitle";
@@ -66,7 +66,7 @@ function App() {
           element={
             <>
               <PageTitle title="Umfragen" />
-              <SurveyView />
+              <SurveyDetailView />
             </>
           }
         />

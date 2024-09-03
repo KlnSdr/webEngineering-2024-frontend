@@ -9,15 +9,17 @@ import {Heading2} from "../components/Heading";
 import UncheckCheckbox from "../components/UncheckCheckbox";
 import {Survey} from "../types/Surveys";
 import SurveyService from "../services/SurveyService";
+import {useParams} from "react-router-dom";
 
 
-function SurveyView() {
+function SurveyDetailView() {
 
     const [recipes, setRecipe] = useState<Recipe[]>([]);
     const [survey, setSurvey] = useState<Survey | undefined>(undefined);
+    const {id} = useParams<{id: string}>();
 
     useEffect(() => {
-        SurveyService.getSurveyById(1).then((survey) => {
+        SurveyService.getSurveyById(id).then((survey) => {
             if (survey) {
                 console.log("Survey data:", survey);
                 setSurvey(survey);
@@ -79,17 +81,17 @@ if (!survey) {
                     <div  key={index} className="container">
                     <div className="row mt-3">
                         <Stack direction={"horizontal"}>
-                            <ImageArea origin={recipe.image}/>
+                            <ImageArea origin={recipe.imgUri}/>
                             <MyRecipeBar Recipe={recipe}/>
                             {survey && (<UncheckCheckbox voteChange= {()=>handleVote(survey.id, recipe.id)} />)}
                             <div className="align-content-center "> Stimmen ---{'>'}  {getVoteCount(recipe.id)}</div>
                         </Stack>
                     </div>
                 </div>
-                ))};
+                ))}
             </div>
         </div>
     );
 }
 
-export default SurveyView;
+export default SurveyDetailView;

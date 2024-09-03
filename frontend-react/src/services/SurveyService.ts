@@ -19,7 +19,7 @@ class SurveyService {
         });
     }
 
-    public static getSurveyById(surveyId: number): Promise<Survey> {
+    public static getSurveyById(surveyId: string | undefined): Promise<Survey> {
         return new Promise((resolve, reject) => {
             fetch(`${this.backendURL}/surveys/${surveyId}`, {credentials: "include"}).then((response: Response) => {
                 if (!response.ok) {

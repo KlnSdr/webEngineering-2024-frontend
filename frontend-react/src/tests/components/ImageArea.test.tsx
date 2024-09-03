@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import ImageArea from "../../components/ImageArea";
 
 describe("ImageArea Component", () => {
-    test("renders with correct image", () => {
+    test("renders with correct imgUri", () => {
         const origin = "https://via.placeholder.com/150";
 
        const {asFragment} = render( <ImageArea origin={origin} />);

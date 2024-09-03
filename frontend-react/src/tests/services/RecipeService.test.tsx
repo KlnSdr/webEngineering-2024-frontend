@@ -317,6 +317,17 @@ describe("RecipeService", () => {
       ok: true,
       json: async () => staticRecipes,
     });
+  test("getRecipeById resolves successfully with valid recipe", async () => {
+    const recipeId = "1";
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockRecipes[0],
+    });
+
+    const recipe = await RecipeService.getRecipeById(recipeId);
+    expect(recipe).toEqual(mockRecipes[0]);
+  });
+
 
     const neededProducts: NeededProduct[] = [
       { id: 1, productName: "Cheese", amount: 1 },

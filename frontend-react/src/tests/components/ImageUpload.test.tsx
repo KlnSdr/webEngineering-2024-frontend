@@ -40,7 +40,7 @@ describe("ImageUpload Component", () => {
 
         expect(screen.getByAltText("Selected")).toHaveAttribute("src", initialValue);
 
-        const removeButton = screen.getByRole("button", { name: /remove imgUri/i });
+        const removeButton = screen.getByRole("button", { name: /remove image/i });
         fireEvent.click(removeButton);
 
         expect(screen.queryByAltText("Selected")).not.toBeInTheDocument();

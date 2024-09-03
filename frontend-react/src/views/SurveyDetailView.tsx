@@ -32,7 +32,7 @@ function SurveyDetailView() {
                     .catch(_ => {
                         setCreator({
                             userName: "could not load username",
-                            id: -1
+                            userId: -1
                         });
                 });
             }

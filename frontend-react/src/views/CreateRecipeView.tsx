@@ -7,7 +7,7 @@ import ImageUpload from "../components/ImageUpload";
 import LabelInput from "../components/LabelInput";
 import TextArea from "../components/TextArea";
 import "../style/CreateRecipeView.css";
-import { CreateRecipe } from "../types/Recipes";
+import {CreateRecipe, Recipe} from "../types/Recipes";
 import { NeededProduct, Product } from "../types/Products";
 import { ProductsService } from "../services/ProductService";
 import Stack from "react-bootstrap/Stack";
@@ -23,7 +23,6 @@ function CreateRecipeView() {
     products: [],
   };
   const popUpTimeout: number = parseInt(process.env.REACT_APP_POPUP_TIMEOUT || "5000");
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showFailAlert, setShowFailAlert] = useState(false);
   const [state, setState] = useState(emptyRecipe);
   const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
@@ -66,11 +65,6 @@ function CreateRecipeView() {
     return true;
   };
 
-  const showPopUpSuccess = () => {
-    setShowSuccessAlert(true);
-    setTimeout(() => setShowSuccessAlert(false), popUpTimeout);
-  };
-
   const showPopUpFail = () => {
     setShowFailAlert(true);
     setTimeout(() => setShowFailAlert(false), popUpTimeout);
@@ -78,10 +72,18 @@ function CreateRecipeView() {
 
   const saveRecipe = () => {
     if (validate()) {
-      RecipeService.save(state)
-        .then((_) => {
-            // TODO redirect to detail view
-          showPopUpSuccess();
+        const newRecipe: CreateRecipe = {
+            ...state,
+            products: state.products.map((product: NeededProduct) => {
+                return {
+                    ...product,
+                    id: availableProducts.find((p: Product) => p.name === product.productName)?.id || 0
+                };
+            })
+        };
+      RecipeService.save(newRecipe)
+        .then((storedRecipe: Recipe) => {
+            navigate(`/recipe/view/${storedRecipe.id}`);
         })
         .catch((reason: any) => {
           console.log(reason);
@@ -94,15 +96,6 @@ function CreateRecipeView() {
 
   return (
     <div className="createRecipeView">
-      {showSuccessAlert && (
-        <Alert
-          variant="success"
-          onClose={() => setShowSuccessAlert(false)}
-          dismissible
-        >
-          Rezept erfolgreich gespeichert!
-        </Alert>
-      )}
       {showFailAlert && (
         <Alert
           variant="danger"

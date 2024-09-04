@@ -6,7 +6,11 @@ class RecipeService {
   private static backendURL: string =
     process.env.REACT_APP_BACKEND_URL || "http://localhost:13000";
 
-  public static save(recipe: CreateRecipe): Promise<void> {
+  public static save(recipe: CreateRecipe): Promise<Recipe> {
+      const quantityMap: { [key: string]: number } = {};
+        recipe.products.forEach((product) => {
+            quantityMap[`/products/${product.id}`] = product.amount;
+        });
     return new Promise((resolve, reject) => {
       fetch(`${this.backendURL}/recipes`, {
         method: "POST",
@@ -14,7 +18,15 @@ class RecipeService {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(recipe),
+        body: JSON.stringify({
+            title: recipe.title,
+            imgUri: "https://upload.wikimedia.org/wikipedia/commons/3/36/HD_189733b.jpg",
+            description: recipe.description,
+            isPrivate: false,
+            productUris: recipe.products.map((product) => `/products/${product.id}`),
+            productQuantities: quantityMap
+
+        }),
       })
         .then((response: Response) => {
           if (!response.ok) {
@@ -22,9 +34,9 @@ class RecipeService {
           }
           return response.json();
         })
-        .then((data: any) => {
+        .then((data: Recipe) => {
           console.log(data);
-          resolve();
+          resolve(data);
         })
         .catch((reason: any) => {
           reject(reason);

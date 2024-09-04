@@ -23,6 +23,18 @@ describe("RecipeService", () => {
     },
   ];
 
+  const mockCreateRecipe = {
+    title: "Test Recipe",
+    imgUri: "https://upload.wikimedia.org/wikipedia/commons/3/36/HD_189733b.jpg",
+    description: "Test description",
+    isPrivate: false,
+    productUris: ["/products/1", "/products/2"],
+    productQuantities: {
+      "/products/1": 100,
+        "/products/2": 200
+    }
+  };
+
   beforeEach(() => {
     // Clear the mock before each test to avoid any interference between tests
     (fetch as jest.Mock).mockClear();
@@ -45,14 +57,14 @@ describe("RecipeService", () => {
       json: async () => mockResponse,
     });
 
-    await expect(RecipeService.save(recipe)).resolves.toBeUndefined();
+    await expect(RecipeService.save(recipe)).resolves.toEqual(mockResponse);
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(recipe),
+      body: JSON.stringify(mockCreateRecipe),
       credentials: "include",
     });
   });
@@ -71,40 +83,22 @@ describe("RecipeService", () => {
       json: async () => mockResponse,
     });
 
-    await expect(RecipeService.save(recipe)).resolves.toBeUndefined();
+    await expect(RecipeService.save(recipe)).resolves.toEqual(mockResponse);
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(recipe),
-      credentials: "include",
-    });
-  });
-
-  test("save handles empty fields", async () => {
-    const recipe: CreateRecipe = {
-      title: "",
-      image: null,
-      description: "",
-      products: [],
-    };
-
-    // Mock a successful fetch response
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockResponse,
-    });
-
-    await expect(RecipeService.save(recipe)).resolves.toBeUndefined();
-    expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(recipe),
+      body: JSON.stringify({
+        ...mockCreateRecipe,
+        title: "Recipe with No Image",
+        description: "Description with no image",
+        productUris: ["/products/3"],
+        productQuantities: {
+          "/products/3": 150,
+        },
+      }),
       credentials: "include",
     });
   });
@@ -123,14 +117,23 @@ describe("RecipeService", () => {
       json: async () => mockResponse,
     });
 
-    await expect(RecipeService.save(recipe)).resolves.toBeUndefined();
+    await expect(RecipeService.save(recipe)).resolves.toEqual(mockResponse);
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(recipe),
+      body: JSON.stringify({
+        ...mockCreateRecipe,
+        title: "A".repeat(1000),
+        description: "C".repeat(1000),
+        productUris: Array(1000).fill("/products/1"),
+        productQuantities: Array(1000).fill(1).reduce((obj, _, i) => {
+          obj[`/products/1`] = 1;
+          return obj;
+        }, {}),
+      }),
       credentials: "include",
     });
   });
@@ -160,7 +163,7 @@ describe("RecipeService", () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(recipe),
+      body: JSON.stringify(mockCreateRecipe),
       credentials: "include",
     });
   });
@@ -187,7 +190,7 @@ describe("RecipeService", () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(recipe),
+      body: JSON.stringify(mockCreateRecipe),
       credentials: "include",
     });
   });

@@ -53,7 +53,7 @@ function RecipeDetailView() {
                 .catch(_ => {
                     setOwner({
                         userName: "could not load username",
-                        id: -1
+                        userId: -1
                     });
                 });
                 setRecipe(recipe);

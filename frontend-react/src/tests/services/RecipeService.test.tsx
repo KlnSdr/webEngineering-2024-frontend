@@ -263,9 +263,9 @@ describe("RecipeService", () => {
       ownerUri: "",
       likedByUserUris: [],
       products: [
-        { name: "Cheese", amount: 1, unit: "kg" },
-        { name: "Milk", amount: 1, unit: "l" },
-        { name: "Butter", amount: 0.5, unit: "kg" }, // Adjusted unit to kg
+        { id: 1, name: "Cheese", amount: 1, unit: "kg" },
+        { id: 1, name: "Milk", amount: 1, unit: "l" },
+        { id: 1, name: "Butter", amount: 0.5, unit: "kg" }, // Adjusted unit to kg
       ],
     },
     {
@@ -278,9 +278,9 @@ describe("RecipeService", () => {
       ownerUri: "",
       likedByUserUris: [],
       products: [
-        { name: "Cheese", amount: 2, unit: "kg" },
-        { name: "Salt", amount: 0.1, unit: "kg" }, // Adjusted unit to kg
-        { name: "Milk", amount: 2, unit: "l" },
+        { id: 1, name: "Cheese", amount: 2, unit: "kg" },
+        { id: 1, name: "Salt", amount: 0.1, unit: "kg" }, // Adjusted unit to kg
+        { id: 1, name: "Milk", amount: 2, unit: "l" },
       ],
     },
     {
@@ -293,9 +293,9 @@ describe("RecipeService", () => {
       ownerUri: "",
       likedByUserUris: [],
       products: [
-        { name: "Cheese", amount: 2, unit: "kg" },
-        { name: "Pepper", amount: 0.05, unit: "kg" }, // Adjusted unit to kg
-        { name: "Milk", amount: 1, unit: "l" },
+        { id: 1,  name: "Cheese", amount: 2, unit: "kg" },
+        { id: 1,  name: "Pepper", amount: 0.05, unit: "kg" }, // Adjusted unit to kg
+        { id: 1,  name: "Milk", amount: 1, unit: "l" },
       ],
     },
     {
@@ -308,8 +308,8 @@ describe("RecipeService", () => {
       ownerUri: "",
       likedByUserUris: [],
       products: [
-        { name: "Cheese", amount: 3, unit: "kg" },
-        { name: "Milk", amount: 2, unit: "l" }
+        { id: 1,  name: "Cheese", amount: 3, unit: "kg" },
+        { id: 1,  name: "Milk", amount: 2, unit: "l" }
       ],
     },
   ];

@@ -12,28 +12,29 @@ function HomePage() {
   const [myRecipes, setMyRecipe] = useState<Recipe[]>([]);
 
     useEffect(() => {
-    RecipeService.getAll().then((recipes) => {
+    RecipeService.getRecipeById("1").then((recipes) => {
         if (recipes) {
-            setMyRecipe(recipes);
+            console.log("Recipes", recipes);
+            setMyRecipe(Array(recipes));
         }
-        console.log(recipes);
     }).catch((error) => {
         console.error("Failed",error);
     });
     }, []);
 
-    const realPage = myRecipes.map((recipe, index) => (
-        <div key={index} className="RowArea ">
-            <Stack direction={"horizontal"}>
-             <ImageArea origin="https://www.gluthelden.de/wp-content/uploads/2018/06/K%C3%A4seso%C3%9Fe-.jpg" />
-             <Link to={`/recipe/view/${recipe.id}`}> <MyRecipeBar Recipe={recipe} /></Link>
-             <EditButton Recipe={recipe} />
-            </Stack>
-        </div>
-    ));
+    if (myRecipes.length === 0) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div><h1>Meine Rezepte</h1>
-            {realPage}
+            <div className="RowArea ">
+                <Stack direction={"horizontal"}>
+                    <ImageArea origin={""}/>
+                    <Link to={`/recipe/view/${myRecipes[0].id}`}> <MyRecipeBar Recipe={myRecipes[0]}/></Link>
+                    <EditButton Recipe={myRecipes[0]}/>
+                </Stack>
+            </div>
         </div>
     );
 

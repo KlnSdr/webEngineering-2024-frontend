@@ -11,6 +11,7 @@ import PageTitle from "./components/PageTitle";
 import RecipeDetailView from "./views/RecipeDetailView";
 import CreateSurveyView from "./views/CreateSurveyView";
 import SurveyHub from "./views/SurveyHub";
+import EditRecipeView from "./views/RecipeEditView";
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
                   element={
                       <>
                           <PageTitle title="Neues Rezept" />
-                          <CreateRecipeView />
+                          <CreateRecipeView  recipe={null}/>
                       </>
                   }
               />
@@ -44,6 +45,17 @@ function App() {
                       </>
                   }
               />
+
+                <Route
+                    path="edit/:id"
+                    element={
+                        <>
+                        <PageTitle title="Rezept bearbeiten" />
+                        <EditRecipeView/>
+                        </>
+                    }
+                />
+
               <Route
                   path="*"
                   element={

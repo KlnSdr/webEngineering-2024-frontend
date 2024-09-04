@@ -3,11 +3,11 @@ import AddProducts from "../components/AddProducts";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import Heading from "../components/Heading";
-import ImageUpload from "../components/ImageUpload";
+import ImageUrl from "../components/ImageUrl";
 import LabelInput from "../components/LabelInput";
 import TextArea from "../components/TextArea";
 import "../style/CreateRecipeView.css";
-import {CreateRecipe, Recipe} from "../types/Recipes";
+import { CreateRecipe, Recipe } from "../types/Recipes";
 import { NeededProduct, Product } from "../types/Products";
 import { ProductsService } from "../services/ProductService";
 import Stack from "react-bootstrap/Stack";
@@ -15,13 +15,27 @@ import { RecipeService } from "../services/RecipeService";
 import {UserService} from "../services/UserService";
 import {useNavigate} from "react-router-dom";
 
-function CreateRecipeView() {
-  const emptyRecipe: CreateRecipe = {
-    title: "",
-    image: null,
-    description: "",
-    products: [],
-  };
+
+
+function CreateRecipeView ({recipe}: {recipe: Recipe | null}) {
+    const emptyRecipe: CreateRecipe = {
+        title: "",
+        image: null,
+        description: "",
+        products: [],
+    };
+if (recipe)
+{
+    emptyRecipe.title = recipe.title;
+    emptyRecipe.image = recipe.imgUri;
+    emptyRecipe.description = recipe.description;
+    emptyRecipe.products = recipe.products.map((product) => ({
+        id: product.id,
+        productName: product.name,
+        amount: product.amount
+    }));
+    console.log("Empty Recipe", emptyRecipe);
+}
   const popUpTimeout: number = parseInt(process.env.REACT_APP_POPUP_TIMEOUT || "5000");
   const [showFailAlert, setShowFailAlert] = useState(false);
   const [state, setState] = useState(emptyRecipe);
@@ -112,13 +126,12 @@ function CreateRecipeView() {
           setState({ ...state, title: val });
         }}
       />
-      <ImageUpload
-        initialValue={state.image}
-        onChange={(img: string | null) => {
-          setState({ ...state, image: img });
-        }}
-      />
-      <Heading headingText="Zutaten" />
+        <LabelInput labelText="Bild Url" initialValue=""
+                    onChange={(val: string) => {
+                        setState({ ...state, image: val });
+                    }}/>
+        {state.image ? <ImageUrl url={state.image} /> : null}
+        <Heading headingText="Zutaten" />
       <AddProducts
         initialValue={state.products}
         onChange={(products: NeededProduct[]) => {

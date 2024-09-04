@@ -12,9 +12,13 @@ interface CreateButtonProps {
 }
 
 const EditButton: React.FC<EditButtonProps> = ({Recipe}) => {
+    const navigate = useNavigate();
+    function editRecipe() {
+        navigate("/recipe/edit/" + Recipe.id);
+    }
     return (
         <div className="EditButton">
-            <Button className="bi bi-pencil" onClick={() => console.log(Recipe)}>Edit</Button>
+            <Button className="bi bi-pencil" onClick={editRecipe}>Edit</Button>
         </div>
     );
 };

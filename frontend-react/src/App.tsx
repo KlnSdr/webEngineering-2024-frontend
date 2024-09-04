@@ -10,7 +10,6 @@ import LoginView from "./views/LoginView";
 import PageTitle from "./components/PageTitle";
 import RecipeDetailView from "./views/RecipeDetailView";
 import CreateSurveyView from "./views/CreateSurveyView";
-import {Recipe} from "./types/Recipes";
 import EditRecipeView from "./views/RecipeEditView";
 import SurveyHub from "./views/SurveyHub";
 

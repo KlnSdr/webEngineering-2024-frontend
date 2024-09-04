@@ -17,7 +17,7 @@ const ImageUrl: React.FC<ImageUrlProps> = ({ url }) => {
     return (
         <div className="mt-2">
             {isValid ? (
-                <img src={url} alt="Loaded from URL" style={{ width: "300px", height: "auto" }} />
+                <img src={url} alt="dish" style={{ width: "300px", height: "auto" }} />
             ) : (
                 <p>Invalid image URL</p>
             )}

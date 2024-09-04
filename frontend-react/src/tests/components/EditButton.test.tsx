@@ -2,9 +2,9 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import EditButton from "../../components/EditButton";
+import { Recipe } from "../../types/Recipes";
+import { useNavigate } from "react-router-dom";
 import {CreateButton} from "../../components/EditButton";
-import {Recipe} from "../../types/Recipes";
-import {useNavigate} from "react-router-dom";
 
 
 jest.mock("react-router-dom", () => ({

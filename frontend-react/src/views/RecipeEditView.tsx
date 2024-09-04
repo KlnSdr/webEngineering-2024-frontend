@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import {Recipe} from "../types/Recipes";
 import {useParams} from "react-router-dom";
-import {RecipeService} from "../services/RecipeService";
 import CreateRecipeView from "./CreateRecipeView";
 import {Product} from "../types/Products";
 import {ProductsService} from "../services/ProductService";
-import {UserService} from "../services/UserService";
 
 function EditRecipeView() {
     const {id} = useParams<{id:string}>();

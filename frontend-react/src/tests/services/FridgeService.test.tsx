@@ -88,4 +88,25 @@ describe("FridgeService", () => {
         expect(result).toEqual([mockNeededProducts[0]]);
     });
 
+    test("updateFridgeContent successfully updates fridge content", async () => {
+        (fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+        });
+
+        await FridgeService.updateFridgeContent(userId, mockNeededProducts);
+
+        expect(fetch).toHaveBeenCalledTimes(1);
+        expect(fetch).toHaveBeenCalledWith(`http://localhost:13000/fridge/${userId}`, {
+            method: "PUT",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userUri: `/users/${userId}`,
+                products: { One: 5, Two: 10 },
+            }),
+        });
+    });
+
 });

@@ -122,7 +122,6 @@ if (recipe)
               ownerUri: recipe!.ownerUri,
               likedByUserUris: recipe!.likedByUserUris
           };
-          console .log("Updated Recipe", updatedRecipe);
             RecipeService.updateRecipe(updatedRecipe).then((_) => {
                     showPopUpSuccess();
                 })

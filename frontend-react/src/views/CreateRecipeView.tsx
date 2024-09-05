@@ -125,6 +125,7 @@ if (recipe)
                     console.log(reason);
                     showPopUpFail();
                 });
+            return;
         }
     } else {
         showPopUpFail();

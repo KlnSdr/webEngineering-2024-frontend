@@ -66,4 +66,26 @@ describe("FridgeService", () => {
         expect(ProductsService.getProductIdByName).toHaveBeenCalledWith("Two");
     });
 
+    test("getFridgeContent handles missing product ID", async () => {
+        // Mock the fetch call for fridge content
+        (fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+            json: async () => mockFridgeContentResponse,
+        });
+
+        // Mock the product ID lookup for "One"
+        (ProductsService.getProductIdByName as jest.Mock).mockResolvedValueOnce({
+            id: 0,
+            productName: "One",
+        });
+
+        // Mock "Two" to return null (indicating no matching product ID found)
+        (ProductsService.getProductIdByName as jest.Mock).mockResolvedValueOnce(null);
+
+        const result = await FridgeService.getFridgeContent(userId);
+
+        // Expect only "One" to be in the result, since "Two" wasn't found
+        expect(result).toEqual([mockNeededProducts[0]]);
+    });
+
 });

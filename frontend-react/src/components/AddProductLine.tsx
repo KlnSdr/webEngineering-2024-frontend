@@ -24,7 +24,7 @@ const AddProductLine: React.FC<AddProductLineProps> = ({
         const neededProduct = getProduct();
         setAmount(neededProduct.amount);
 
-    }, []);
+    }, [getProduct]);
 
   return (
     <Stack direction="horizontal">

@@ -109,4 +109,20 @@ describe("FridgeService", () => {
         });
     });
 
+    test("deleteFridgeProduct successfully deletes a product from the fridge", async () => {
+        const productId = 0;
+
+        (fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+        });
+
+        await FridgeService.deleteFridgeProduct(userId, productId);
+
+        expect(fetch).toHaveBeenCalledTimes(1);
+        expect(fetch).toHaveBeenCalledWith(`http://localhost:13000/fridge/${userId}/product/${productId}`, {
+            method: "DELETE",
+            credentials: "include",
+        });
+    });
+
 });

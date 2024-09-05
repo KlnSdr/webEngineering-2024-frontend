@@ -43,6 +43,34 @@ class FridgeService {
         });
     }
 
+    public static updateFridgeContent(userId: number, products: NeededProduct[]): Promise<void> {
+        return new Promise((resolve, reject) => {
+            // Convert the products array to a map
+            const productsMap: Record<string, number> = {};
+            products.forEach((product) => {
+                productsMap[product.productName] = product.amount;
+            });
+
+            fetch(`${this.backendURL}/fridge/${userId}`, {
+                method: "PUT",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ userUri: `/users/${userId}`, products: productsMap }),
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Failed to update fridge content.");
+                    }
+                    resolve();
+                })
+                .catch((reason: any) => {
+                    reject(reason);
+                });
+        });
+    }
+
 }
 
 export { FridgeService };

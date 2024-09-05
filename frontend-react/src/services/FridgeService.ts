@@ -26,8 +26,8 @@ class FridgeService {
                         const productId = await ProductsService.getProductIdByName(productName);
                         if (productId !== null) {
                             products.push({
-                                id: productId,
-                                productName,
+                                id: productId.id,
+                                productName: productId.productName,
                                 amount,
                             });
                         } else {
@@ -43,51 +43,6 @@ class FridgeService {
         });
     }
 
-    public static updateFridgeContent(userId: number, products: NeededProduct[]): Promise<void> {
-        return new Promise((resolve, reject) => {
-            // Convert the products array to a map
-            const productsMap: Record<string, number> = {};
-            products.forEach((product) => {
-                productsMap[product.productName] = product.amount;
-            });
-
-            fetch(`${this.backendURL}/fridge/${userId}`, {
-                method: "PUT",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ userUri: `/users/${userId}`, products: productsMap }),
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error("Failed to update fridge content.");
-                    }
-                    resolve();
-                })
-                .catch((reason: any) => {
-                    reject(reason);
-                });
-        });
-    }
-
-    public static deleteFridgeProduct(userId: number, productId: number): Promise<void> {
-        return new Promise((resolve, reject) => {
-            fetch(`${this.backendURL}/fridge/${userId}/product/${productId}`, {
-                method: "DELETE",
-                credentials: "include",
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error("Failed to delete product from fridge.");
-                    }
-                    resolve();
-                })
-                .catch((reason: any) => {
-                    reject(reason);
-                });
-        });
-    }
 }
 
 export { FridgeService };

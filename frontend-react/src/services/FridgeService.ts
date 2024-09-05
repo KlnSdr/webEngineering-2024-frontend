@@ -71,6 +71,23 @@ class FridgeService {
         });
     }
 
+    public static deleteFridgeProduct(userId: number, productId: number): Promise<void> {
+        return new Promise((resolve, reject) => {
+            fetch(`${this.backendURL}/fridge/${userId}/product/${productId}`, {
+                method: "DELETE",
+                credentials: "include",
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Failed to delete product from fridge.");
+                    }
+                    resolve();
+                })
+                .catch((reason: any) => {
+                    reject(reason);
+                });
+        });
+    }
 }
 
 export { FridgeService };

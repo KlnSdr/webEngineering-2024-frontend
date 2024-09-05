@@ -115,7 +115,7 @@ class RecipeService {
         });
     }
 
-    public static updateRecipe(recipe: Recipe): Promise<void> {
+    public static updateRecipe(recipe: Recipe): Promise<Recipe> {
         return new Promise((resolve, reject) => {
             fetch(`${this.backendURL}/recipes/${recipe.id}`, {
                 method: "PUT",
@@ -130,7 +130,7 @@ class RecipeService {
                 }
                 return response.json();
             }).then((data: any) => {
-                resolve();
+                resolve(data);
             })
                 .catch((reason: any) => {
                     reject(reason);

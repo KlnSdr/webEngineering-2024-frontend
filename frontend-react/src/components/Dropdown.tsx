@@ -5,11 +5,10 @@ interface DropdownProps {
     initialValue: string,
     onChange: (value: string) => void,
 }
-
 const Dropdown: React.FC<DropdownProps> = ({
                                                options,
                                                initialValue,
-                                               onChange
+                                               onChange,
                                            }) => {
     const [value, setValue] = useState(initialValue);
     return (

@@ -72,7 +72,9 @@ function SearchView() {
                 onChange={(prod: string, amount: number) => handleProductChange(index, prod, amount)}
                 onRemove={() => handleRemoveProduct(index)}
                 getUnitOf={getUnitOfProduct}
-            />
+                getProduct={() => {
+                    return product;
+                }}/>
         ));
     };
 

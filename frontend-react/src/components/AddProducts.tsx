@@ -22,6 +22,7 @@ const AddProducts: React.FC<AddProductsProps> = ({
   };
 
   useEffect(() => {
+    console.log("initialValue", initialValue);
     setNeededProducts(initialValue);
   }, [initialValue]);
 
@@ -54,6 +55,9 @@ const AddProducts: React.FC<AddProductsProps> = ({
             key={product.id}
             products={availableProducts.map((prod: Product) => prod.name)}
             initialValue={product.productName}
+            getProduct={() => {
+                return product;
+            }}
             onChange={(prod: string, amount: number) => {
               updateNeededProduct(index, prod, amount);
             }}

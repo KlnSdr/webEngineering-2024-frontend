@@ -81,10 +81,9 @@ if (recipe)
     setShowFailAlert(true);
     setTimeout(() => setShowFailAlert(false), popUpTimeout);
   };
-
   const saveRecipe = () => {
-      if(!recipe){
     if (validate()) {
+        if(!recipe){
         const newRecipe: CreateRecipe = {
             ...state,
             products: state.products.map((product: NeededProduct) => {
@@ -102,10 +101,7 @@ if (recipe)
           console.log(reason);
           showPopUpFail();
         });
-    } else {
-      showPopUpFail();
-    }
-        }else{
+        } else{
           const updatedRecipe: Recipe = {
                 id: recipe!.id,
                 title: state.title,
@@ -122,16 +118,18 @@ if (recipe)
               ownerUri: recipe!.ownerUri,
               likedByUserUris: recipe!.likedByUserUris
           };
-            RecipeService.updateRecipe(updatedRecipe).then((_) => {
-                    showPopUpSuccess();
+            RecipeService.updateRecipe(updatedRecipe).then((updatedRecipe: Recipe) => {
+                navigate(`/recipe/view/${updatedRecipe.id}`);
                 })
                 .catch((reason: any) => {
                     console.log(reason);
                     showPopUpFail();
                 });
-      }
-  };
-
+        }
+    } else {
+        showPopUpFail();
+    }
+    }
 
   return (
     <div className="createRecipeView">

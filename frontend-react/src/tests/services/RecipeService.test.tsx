@@ -25,7 +25,7 @@ describe("RecipeService", () => {
 
   const mockCreateRecipe = {
     title: "Test Recipe",
-    imgUri: "https://upload.wikimedia.org/wikipedia/commons/3/36/HD_189733b.jpg",
+    imgUri: "data:image/png;base64,testImage",
     description: "Test description",
     isPrivate: false,
     productUris: ["/products/1", "/products/2"],
@@ -93,6 +93,7 @@ describe("RecipeService", () => {
       body: JSON.stringify({
         ...mockCreateRecipe,
         title: "Recipe with No Image",
+        imgUri: null,
         description: "Description with no image",
         productUris: ["/products/3"],
         productQuantities: {
@@ -127,6 +128,7 @@ describe("RecipeService", () => {
       body: JSON.stringify({
         ...mockCreateRecipe,
         title: "A".repeat(1000),
+        imgUri: "data:image/png;base64," + "B".repeat(1000),
         description: "C".repeat(1000),
         productUris: Array(1000).fill("/products/1"),
         productQuantities: Array(1000).fill(1).reduce((obj, _, i) => {

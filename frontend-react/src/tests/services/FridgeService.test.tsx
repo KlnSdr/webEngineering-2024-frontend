@@ -125,4 +125,15 @@ describe("FridgeService", () => {
         });
     });
 
+    test("getFridgeContent throws an error when fetching fails", async () => {
+        // Mock fetch to return a failed response
+        (fetch as jest.Mock).mockResolvedValueOnce({
+            ok: false,
+        });
+
+        await expect(FridgeService.getFridgeContent(userId)).rejects.toThrow(
+            "Failed to load fridge content."
+        );
+    });
+
 });

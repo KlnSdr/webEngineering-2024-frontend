@@ -136,4 +136,14 @@ describe("FridgeService", () => {
         );
     });
 
+    test("updateFridgeContent throws an error when updating fails", async () => {
+        (fetch as jest.Mock).mockResolvedValueOnce({
+            ok: false,
+        });
+
+        await expect(FridgeService.updateFridgeContent(userId, mockNeededProducts)).rejects.toThrow(
+            "Failed to update fridge content."
+        );
+    });
+
 });

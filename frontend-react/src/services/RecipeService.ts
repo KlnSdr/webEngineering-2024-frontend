@@ -20,7 +20,7 @@ class RecipeService {
                 },
                 body: JSON.stringify({
             title: recipe.title,
-            imgUri: "https://upload.wikimedia.org/wikipedia/commons/3/36/HD_189733b.jpg",
+            imgUri: recipe.image,
             description: recipe.description,
             isPrivate: false,
             productUris: recipe.products.map((product) => `/products/${product.id}`),
@@ -117,13 +117,25 @@ class RecipeService {
 
     public static updateRecipe(recipe: Recipe): Promise<Recipe> {
         return new Promise((resolve, reject) => {
+            const quantityMap: { [key: string]: number } = {};
+            recipe.products.forEach((product) => {
+                quantityMap[`/products/${product.id}`] = product.amount;
+            });
             fetch(`${this.backendURL}/recipes/${recipe.id}`, {
                 method: "PUT",
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(recipe),
+                body: JSON.stringify({
+                    id: recipe.id,
+                    title: recipe.title,
+                    imgUri: recipe.imgUri,
+                    description: recipe.description,
+                    isPrivate: false,
+                    productUris: recipe.products.map((product) => `/products/${product.id}`),
+                    productQuantities: quantityMap
+                }),
             }).then((response: Response) => {
                 if (!response.ok) {
                     throw new Error("Failed to update recipe.");

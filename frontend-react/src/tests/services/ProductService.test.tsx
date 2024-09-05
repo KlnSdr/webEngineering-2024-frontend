@@ -89,4 +89,18 @@ describe("ProductsService", () => {
     expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products");
   });
 
+  test("getProductIdByName returns null when the product name does not exist", async () => {
+    // Mocking getAll() to return mockProducts
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockProducts,
+    });
+
+    const result = await ProductsService.getProductIdByName("Unknown");
+
+    expect(result).toBeNull();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products");
+  });
+
 });

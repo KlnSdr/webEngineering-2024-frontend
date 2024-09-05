@@ -116,5 +116,16 @@ describe("ProductsService", () => {
     expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products");
   });
 
+  test("getProductIdByName throws an error if fetch rejects", async () => {
+    // Mock a network error (fetch rejects)
+    const mockError = new Error("Network Error");
+    (fetch as jest.Mock).mockRejectedValueOnce(mockError);
+
+    await expect(ProductsService.getProductIdByName("One")).rejects.toThrow(
+        mockError
+    );
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products");
+  });
 
 });

@@ -42,7 +42,7 @@ const AddProductLine: React.FC<AddProductLineProps> = ({
         }}
         className="form-control"
       />
-      <label>{unit}</label>
+      <label>{unit || getUnitOf(product)}</label>
       <Button
         onClick={() => {
           onRemove();

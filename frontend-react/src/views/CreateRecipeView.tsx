@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import AddProducts from "../components/AddProducts";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
@@ -34,12 +34,12 @@ if (recipe)
         productName: product.name,
         amount: product.amount
     }));
-    console.log("Empty Recipe", emptyRecipe);
 }
   const popUpTimeout: number = parseInt(process.env.REACT_APP_POPUP_TIMEOUT || "5000");
   const [showFailAlert, setShowFailAlert] = useState(false);
   const [state, setState] = useState(emptyRecipe);
   const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
+
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -85,6 +85,7 @@ if (recipe)
   };
 
   const saveRecipe = () => {
+      if(!recipe){
     if (validate()) {
         const newRecipe: CreateRecipe = {
             ...state,
@@ -106,7 +107,35 @@ if (recipe)
     } else {
       showPopUpFail();
     }
+        }else{
+          const updatedRecipe: Recipe = {
+                id: recipe!.id,
+                title: state.title,
+                imgUri: state.image || "",
+                description: state.description,
+                products: state.products.map((product) => ({
+                    id: product.id,
+                    name: product.productName,
+                    amount: product.amount,
+                    unit: availableProducts.find((prod: Product) => prod.id === product.id)?.unit || ""
+                })),
+              isPrivate: recipe!.isPrivate,
+              creationDate: recipe!.creationDate,
+              ownerUri: recipe!.ownerUri,
+              likedByUserUris: recipe!.likedByUserUris
+          };
+          console .log("Updated Recipe", updatedRecipe);
+            RecipeService.updateRecipe(updatedRecipe)
+                .then((_) => {
+                    showPopUpSuccess();
+                })
+                .catch((reason: any) => {
+                    console.log(reason);
+                    showPopUpFail();
+                });
+      }
   };
+
 
   return (
     <div className="createRecipeView">
@@ -126,14 +155,14 @@ if (recipe)
           setState({ ...state, title: val });
         }}
       />
-        <LabelInput labelText="Bild Url" initialValue=""
+        <LabelInput labelText="Bild Url" initialValue={state.image || ""}
                     onChange={(val: string) => {
                         setState({ ...state, image: val });
                     }}/>
         {state.image ? <ImageUrl url={state.image} /> : null}
         <Heading headingText="Zutaten" />
       <AddProducts
-        initialValue={state.products}
+          initialValue={state.products}
         onChange={(products: NeededProduct[]) => {
           setState({ ...state, products: products });
         }}
@@ -160,8 +189,11 @@ if (recipe)
           speichern
         </Button>
       </Stack>
+
     </div>
   );
+
+
 }
 
 export default CreateRecipeView;

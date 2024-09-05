@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import AddProducts from "../components/AddProducts";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
@@ -14,8 +14,6 @@ import Stack from "react-bootstrap/Stack";
 import { RecipeService } from "../services/RecipeService";
 import {UserService} from "../services/UserService";
 import {useNavigate} from "react-router-dom";
-
-
 
 function CreateRecipeView ({recipe}: {recipe: Recipe | null}) {
     const emptyRecipe: CreateRecipe = {
@@ -125,8 +123,7 @@ if (recipe)
               likedByUserUris: recipe!.likedByUserUris
           };
           console .log("Updated Recipe", updatedRecipe);
-            RecipeService.updateRecipe(updatedRecipe)
-                .then((_) => {
+            RecipeService.updateRecipe(updatedRecipe).then((_) => {
                     showPopUpSuccess();
                 })
                 .catch((reason: any) => {

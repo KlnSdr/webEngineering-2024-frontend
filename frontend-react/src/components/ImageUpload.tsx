@@ -6,10 +6,7 @@ interface ImageUploadProps {
   onChange: (img: string | null) => void;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({
-  initialValue,
-  onChange,
-}) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({initialValue, onChange,}) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   useEffect(() => {

@@ -11,6 +11,7 @@ interface Product {
 }
 
 interface DetailedProduct {
+    id: number;
     name: string;
     amount: number;
     unit: string;

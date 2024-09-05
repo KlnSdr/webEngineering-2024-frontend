@@ -41,6 +41,7 @@ function RecipeDetailView() {
                         const productId: number = parseInt(key.replace("/products/", ""));
                         const productDetail: Product | undefined = productDetails.find((val: Product) => val.id === productId);
                         return {
+                            id: productId,
                             name: productDetail?.name || "---",
                             amount: data.productQuantities[key],
                             unit: productDetail?.unit || "---"

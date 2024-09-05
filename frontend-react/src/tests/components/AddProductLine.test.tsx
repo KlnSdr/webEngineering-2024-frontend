@@ -23,6 +23,7 @@ describe("AddProductLine Component", () => {
     const products = ["Product 1", "Product 2", "Product 3"];
     const initialValue = "Product 1";
     const getUnitOf = (product: string) => (product === "Product 1" ? "kg" : "ltr");
+    const getProduct = () => ({id: 1, productName: "Product 1", amount: 0 });
 
     test("renders with initial values", () => {
         const handleChange = jest.fn();
@@ -35,7 +36,7 @@ describe("AddProductLine Component", () => {
                 onChange={handleChange}
                 onRemove={handleRemove}
                 getUnitOf={getUnitOf}
-            />
+                getProduct={getProduct}/>
         );
 
         expect(screen.getByTestId("dropdown")).toHaveValue(initialValue);
@@ -54,6 +55,7 @@ describe("AddProductLine Component", () => {
                 onChange={handleChange}
                 onRemove={handleRemove}
                 getUnitOf={getUnitOf}
+                getProduct={getProduct}
             />
         );
 
@@ -76,6 +78,7 @@ describe("AddProductLine Component", () => {
                 onChange={handleChange}
                 onRemove={handleRemove}
                 getUnitOf={getUnitOf}
+                getProduct={getProduct}
             />
         );
 
@@ -97,6 +100,7 @@ describe("AddProductLine Component", () => {
                 onChange={handleChange}
                 onRemove={handleRemove}
                 getUnitOf={getUnitOf}
+                getProduct={getProduct}
             />
         );
 

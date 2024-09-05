@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import Dropdown from "./Dropdown";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
+import {NeededProduct} from "../types/Products";
 
 interface AddProductLineProps {
   products: string[];
@@ -9,18 +10,21 @@ interface AddProductLineProps {
   onChange: (product: string, amount: number) => void;
   onRemove: () => void;
   getUnitOf: (product: string) => string;
+  getProduct: () => NeededProduct
 }
 
 const AddProductLine: React.FC<AddProductLineProps> = ({
-  products,
-  initialValue,
-  onChange,
-  onRemove,
-  getUnitOf,
+  products, initialValue, getProduct, onChange, onRemove, getUnitOf,
 }) => {
   const [unit, setUnit] = useState(getUnitOf(initialValue));
   const [amount, setAmount] = useState(0);
   const [product, setProduct] = useState(initialValue);
+
+    useEffect(() => {
+        const neededProduct = getProduct();
+        setAmount(neededProduct.amount);
+
+    }, [getProduct]);
 
   return (
     <Stack direction="horizontal">
@@ -42,7 +46,7 @@ const AddProductLine: React.FC<AddProductLineProps> = ({
         }}
         className="form-control"
       />
-      <label>{unit}</label>
+      <label>{unit || getUnitOf(product)}</label>
       <Button
         onClick={() => {
           onRemove();

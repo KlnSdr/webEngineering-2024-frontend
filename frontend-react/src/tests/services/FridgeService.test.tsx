@@ -146,4 +146,15 @@ describe("FridgeService", () => {
         );
     });
 
+    test("deleteFridgeProduct throws an error when deleting fails", async () => {
+        const productId = 0;
+
+        (fetch as jest.Mock).mockResolvedValueOnce({
+            ok: false,
+        });
+
+        await expect(FridgeService.deleteFridgeProduct(userId, productId)).rejects.toThrow(
+            "Failed to delete product from fridge."
+        );
+    });
 });

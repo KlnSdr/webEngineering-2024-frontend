@@ -19,7 +19,7 @@ class ProductsService {
         });
     });
   }
-
+  
   //get Id from product
     public static getProductIdByName(productName: string): Promise<NeededProduct | null> {
         return this.getAll().then(products => {

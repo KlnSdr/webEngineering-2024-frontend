@@ -69,4 +69,24 @@ describe("ProductsService", () => {
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products");
   });
+
+  // Tests for getProductIdByName
+  test("getProductIdByName returns the correct product when name exists", async () => {
+    // Mocking getAll() to return mockProducts
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockProducts,
+    });
+
+    const result = await ProductsService.getProductIdByName("One");
+
+    expect(result).toEqual({
+      id: 0,
+      productName: "One",
+      amount: 0,
+    });
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products");
+  });
+
 });

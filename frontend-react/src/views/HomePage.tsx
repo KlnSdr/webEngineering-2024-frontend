@@ -9,14 +9,20 @@ import Stack from "react-bootstrap/Stack";
 import {Link} from "react-router-dom";
 import {ProductsService} from "../services/ProductService";
 import {NeededProduct, Product} from "../types/Products";
-import Heading, {Heading2} from "../components/Heading";
+import {Heading2} from "../components/Heading";
 import Button from "react-bootstrap/Button";
-import AddProductLine from "../components/AddProductLine";
+import {FridgeService} from "../services/FridgeService";
+import {UserService} from "../services/UserService";
+import {Table} from "react-bootstrap";
+
 
 function HomePage() {
-  const [myRecipes, setMyRecipe] = useState<Recipe[]>([]);
-  const [productsData, setProductsData] = useState<Product[]>([]);
-  const [neededProducts, setNeededProducts] = useState<NeededProduct[]>([]);
+    const [myRecipes, setMyRecipe] = useState<Recipe[]>([]);
+    const [productsData, setProductsData] = useState<Product[]>([]);
+    const [fridgeProducts, setFridgeProducts] = useState<NeededProduct[]>([]);
+    const [tempProducts, setTempProducts] = useState<NeededProduct[]>([]);
+    const [userId, setUserId] = useState<number | null>(null);
+
 
     // Fetch recipes
     useEffect(() => {
@@ -37,7 +43,22 @@ function HomePage() {
         });
     }, []);
 
+    // Fetch user and fridge content
     useEffect(() => {
+        UserService.getUserInfo()
+            .then((userInfo) => {
+                if (userInfo && userInfo.id) {
+                    setUserId(userInfo.id);
+                    return FridgeService.getFridgeContent(userInfo.id);
+                }
+                throw new Error("User not found");
+            })
+            .then((products) => {
+                setFridgeProducts(products); // Initialize with existing fridge content
+            })
+            .catch((error) => {
+                console.error("Failed to load fridge content:", error);
+            })
     RecipeService.getRecipeById("1").then((recipes) => {
         if (recipes) {
             console.log("Recipes", recipes);
@@ -49,78 +70,137 @@ function HomePage() {
     }, []);
 
     const handleProductChange = (index: number, product: string, amount: number) => {
-        const updatedProducts = [...neededProducts];
-        updatedProducts[index] = { id: index, productName: product, amount: amount };
-        setNeededProducts(updatedProducts);
+        const updatedProducts = [...tempProducts];
+        updatedProducts[index] = { ...updatedProducts[index], productName: product, amount: amount };
+        setTempProducts(updatedProducts);
     };
 
     const handleRemoveProduct = (index: number) => {
-        const filteredProducts = neededProducts.filter((_, i) => i !== index);
-        setNeededProducts(filteredProducts);
-    };
-
-    const getUnitOfProduct = (product: string): string => {
-        return productsData.find((prod: Product) => prod.name === product)?.unit || "";
+        const updatedProducts = tempProducts.filter((_, i) => i !== index);
+        setTempProducts(updatedProducts);
     };
 
     const addProduct = () => {
-        const emptyNeededProduct: NeededProduct = {
-            id: Date.now(),
-            productName: productsData.length > 0 ? productsData[0].name : "",
-            amount: 0,
-        };
-
-        setNeededProducts([...neededProducts, emptyNeededProduct]);
+        const defaultProduct = productsData.length > 0 ? productsData[0].name : "";
+        setTempProducts([...tempProducts, { id: Date.now(), productName: defaultProduct, amount: 0 }]);
     };
 
-    // Save the products in the fridge
     const saveAllProducts = () => {
-        const productsToSave = neededProducts.filter(product => product.amount > 0);
+        if (userId === null) return;
+
+        FridgeService.updateFridgeContent(userId, tempProducts)
+            .then(() => {
+                setFridgeProducts(tempProducts);
+                alert("Fridge updated successfully!");
+            })
+            .catch((error) => {
+                console.error("Failed to update fridge content:", error);
+                alert("Failed to update fridge. Please try again.");
+            });
     };
 
-        const renderProductLines = () => {
-        return neededProducts.map((product, index) => (
-            <div key={index} className="product-line">
-                <AddProductLine
-                    key={index}
-                    products={productsData.map((prod: Product) => prod.name)}
-                    initialValue={product.productName}
-                    onChange={(prod: string, amount: number) => handleProductChange(index, prod, amount)}
-                    onRemove={() => handleRemoveProduct(index)}
-                    getUnitOf={getUnitOfProduct}
-                />
-            </div>
-        ));
+    const deleteProduct = (productId: number) => {
+        if (userId === null) return;
+
+        FridgeService.deleteFridgeProduct(userId, productId)
+            .then(() => {
+                setFridgeProducts(fridgeProducts.filter(product => product.id !== productId));
+                alert("Product removed successfully!");
+            })
+            .catch((error) => {
+                console.error("Failed to delete product from fridge:", error);
+                alert("Failed to remove product. Please try again.");
+            });
     };
+
+    const renderFridgeContent = () =>
+        fridgeProducts.map((product, index) => (
+            <li key={index}>
+                {product.productName}: {product.amount}{" "}
+                {productsData.find((p) => p.name === product.productName)?.unit || ""}
+            </li>
+        ));
+
+    const renderProductLines = () =>
+        tempProducts.map((product, index) => (
+            <tr key={product.id}>
+                <td>
+                    <select
+                        value={product.productName}
+                        onChange={(e) => handleProductChange(index, e.target.value, product.amount)}
+                    >
+                        {productsData.map((prod) => (
+                            <option key={prod.id} value={prod.name}>
+                                {prod.name}
+                            </option>
+                        ))}
+                    </select>
+                </td>
+                <td>
+                    <input
+                        type="number"
+                        value={product.amount}
+                        onChange={(e) => handleProductChange(index, product.productName, parseFloat(e.target.value))}
+                    />{" "}
+                    {productsData.find((p) => p.name === product.productName)?.unit || ""}
+                </td>
+                <td>
+                    <Button variant="danger" onClick={() => deleteProduct(product.id)}>
+                        Löschen
+                    </Button>
+                </td>
+                <td>
+                    <Button variant="outline-danger" onClick={() => handleRemoveProduct(index)}>
+                        X
+                    </Button>
+                </td>
+            </tr>
+        ));
 
 
     const realPage = myRecipes.map((recipe, index) => (
-    <div key={index} className="RowArea ">
-        <Stack direction={"horizontal"}>
-            <ImageArea
-                origin="https://www.gluthelden.de/wp-content/uploads/2018/06/K%C3%A4seso%C3%9Fe-.jpg"/>
+        <div key={index} className="RowArea ">
+            <Stack direction={"horizontal"}>
+                <ImageArea
+                    origin="https://www.gluthelden.de/wp-content/uploads/2018/06/K%C3%A4seso%C3%9Fe-.jpg"/>
             <Link to={`/recipe/view/${recipe.id}`}> <MyRecipeBar Recipe={recipe}/></Link>
             <EditButton Recipe={recipe}/>
         </Stack>
     </div>
     ));
+
     return (
     <div><h1>Meine Rezepte</h1>
         {realPage}
 
-        <Heading2 headingText="Mein Kühlschrank"/>
+        <Heading2 headingText="Mein Kühlschrank" />
 
-        {renderProductLines()}
-
-        <Stack gap={2} className="col-md-4 mx-auto">
-            <Button onClick={addProduct} className="bi bi-plus">
+        <Stack gap={2} className="col-md-4 mx-auto mt-3">
+            <Button onClick={addProduct} variant="success">
                 Produkt hinzufügen
             </Button>
 
-            <Button onClick={saveAllProducts} className="save-button">
+            <Button onClick={saveAllProducts} variant="primary">
                 Speichern
             </Button>
         </Stack>
+
+        <Table striped bordered hover className="mt-3">
+            <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Menge</th>
+                <th>Löschen</th>
+                <th>Zeile entfernen</th>
+            </tr>
+            </thead>
+            <tbody>{renderProductLines()}</tbody>
+        </Table>
+
+        <Heading2 headingText="Kühlschrank Inhalt:" />
+        <ul>
+            {renderFridgeContent()}
+        </ul>
     </div>
     if (myRecipes.length === 0) {
         return <div>Loading...</div>;

@@ -24,6 +24,36 @@ class FridgeService {
             throw error;
         }
     }
+
+    public static async updateFridgeContent(userId: number, products: NeededProduct[]): Promise<void> {
+        try {
+            // Convert the products array into a list of FridgeAddItemDTO objects
+            const payload = products.map(product => ({
+                productID: product.id,
+                quantity: product.amount
+            }));
+
+            console.log("Payload for update:", JSON.stringify(payload, null, 2));
+
+            const response = await fetch(`${this.backendURL}/fridge/${userId}`, {
+                method: "PUT",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload), // Send the list of FridgeAddItemDTO objects
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Error response body:", errorData);
+                throw new Error(`Failed to update fridge content. ${errorData.error || ''}`);
+            }
+        } catch (error) {
+            console.error("Error updating fridge content:", error);
+            throw error;
+        }
+    }
 }
 
 export { FridgeService };

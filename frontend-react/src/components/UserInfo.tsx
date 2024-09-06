@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import { Overlay } from "react-bootstrap";
 import "../style/UserInfo.css";
 import { UserService } from "../services/UserService";
+import {CurrentUser} from "../types/Users";
 
 const UserInfo = () => {
   const [image, setImage] = useState(
@@ -16,12 +17,11 @@ const UserInfo = () => {
 
   useEffect(() => {
     UserService.getUserInfo()
-      .then((data: any) => {
-        console.log(data);
-        if(data.principal.principal.attributes.avatar_url !== null) {
-            setImage(data.principal.principal.attributes.avatar_url);
+      .then((data: CurrentUser) => {
+        if(data.profileImage !== null) {
+            setImage(data.profileImage);
         }
-        setDisplayName(data.internalUser.userName);
+        setDisplayName(data.username);
       })
       .catch((_) => {
         // todo

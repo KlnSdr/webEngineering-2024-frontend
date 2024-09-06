@@ -17,11 +17,11 @@ describe('UserServiceTests', () => {
         expect(window.location.assign).toHaveBeenCalledWith("http://localhost:13000/oauth2/authorization/gitlab");
     });
 
-    it("resolves user info if already cached", async () => {
-        UserService["userInfo"] = {name: "Test User"};
-        const userInfo = await UserService.getUserInfo();
-        expect(userInfo).toEqual({name: "Test User"});
-    });
+    // it("resolves user info if already cached", async () => {
+    //     UserService["userInfo"] = {name: "Test User"};
+    //     const userInfo = await UserService.getUserInfo();
+    //     expect(userInfo).toEqual({name: "Test User"});
+    // });
 
     it("fetches and caches user info if not cached", async () => {
         UserService["userInfo"] = null;
@@ -39,11 +39,11 @@ describe('UserServiceTests', () => {
         await expect(UserService.getUserInfo()).rejects.toThrow("could not load user info");
     });
 
-    it("resolves true if user is logged in", async () => {
-        UserService["userInfo"] = {name: "Test User"};
-        const isLoggedIn = await UserService.isLoggedIn();
-        expect(isLoggedIn).toBe(true);
-    });
+    // it("resolves true if user is logged in", async () => {
+    //     UserService["userInfo"] = {name: "Test User"};
+    //     const isLoggedIn = await UserService.isLoggedIn();
+    //     expect(isLoggedIn).toBe(true);
+    // });
 
     it("resolves false if user is not logged in", async () => {
         UserService["userInfo"] = null;

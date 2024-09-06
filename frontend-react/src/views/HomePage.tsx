@@ -59,6 +59,15 @@ function HomePage() {
                 throw new Error("User not found");
             })
             .then((products) => {
+                console.log("Fetched fridge products:", products);
+                // Transform fetched products to match NeededProduct format
+                const updatedFridgeProducts = products.map((product: any) => ({
+                    id: product.id,
+                    productName: product.name,
+                    amount: product.quantity,
+                }));
+                // Initialize with existing fridge content
+                setFridgeProducts(updatedFridgeProducts);
                 setFridgeProducts(products); // Initialize with existing fridge content
             })
             .catch((error) => {
@@ -75,10 +84,15 @@ function HomePage() {
     });
     }, []);
 
-    const handleProductChange = (index: number, product: string, amount: number) => {
+
+    const handleProductChange = (index: number, productName: string, amount: number) => {
+        const productId = productsData.find(p => p.name === productName)?.id;
         const updatedProducts = [...tempProducts];
-        updatedProducts[index] = { ...updatedProducts[index], productName: product, amount: amount };
-        setTempProducts(updatedProducts);
+        if (productId !== undefined) {
+            updatedProducts[index] = { ...updatedProducts[index], id: productId, productName, amount };
+            setTempProducts(updatedProducts);
+        }
+        console.log("temp Products:", tempProducts);
     };
 
     const handleRemoveProduct = (index: number) => {
@@ -87,12 +101,44 @@ function HomePage() {
     };
 
     const addProduct = () => {
-        const defaultProduct = productsData.length > 0 ? productsData[0].name : "";
-        setTempProducts([...tempProducts, { id: Date.now(), productName: defaultProduct, amount: 0 }]);
+        console.log("temp Products:", tempProducts);
+        const defaultProduct = productsData.length > 0 ? productsData[0] : null;
+        if (defaultProduct) {
+            setTempProducts([
+                ...tempProducts,
+                { id: defaultProduct.id, productName: defaultProduct.name, amount: 0 }
+            ]);
+        }
     };
 
-    const saveAllProducts = () => {
+    const saveAllProducts = async () => {
         if (userId === null) return;
+
+        // Filter out products with an amount of 0
+        const filteredProducts = tempProducts.filter(product => product.amount > 0);
+
+        try {
+            // Update fridge content
+            await FridgeService.updateFridgeContent(userId, filteredProducts);
+
+            // Fetch the updated fridge content
+            const fetchedProducts = await FridgeService.getFridgeContent(userId);
+
+            // Transform fetched products to match NeededProduct format
+            const updatedFridgeProducts = fetchedProducts.map((product: any) => ({
+                id: product.id,
+                productName: product.name,
+                amount: product.quantity,
+            }));
+
+            console.log("nachUpdate:", updatedFridgeProducts);
+            // Update state with the latest fridge content
+            setFridgeProducts(updatedFridgeProducts);
+            alert("Fridge updated successfully!");
+        } catch (error) {
+            console.error("Failed to update fridge content:", error);
+            alert("Failed to update fridge. Please try again.");
+        }
         FridgeService.updateFridgeContent(userId, tempProducts)
             .then(() => {
                 setFridgeProducts(tempProducts);
@@ -104,18 +150,29 @@ function HomePage() {
             });
     };
 
-    const deleteProduct = (productId: number) => {
+    const deleteProduct = async (productId: number) => {
         if (userId === null) return;
 
-        FridgeService.deleteFridgeProduct(userId, productId)
-            .then(() => {
-                setFridgeProducts(fridgeProducts.filter(product => product.id !== productId));
-                alert("Product removed successfully!");
-            })
-            .catch((error) => {
-                console.error("Failed to delete product from fridge:", error);
-                alert("Failed to remove product. Please try again.");
-            });
+        try {
+            // Attempt to delete the product using productId
+            await FridgeService.deleteFridgeProduct(userId, productId);
+
+            // Fetch the updated fridge content
+            const updatedProducts = await FridgeService.getFridgeContent(userId);
+
+            // Update the fridgeProducts state with the new content
+            const updatedFridgeProducts = updatedProducts.map((product: any) => ({
+                id: product.id,
+                productName: product.name,
+                amount: product.quantity,
+            }));
+            setFridgeProducts(updatedFridgeProducts);
+
+            alert("Product removed successfully!");
+        } catch (error) {
+            console.error("Failed to delete product from fridge:", error);
+            alert("Failed to remove product. Please try again.");
+        }
     };
 
     const renderFridgeContent = () =>
@@ -161,7 +218,6 @@ function HomePage() {
                 </td>
             </tr>
         ));
-
 
     const realPage = myRecipes.map((recipe, index) => (
         <div key={index} className="RowArea ">
@@ -209,7 +265,6 @@ function HomePage() {
                     <li key={index}>
                         {product.productName}: {product.amount}{" "}
                         {productsData?.find((p) => p.name === product.productName)?.unit || ""}
-
                     </li>
                 );
             })}

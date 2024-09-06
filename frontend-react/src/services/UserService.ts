@@ -1,5 +1,6 @@
 import {CurrentUser, User} from "../types/Users";
 import {jwtDecode} from "jwt-decode";
+import {request} from "./Requests";
 
 class UserService {
   private static backendURL: string =
@@ -29,7 +30,7 @@ class UserService {
 
   static getUser(uri: string): Promise<User> {
       return new Promise((resolve, reject) => {
-          fetch(`${this.backendURL}${uri}`, {})
+          request(`${this.backendURL}${uri}`, {})
           .then(response => {
               if (!response.ok) {
                   throw new Error("could not get user with uri " + uri);

@@ -4,6 +4,7 @@ import {useParams} from "react-router-dom";
 import CreateRecipeView from "./CreateRecipeView";
 import {Product} from "../types/Products";
 import {ProductsService} from "../services/ProductService";
+import {request} from "../services/Requests";
 
 function EditRecipeView() {
     const {id} = useParams<{id:string}>();
@@ -14,7 +15,7 @@ function EditRecipeView() {
         ProductsService.getAll().then((productDetails: Product[]) => {
             (async () => {
                 try {
-                    const response = await fetch(`${backendURL}/recipes/${id}`);
+                    const response = await request(`${backendURL}/recipes/${id}`);
                     if (!response.ok) {
                         throw new Error("Failed to load recipe.");
                     }

@@ -1,4 +1,5 @@
 import { Product } from "../types/Products";
+import {request} from "./Requests";
 
 class ProductsService {
     private static backendURL: string =
@@ -6,7 +7,7 @@ class ProductsService {
 
     public static getAll(): Promise<Product[]> {
         return new Promise((resolve, reject) => {
-            fetch(`${this.backendURL}/products`).then((response: Response) => {
+            request(`${this.backendURL}/products`).then((response: Response) => {
                 if (!response.ok) {
                     throw new Error("Failed to load products.");
                 }

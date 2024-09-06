@@ -17,7 +17,7 @@ import {UserService} from "./services/UserService";
 import SurveyEditView from "./views/SurveyEditView";
 
 function App() {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     useEffect(() => {
         if (searchParams.get('token')) {
@@ -27,7 +27,7 @@ function App() {
         } else {
             localStorage.getItem("token") && UserService.loadUserInfo(localStorage.getItem("token")!);
         }
-    }, []);
+    }, [searchParams]);
 
   return (
     <Routes>

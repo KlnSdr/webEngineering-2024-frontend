@@ -54,6 +54,32 @@ class FridgeService {
             throw error;
         }
     }
+
+    public static async deleteFridgeProduct(userId: number, productId: number): Promise<void> {
+        try {
+            const payload = {
+                userId: userId,
+                productId: productId,
+            };
+
+            const response = await fetch(`${this.backendURL}/fridge/${userId}/${productId}`, {
+                method: "DELETE",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload), // Send only userId and productId as part of the request
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`Failed to delete product from fridge: ${errorData.error || response.statusText}`);
+            }
+        } catch (error) {
+            console.error("Error deleting fridge product:", error);
+            throw error;
+        }
+    }
 }
 
 export { FridgeService };

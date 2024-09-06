@@ -47,9 +47,14 @@ function HomePage() {
     useEffect(() => {
         UserService.getUserInfo()
             .then((userInfo) => {
-                if (userInfo && userInfo.id) {
-                    setUserId(userInfo.id);
-                    return FridgeService.getFridgeContent(userInfo.id);
+                console.log("User info:", userInfo);
+
+                // Access userId from internalUser
+                if (userInfo && userInfo.internalUser && userInfo.internalUser.userId) {
+                    const userId = userInfo.internalUser.userId; // Extract userId from internalUser
+                    console.log("User ID:", userId);
+                    setUserId(userId);
+                    return FridgeService.getFridgeContent(userId); // Fetch fridge content using userId
                 }
                 throw new Error("User not found");
             })
@@ -58,6 +63,7 @@ function HomePage() {
             })
             .catch((error) => {
                 console.error("Failed to load fridge content:", error);
+            });
             })
     RecipeService.getRecipeById("1").then((recipes) => {
         if (recipes) {
@@ -87,7 +93,6 @@ function HomePage() {
 
     const saveAllProducts = () => {
         if (userId === null) return;
-
         FridgeService.updateFridgeContent(userId, tempProducts)
             .then(() => {
                 setFridgeProducts(tempProducts);
@@ -199,7 +204,16 @@ function HomePage() {
 
         <Heading2 headingText="Kühlschrank Inhalt:" />
         <ul>
-            {renderFridgeContent()}
+            {fridgeProducts.map((product, index) => {
+                return (
+                    <li key={index}>
+                        {product.productName}: {product.amount}{" "}
+                        {productsData?.find((p) => p.name === product.productName)?.unit || ""}
+
+                    </li>
+                );
+            })}
+
         </ul>
     </div>
     if (myRecipes.length === 0) {

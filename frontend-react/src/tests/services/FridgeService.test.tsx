@@ -54,4 +54,38 @@ describe("FridgeService", () => {
         );
     });
 
+    test("updateFridgeContent successfully updates fridge content", async () => {
+        (fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+        });
+
+        const payload = mockProducts.map(product => ({
+            productID: product.id,
+            quantity: product.amount
+        }));
+
+        await FridgeService.updateFridgeContent(userId, mockProducts);
+
+        expect(fetch).toHaveBeenCalledTimes(1);
+        expect(fetch).toHaveBeenCalledWith(`http://localhost:13000/fridge/${userId}`, {
+            method: "PUT",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+        });
+    });
+
+    test("updateFridgeContent handles update error", async () => {
+        (fetch as jest.Mock).mockResolvedValueOnce({
+            ok: false,
+            json: async () => ({ error: "Update failed" }),
+        });
+
+        await expect(FridgeService.updateFridgeContent(userId, mockProducts)).rejects.toThrow(
+            "Failed to update fridge content. Update failed"
+        );
+    });
+
 });

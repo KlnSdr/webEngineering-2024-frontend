@@ -19,14 +19,6 @@ class ProductsService {
         });
     });
   }
-
-    //get Id from product
-    public static getProductIdByName(productName: string): Promise<NeededProduct | null> {
-        return this.getAll().then(products => {
-            const product = products.find(prod => prod.name.toLowerCase() === productName.toLowerCase());
-            return product ? { id: product.id, productName: product.name, amount: 0 } : null;
-        });
-    }
 }
 
 export { ProductsService };

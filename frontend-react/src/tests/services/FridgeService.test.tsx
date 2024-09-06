@@ -88,4 +88,37 @@ describe("FridgeService", () => {
         );
     });
 
+    test("deleteFridgeProduct successfully deletes a product from the fridge", async () => {
+        const productId = 0;
+
+        (fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+        });
+
+        await FridgeService.deleteFridgeProduct(userId, productId);
+
+        expect(fetch).toHaveBeenCalledTimes(1);
+        expect(fetch).toHaveBeenCalledWith(`http://localhost:13000/fridge/${userId}/${productId}`, {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ userId, productId }), // Note: Typically DELETE requests don't include a body
+        });
+    });
+
+    test("deleteFridgeProduct handles delete error", async () => {
+        const productId = 0;
+
+        (fetch as jest.Mock).mockResolvedValueOnce({
+            ok: false,
+            json: async () => ({ error: "Delete failed" }),
+        });
+
+        await expect(FridgeService.deleteFridgeProduct(userId, productId)).rejects.toThrow(
+            "Failed to delete product from fridge: Delete failed"
+        );
+    });
+
 });

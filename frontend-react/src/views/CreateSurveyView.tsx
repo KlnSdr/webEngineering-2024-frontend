@@ -9,15 +9,21 @@ import RecipeSearch from "../components/RecipeSearch";
 import Heading from "../components/Heading";
 import ImageArea from "../components/ImageArea";
 import MyRecipeBar from "../components/MyRecipeBar";
-import {CreateSurvey, Survey} from "../types/Surveys";
+import {CreateSurvey, Survey, UpdateSurvey} from "../types/Surveys";
 import {Recipe} from "../types/Recipes";
 import Alert from "react-bootstrap/Alert";
 import SurveyService from "../services/SurveyService";
+import {RecipeService} from "../services/RecipeService";
 
-function CreateSurveyView() {
+function CreateSurveyView({survey}: { survey: UpdateSurvey | null}) {
+
     const emptySurvey: CreateSurvey = {
         title: "", options: []
     };
+    if (survey) {
+        emptySurvey.title = survey.title;
+        emptySurvey.options = survey.options;
+    }
     const popUpTimeout: number = parseInt(process.env.REACT_APP_POPUP_TIMEOUT || "5000");
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
     const [showFailAlert, setShowFailAlert] = useState(false);
@@ -54,6 +60,25 @@ function CreateSurveyView() {
         if (!validate()) {
             showPopUpFail();
             return;
+        }
+        if (survey) {
+            const surveyUpdate : Survey={
+                id: survey.id,
+                title: state.title,
+                options: survey.options.map((recipe: any) => `/recipes/${recipe.id}`),
+                creator: survey.creator,
+                creationDate: survey.creationDate,
+                participants: survey.participants,
+                recipeVote: survey.recipeVote
+            }
+            SurveyService.updateSurvey(surveyUpdate)
+                .then((updatedSurvey) => {
+                    window.location.assign(`/survey/view/${updatedSurvey.id}`);
+                })
+                .catch(() => {
+                    showPopUpFail();
+                });
+            return
         }
         SurveyService.createSurvey(state)
             .then((createdSurvey: Survey) => {
@@ -93,19 +118,22 @@ function CreateSurveyView() {
         />
         <RecipeSearch onAdd={addRecipeToOptions}/>
         <Heading headingText={"Rezepte"}/>
-        {state.options.map((recipe, index) => {
-            return (<Stack direction={"horizontal"}>
+        {state.options.map((recipe, index) => (
+            <Stack direction={"horizontal"}>
                 <ImageArea origin={recipe.imgUri}/>
                 <Link to={`/recipe/view/${recipe.id}`}>
                     <MyRecipeBar Recipe={recipe}/>
                 </Link>
                 <Button variant="danger" className={"bi bi-x"} onClick={() => removeFromOptions(index)}></Button>
-            </Stack>);
-        })}
+            </Stack>
+        ))}
         <Stack direction="horizontal">
             <Button
                 variant="secondary"
                 onClick={() => {
+                    if(survey) {
+                        navigate(`/survey/`);
+                    }
                     setState(emptySurvey);
                 }}
                 className="ms-auto"

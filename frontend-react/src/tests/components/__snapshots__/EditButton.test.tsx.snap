@@ -29,18 +29,3 @@ exports[`EditButton Component navigates to the correct URL on click 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`EditButton Component navigates to the correct URL on click 1`] = `
-<DocumentFragment>
-  <div
-    class="EditButton"
-  >
-    <button
-      class="bi bi-pencil btn btn-primary"
-      type="button"
-    >
-       Edit
-    </button>
-  </div>
-</DocumentFragment>
-`;

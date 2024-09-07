@@ -30,12 +30,12 @@ describe("EditButton Component", () => {
         (useNavigate as jest.Mock).mockReturnValue(navigate);
 
 
-        const { asFragment } = render(<EditButton Recipe={recipe} />);
+        const { asFragment } = render(<EditButton Link={"./edit"} />);
 
         const buttonElement = screen.getByRole("button");
         fireEvent.click(buttonElement);
 
-        expect(navigate).toHaveBeenCalledWith("/recipe/edit/1");
+        expect(navigate).toHaveBeenCalledWith("./edit");
         expect(asFragment()).toMatchSnapshot();
     });
 });

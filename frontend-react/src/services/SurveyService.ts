@@ -1,4 +1,4 @@
-import {CreateSurvey, Survey} from "../types/Surveys";
+import {CreateSurvey, Survey, UpdateSurvey} from "../types/Surveys";
 
 class SurveyService {
     private static backendURL: string =
@@ -72,6 +72,28 @@ class SurveyService {
             }).then((response: Response) => {
                 if (!response.ok) {
                     throw new Error("Could not save survey.");
+                }
+                return response.json();
+            }).then((data: Survey) => {
+                resolve(data);
+            }).catch((reason: any) => {
+                reject(reason);
+            });
+        });
+    }
+
+   public static updateSurvey(survey: Survey): Promise<Survey> {
+        return new Promise((resolve, reject) => {
+            fetch(`${this.backendURL}/surveys/${survey.id}`, {
+                method: "PUT",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(survey),
+            }).then((response: Response) => {
+                if (!response.ok) {
+                    throw new Error("Could not update survey.");
                 }
                 return response.json();
             }).then((data: Survey) => {

@@ -12,7 +12,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                                                initialValue,
                                                onChange,
                                            }) => {
-    const [value, setValue] = useState(initialValue);
+    const [_, setValue] = useState(initialValue);
     const [open, setOpen] = useState(false);
     const [filterValue, setFilterValue] = useState(initialValue);
     return (

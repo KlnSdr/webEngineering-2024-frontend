@@ -148,6 +148,39 @@ class RecipeService {
                 });
         });
     }
+
+    public static deleteRecipe(id: number): Promise<void> {
+        return new Promise((resolve, reject) => {
+            authorizedRequest(`${this.backendURL}/recipes/${id}`, {
+                method: "DELETE",
+            }).then((response: Response) => {
+                if (!response.ok) {
+                    throw new Error("Failed to delete recipe.");
+                }
+                resolve();
+            })
+                .catch((reason: any) => {
+                    reject(reason);
+                });
+        });
+    }
+    public static getRecipeByUser(UserId: number): Promise<Recipe[]> {
+        return new Promise((resolve, reject) => {
+            authorizedRequest(`${this.backendURL}/recipes/user/${UserId}`, {
+                method: "GET",
+            }).then((response: Response) => {
+                if (!response.ok) {
+                    throw new Error("Failed to load recipes.");
+                }
+                return response.json();
+            }).then((data: Recipe[]) => {
+                resolve(data);
+            })
+                .catch((reason: any) => {
+                    reject(reason);
+                });
+        });
+    }
 }
 
 export { RecipeService };

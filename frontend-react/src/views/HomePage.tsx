@@ -126,7 +126,7 @@ function HomePage() {
         if (defaultProduct) {
             setTempProducts([
                 ...tempProducts,
-                { id: defaultProduct.id, productName: defaultProduct.name, amount: 0 }
+                { id: Date.now(), productName: defaultProduct.name, amount: 0 }
             ]);
         }
     };
@@ -139,7 +139,16 @@ function HomePage() {
         if (userId === null) return;
 
         // Filter out products with an amount of 0
-        const filteredProducts = tempProducts.filter(product => product.amount > 0);
+        let filteredProducts = tempProducts.filter(product => product.amount > 0);
+        filteredProducts = filteredProducts.map((product: NeededProduct) => {
+            return {
+              ...product,
+              id:
+                productsData.find(
+                  (p: Product) => p.name === product.productName
+                )?.id || 0,
+            };
+        });
 
         // Update fridge content and then fetch updated fridge content
         FridgeService.updateFridgeContent(userId, filteredProducts)
@@ -151,6 +160,8 @@ function HomePage() {
                     amount: product.quantity,
                 }));
                 setFridgeProducts(updatedFridgeProducts);
+                setIsAddingProduct(false);
+                setTempProducts([]);
             })
             .catch((error) => {
                 console.error("Failed to update fridge content:", error);

@@ -14,7 +14,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                                            }) => {
     const [value, setValue] = useState(initialValue);
     const [open, setOpen] = useState(false);
-    const [filterValue, setFilterValue] = useState("");
+    const [filterValue, setFilterValue] = useState(initialValue);
     return (
         <div>
             <input

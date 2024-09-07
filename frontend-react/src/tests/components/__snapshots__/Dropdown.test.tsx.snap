@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Dropdown Component renders with correct initial value 1`] = `
+<DocumentFragment>
+  <div>
+    <input
+      class="form-control"
+      type="text"
+      value="Option 2"
+    />
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Dropdown Component renders with correct initial value and options 1`] = `
 <DocumentFragment>
   <select>

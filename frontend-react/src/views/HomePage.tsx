@@ -52,7 +52,6 @@ function HomePage() {
                 // Access userId from internalUser
                 if (userInfo && userInfo.internalUser && userInfo.internalUser.userId) {
                     const userId = userInfo.internalUser.userId; // Extract userId from internalUser
-                    console.log("User ID:", userId);
                     setUserId(userId);
                     return FridgeService.getFridgeContent(userId); // Fetch fridge content using userId
                 }
@@ -68,20 +67,10 @@ function HomePage() {
                 }));
                 // Initialize with existing fridge content
                 setFridgeProducts(updatedFridgeProducts);
-                setFridgeProducts(products); // Initialize with existing fridge content
             })
             .catch((error) => {
                 console.error("Failed to load fridge content:", error);
             });
-            })
-    RecipeService.getRecipeById("1").then((recipes) => {
-        if (recipes) {
-            console.log("Recipes", recipes);
-            setMyRecipe(Array(recipes));
-        }
-    }).catch((error) => {
-        console.error("Failed",error);
-    });
     }, []);
 
 
@@ -92,7 +81,6 @@ function HomePage() {
             updatedProducts[index] = { ...updatedProducts[index], id: productId, productName, amount };
             setTempProducts(updatedProducts);
         }
-        console.log("temp Products:", tempProducts);
     };
 
     const handleRemoveProduct = (index: number) => {
@@ -101,7 +89,6 @@ function HomePage() {
     };
 
     const addProduct = () => {
-        console.log("temp Products:", tempProducts);
         const defaultProduct = productsData.length > 0 ? productsData[0] : null;
         if (defaultProduct) {
             setTempProducts([
@@ -111,77 +98,55 @@ function HomePage() {
         }
     };
 
-    const saveAllProducts = async () => {
+    const saveAllProducts = () => {
         if (userId === null) return;
 
         // Filter out products with an amount of 0
         const filteredProducts = tempProducts.filter(product => product.amount > 0);
 
-        try {
-            // Update fridge content
-            await FridgeService.updateFridgeContent(userId, filteredProducts);
-
-            // Fetch the updated fridge content
-            const fetchedProducts = await FridgeService.getFridgeContent(userId);
-
-            // Transform fetched products to match NeededProduct format
-            const updatedFridgeProducts = fetchedProducts.map((product: any) => ({
-                id: product.id,
-                productName: product.name,
-                amount: product.quantity,
-            }));
-
-            console.log("nachUpdate:", updatedFridgeProducts);
-            // Update state with the latest fridge content
-            setFridgeProducts(updatedFridgeProducts);
-            alert("Fridge updated successfully!");
-        } catch (error) {
-            console.error("Failed to update fridge content:", error);
-            alert("Failed to update fridge. Please try again.");
-        }
-        FridgeService.updateFridgeContent(userId, tempProducts)
-            .then(() => {
-                setFridgeProducts(tempProducts);
-                alert("Fridge updated successfully!");
+        // Update fridge content and then fetch updated fridge content
+        FridgeService.updateFridgeContent(userId, filteredProducts)
+            .then(() => FridgeService.getFridgeContent(userId))
+            .then((fetchedProducts) => {
+                const updatedFridgeProducts = fetchedProducts.map((product: any) => ({
+                    id: product.id,
+                    productName: product.name,
+                    amount: product.quantity,
+                }));
+                setFridgeProducts(updatedFridgeProducts);
             })
             .catch((error) => {
                 console.error("Failed to update fridge content:", error);
-                alert("Failed to update fridge. Please try again.");
             });
     };
 
-    const deleteProduct = async (productId: number) => {
+    const deleteProduct = (productId: number) => {
         if (userId === null) return;
 
-        try {
-            // Attempt to delete the product using productId
-            await FridgeService.deleteFridgeProduct(userId, productId);
-
-            // Fetch the updated fridge content
-            const updatedProducts = await FridgeService.getFridgeContent(userId);
-
-            // Update the fridgeProducts state with the new content
-            const updatedFridgeProducts = updatedProducts.map((product: any) => ({
-                id: product.id,
-                productName: product.name,
-                amount: product.quantity,
-            }));
-            setFridgeProducts(updatedFridgeProducts);
-
-            alert("Product removed successfully!");
-        } catch (error) {
-            console.error("Failed to delete product from fridge:", error);
-            alert("Failed to remove product. Please try again.");
-        }
+        // Delete the product using productId and then fetch updated fridge content
+        FridgeService.deleteFridgeProduct(userId, productId)
+            .then(() => FridgeService.getFridgeContent(userId))
+            .then((updatedProducts) => {
+                const updatedFridgeProducts = updatedProducts.map((product: any) => ({
+                    id: product.id,
+                    productName: product.name,
+                    amount: product.quantity,
+                }));
+                setFridgeProducts(updatedFridgeProducts);
+            })
+            .catch((error) => {
+                console.error("Failed to delete product from fridge:", error);
+            });
     };
 
-    const renderFridgeContent = () =>
-        fridgeProducts.map((product, index) => (
+    const renderFridgeContent = () => {
+        return fridgeProducts.map((product, index) => (
             <li key={index}>
                 {product.productName}: {product.amount}{" "}
-                {productsData.find((p) => p.name === product.productName)?.unit || ""}
+                {productsData?.find((p) => p.name === product.productName)?.unit || ""}
             </li>
         ));
+    };
 
     const renderProductLines = () =>
         tempProducts.map((product, index) => (
@@ -224,69 +189,45 @@ function HomePage() {
             <Stack direction={"horizontal"}>
                 <ImageArea
                     origin="https://www.gluthelden.de/wp-content/uploads/2018/06/K%C3%A4seso%C3%9Fe-.jpg"/>
-            <Link to={`/recipe/view/${recipe.id}`}> <MyRecipeBar Recipe={recipe}/></Link>
-            <EditButton Recipe={recipe}/>
-        </Stack>
-    </div>
+                <Link to={`/recipe/view/${recipe.id}`}> <MyRecipeBar Recipe={recipe}/></Link>
+                <EditButton Recipe={recipe}/>
+            </Stack>
+        </div>
     ));
 
     return (
-    <div><h1>Meine Rezepte</h1>
-        {realPage}
-
-        <Heading2 headingText="Mein Kühlschrank" />
-
-        <Stack gap={2} className="col-md-4 mx-auto mt-3">
-            <Button onClick={addProduct} variant="success">
-                Produkt hinzufügen
-            </Button>
-
-            <Button onClick={saveAllProducts} variant="primary">
-                Speichern
-            </Button>
-        </Stack>
-
-        <Table striped bordered hover className="mt-3">
-            <thead>
-            <tr>
-                <th>Produkt</th>
-                <th>Menge</th>
-                <th>Löschen</th>
-                <th>Zeile entfernen</th>
-            </tr>
-            </thead>
-            <tbody>{renderProductLines()}</tbody>
-        </Table>
-
-        <Heading2 headingText="Kühlschrank Inhalt:" />
-        <ul>
-            {fridgeProducts.map((product, index) => {
-                return (
-                    <li key={index}>
-                        {product.productName}: {product.amount}{" "}
-                        {productsData?.find((p) => p.name === product.productName)?.unit || ""}
-                    </li>
-                );
-            })}
-
-        </ul>
-    </div>
-    if (myRecipes.length === 0) {
-        return <div>Loading...</div>;
-    }
-
-    return (
         <div><h1>Meine Rezepte</h1>
-            <div className="RowArea ">
-                <Stack direction={"horizontal"}>
-                    <ImageArea origin={""}/>
-                    <Link to={`/recipe/view/${myRecipes[0].id}`}> <MyRecipeBar Recipe={myRecipes[0]}/></Link>
-                    <EditButton Recipe={myRecipes[0]}/>
-                </Stack>
-            </div>
-        </div>
-    );
+            {realPage}
 
+            <Heading2 headingText="Mein Kühlschrank" />
+
+            <Stack gap={2} className="col-md-4 mx-auto mt-3">
+                <Button onClick={addProduct} variant="success">
+                    Produkt hinzufügen
+                </Button>
+
+                <Button onClick={saveAllProducts} variant="primary">
+                    Speichern
+                </Button>
+            </Stack>
+
+            <Table striped bordered hover className="mt-3">
+                <thead>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Menge</th>
+                    <th>Löschen</th>
+                    <th>Zeile entfernen</th>
+                </tr>
+                </thead>
+                <tbody>{renderProductLines()}</tbody>
+            </Table>
+
+            <Heading2 headingText="Kühlschrank Inhalt:" />
+            <ul>
+                {renderFridgeContent()}
+            </ul>
+        </div>
     );
 
 }

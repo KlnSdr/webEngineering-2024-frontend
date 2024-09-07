@@ -12,7 +12,6 @@ const Dropdown: React.FC<DropdownProps> = ({
                                                initialValue,
                                                onChange,
                                            }) => {
-    const [_value, setValue] = useState(initialValue);
     const [open, setOpen] = useState(false);
     const [filterValue, setFilterValue] = useState(initialValue);
     return (
@@ -37,7 +36,6 @@ const Dropdown: React.FC<DropdownProps> = ({
                                     cursor: "pointer",
                                 }}
                                 onClick={() => {
-                                    setValue(option);
                                     setOpen(false);
                                     setFilterValue(option);
                                     onChange(option);

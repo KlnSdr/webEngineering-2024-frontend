@@ -35,7 +35,6 @@ function SurveyHub(){
         return "display-2";
 
     }
-
     const deleteSurvey = (id: number) => {
         SurveyService.deleteSurvey(id).then(() => {
             SurveyService.getSurveysByUserId().then((surveys) => {
@@ -50,7 +49,6 @@ function SurveyHub(){
         });
 
     }
-
 
     if(!surveys){
         return(

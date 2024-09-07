@@ -22,7 +22,7 @@ function HomePage() {
     const [fridgeProducts, setFridgeProducts] = useState<NeededProduct[]>([]);
     const [tempProducts, setTempProducts] = useState<NeededProduct[]>([]);
     const [userId, setUserId] = useState<number | null>(null);
-
+    const [isAddingProduct, setIsAddingProduct] = useState(false);
 
     // Fetch recipes
     useEffect(() => {
@@ -86,9 +86,15 @@ function HomePage() {
     const handleRemoveProduct = (index: number) => {
         const updatedProducts = tempProducts.filter((_, i) => i !== index);
         setTempProducts(updatedProducts);
+
+        // If no more temp products, hide the table
+        if (updatedProducts.length === 0) {
+            setIsAddingProduct(false);
+        }
     };
 
     const addProduct = () => {
+        setIsAddingProduct(true); // Show table when adding a product
         const defaultProduct = productsData.length > 0 ? productsData[0] : null;
         if (defaultProduct) {
             setTempProducts([
@@ -141,10 +147,15 @@ function HomePage() {
 
     const renderFridgeContent = () => {
         return fridgeProducts.map((product, index) => (
-            <li key={index}>
-                {product.productName}: {product.amount}{" "}
-                {productsData?.find((p) => p.name === product.productName)?.unit || ""}
-            </li>
+            <tr key={index}>
+                <td>{product.productName}</td>
+                <td>{product.amount} {productsData?.find((p) => p.name === product.productName)?.unit || ""}</td>
+                <td>
+                    <Button variant="danger" onClick={() => deleteProduct(product.id)}>
+                        Löschen
+                    </Button>
+                </td>
+            </tr>
         ));
     };
 
@@ -170,11 +181,6 @@ function HomePage() {
                         onChange={(e) => handleProductChange(index, product.productName, parseFloat(e.target.value))}
                     />{" "}
                     {productsData.find((p) => p.name === product.productName)?.unit || ""}
-                </td>
-                <td>
-                    <Button variant="danger" onClick={() => deleteProduct(product.id)}>
-                        Löschen
-                    </Button>
                 </td>
                 <td>
                     <Button variant="outline-danger" onClick={() => handleRemoveProduct(index)}>
@@ -211,22 +217,32 @@ function HomePage() {
                 </Button>
             </Stack>
 
+            {isAddingProduct && (
+                <Table striped bordered hover className="mt-3">
+                    <thead>
+                    <tr>
+                        <th>Produkt</th>
+                        <th>Menge</th>
+                        <th>Zeile entfernen</th>
+                    </tr>
+                    </thead>
+                    <tbody>{renderProductLines()}</tbody>
+                </Table>
+            )}
+
+            <Heading2 headingText="Kühlschrank Inhalt:" />
             <Table striped bordered hover className="mt-3">
                 <thead>
                 <tr>
                     <th>Produkt</th>
                     <th>Menge</th>
                     <th>Löschen</th>
-                    <th>Zeile entfernen</th>
                 </tr>
                 </thead>
-                <tbody>{renderProductLines()}</tbody>
-            </Table>
-
-            <Heading2 headingText="Kühlschrank Inhalt:" />
-            <ul>
+                <tbody>
                 {renderFridgeContent()}
-            </ul>
+                </tbody>
+            </Table>
         </div>
     );
 

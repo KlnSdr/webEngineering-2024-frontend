@@ -47,13 +47,13 @@ function HomePage() {
         UserService.getUserInfo()
             .then((userInfo) => {
                 console.log("User info0:", userInfo);
-                console.log("User info01:", userInfo.internalUser);
-                console.log("User info02:", userInfo.internalUser.userId);
-                if (userInfo && userInfo.internalUser && userInfo.internalUser.userId) {
-                    const userId = userInfo.internalUser.userId; // Extract userId from internalUser
+                console.log("User info01:", userInfo.id);
+                if (userInfo && userInfo.id) {
+                    const userId = userInfo.id // Extract userId from internalUser
                     console.log("User info1:", userInfo);
                     setUserId(userId);
                     myRecipeSet(userId);
+                    console.log("Recipe", myRecipes);
                     return FridgeService.getFridgeContent(userId); // Fetch fridge content using userId
                 }
                 throw new Error("User not found");

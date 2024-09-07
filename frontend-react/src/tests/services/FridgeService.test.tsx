@@ -47,12 +47,14 @@ describe("FridgeService", () => {
         (fetch as jest.Mock).mockResolvedValueOnce({
             ok: false,
             statusText: "Not Found",
+            text: () => Promise.resolve("Not Found"),
         });
 
         await expect(FridgeService.getFridgeContent(userId)).rejects.toThrow(
             "Failed to load fridge content: Not Found"
         );
     });
+
 
     test("updateFridgeContent successfully updates fridge content", async () => {
         (fetch as jest.Mock).mockResolvedValueOnce({

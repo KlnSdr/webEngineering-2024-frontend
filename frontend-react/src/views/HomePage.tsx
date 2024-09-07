@@ -193,7 +193,7 @@ function HomePage() {
     if (myRecipes.length === 0) {
         return <div>Loading...</div>;
     }
-    
+
     const realPage = (
         <div className="RowArea ">
             <Stack direction={"horizontal"}>
@@ -248,7 +248,6 @@ function HomePage() {
             </Table>
         </div>
     );
-
 }
 
 export default HomePage;

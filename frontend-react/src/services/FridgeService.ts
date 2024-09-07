@@ -1,5 +1,4 @@
 import { NeededProduct } from "../types/Products";
-import { ProductsService } from "./ProductService";
 
 class FridgeService {
     private static backendURL: string =

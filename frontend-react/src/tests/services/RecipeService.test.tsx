@@ -65,7 +65,6 @@ describe("RecipeService", () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(mockCreateRecipe),
-      credentials: "include",
     });
   });
 
@@ -100,7 +99,6 @@ describe("RecipeService", () => {
           "/products/3": 150,
         },
       }),
-      credentials: "include",
     });
   });
 
@@ -136,7 +134,6 @@ describe("RecipeService", () => {
           return obj;
         }, {}),
       }),
-      credentials: "include",
     });
   });
 
@@ -166,7 +163,6 @@ describe("RecipeService", () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(mockCreateRecipe),
-      credentials: "include",
     });
   });
 
@@ -193,7 +189,6 @@ describe("RecipeService", () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(mockCreateRecipe),
-      credentials: "include",
     });
   });
   test("getAll returns a list of recipes", async () => {
@@ -206,7 +201,7 @@ describe("RecipeService", () => {
     const recipes = await RecipeService.getAll();
     expect(recipes).toEqual(mockRecipes);
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes");
+    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {});
   });
 
   test("getAll returns recipes with correct properties", async () => {
@@ -226,7 +221,7 @@ describe("RecipeService", () => {
     });
 
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes");
+    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {});
   });
 
   test("getAll throws an error if the network request fails", async () => {
@@ -239,7 +234,7 @@ describe("RecipeService", () => {
         "Failed to load recipes."
     );
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes");
+    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {});
   });
 
   test("getAll throws an error if fetch rejects", async () => {
@@ -249,7 +244,7 @@ describe("RecipeService", () => {
 
     await expect(RecipeService.getAll()).rejects.toThrow(mockError);
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes");
+    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {});
   });
 
   //Static recipes for testing

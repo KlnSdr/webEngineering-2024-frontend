@@ -26,7 +26,7 @@ describe("ProductsService", () => {
     const products = await ProductsService.getAll();
     expect(products).toEqual(mockProducts);
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products");
+    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products", {});
   });
 
   test("getAll returns products with correct properties", async () => {
@@ -44,7 +44,7 @@ describe("ProductsService", () => {
     });
 
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products");
+    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products", {});
   });
 
   test("getAll throws an error if the network request fails", async () => {
@@ -57,7 +57,7 @@ describe("ProductsService", () => {
       "Failed to load products."
     );
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products");
+    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products", {});
   });
 
   test("getAll throws an error if fetch rejects", async () => {
@@ -67,7 +67,7 @@ describe("ProductsService", () => {
 
     await expect(ProductsService.getAll()).rejects.toThrow(mockError);
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products");
+    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/products", {});
   });
 
 });

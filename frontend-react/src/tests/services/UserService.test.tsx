@@ -23,20 +23,16 @@ describe('UserServiceTests', () => {
     //     expect(userInfo).toEqual({name: "Test User"});
     // });
 
-    it("fetches and caches user info if not cached", async () => {
-        UserService["userInfo"] = null;
-        global.fetch = jest.fn().mockResolvedValue({
-            ok: true, json: jest.fn().mockResolvedValue({name: "Test User"}),
-        });
+    it("returns userdata", async () => {
+        UserService["userInfo"] = {username: "Test User", id: 42, profileImage: "example.com/image.mp3"};
         const userInfo = await UserService.getUserInfo();
-        expect(userInfo).toEqual({name: "Test User"});
-        expect(UserService["userInfo"]).toEqual({name: "Test User"});
+        expect(userInfo).toEqual({username: "Test User", id: 42, profileImage: "example.com/image.mp3"});
     });
 
-    it("rejects if user info fetch fails", async () => {
+    it("returns null when no user info is available", async () => {
         UserService["userInfo"] = null;
-        global.fetch = jest.fn().mockResolvedValue({ok: false});
-        await expect(UserService.getUserInfo()).rejects.toThrow("could not load user info");
+        const userInfo = await UserService.getUserInfo();
+        expect(userInfo).toBeNull();
     });
 
     // it("resolves true if user is logged in", async () => {

@@ -1,4 +1,5 @@
 import {CreateSurvey, Survey} from "../types/Surveys";
+import {authorizedRequest} from "./Requests";
 
 class SurveyService {
     private static backendURL: string =
@@ -6,7 +7,7 @@ class SurveyService {
 
     public static getSurveysByUserId(): Promise<any[]> {
         return new Promise((resolve, reject) => {
-            fetch(`${this.backendURL}/surveys/my`, {credentials: "include"}).then((response: Response) => {
+            authorizedRequest(`${this.backendURL}/surveys/my`).then((response: Response) => {
                 if (!response.ok) {
                     throw new Error("Failed to load surveys.");
                 }
@@ -21,7 +22,7 @@ class SurveyService {
 
     public static getSurveyById(surveyId: string | undefined): Promise<Survey> {
         return new Promise((resolve, reject) => {
-            fetch(`${this.backendURL}/surveys/${surveyId}`, {credentials: "include"}).then((response: Response) => {
+            authorizedRequest(`${this.backendURL}/surveys/${surveyId}`).then((response: Response) => {
                 if (!response.ok) {
                     throw new Error("Failed to load survey.");
                 }
@@ -36,9 +37,8 @@ class SurveyService {
     }
     public static voteSurvey(surveyId: number, recipeId: number): Promise<Survey>{
         return new Promise((resolve, reject) =>{
-            fetch(`${this.backendURL}/surveys/${surveyId}/vote/${recipeId}`, {
+            authorizedRequest(`${this.backendURL}/surveys/${surveyId}/vote/${recipeId}`, {
                 method: "PUT",
-                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -62,9 +62,8 @@ class SurveyService {
         };
 
         return new Promise((resolve, reject) => {
-            fetch(`${this.backendURL}/surveys`, {
+            authorizedRequest(`${this.backendURL}/surveys`, {
                 method: "POST",
-                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -84,9 +83,8 @@ class SurveyService {
 
    public static updateSurvey(survey: Survey): Promise<Survey> {
         return new Promise((resolve, reject) => {
-            fetch(`${this.backendURL}/surveys/${survey.id}`, {
+            authorizedRequest(`${this.backendURL}/surveys/${survey.id}`, {
                 method: "PUT",
-                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },

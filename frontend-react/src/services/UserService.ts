@@ -1,11 +1,14 @@
-import {User} from "../types/Users";
+import {CurrentUser, User} from "../types/Users";
+import {jwtDecode} from "jwt-decode";
+import {request} from "./Requests";
 
 class UserService {
   private static backendURL: string =
     process.env.REACT_APP_BACKEND_URL || "http://localhost:13000";
-  private static userInfo: any | null = null;
+  private static userInfo: CurrentUser | null = null;
 
   static doLogout() {
+    localStorage.removeItem("token");
     window.location.assign(`${UserService.backendURL}/users/logout`);
   }
 
@@ -21,36 +24,13 @@ class UserService {
         resolve(UserService.userInfo);
         return;
       }
-
-      fetch(`${UserService.backendURL}/users/current`, {
-        credentials: "include",
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("could not load user info");
-          }
-          return response.json();
-        })
-        .then((data: any) => {
-          if (
-            Object.keys(data).filter((key) => data[key] !== null).length === 0
-          ) {
-            resolve(null);
-            return;
-          }
-          UserService.userInfo = data;
-          resolve(UserService.userInfo);
-        })
-        .catch((reason: any) => {
-          console.error(reason);
-          reject(reason);
-        });
+      resolve(null);
     });
   }
 
   static getUser(uri: string): Promise<User> {
       return new Promise((resolve, reject) => {
-          fetch(`${this.backendURL}${uri}`, {})
+          request(`${this.backendURL}${uri}`, {})
           .then(response => {
               if (!response.ok) {
                   throw new Error("could not get user with uri " + uri);
@@ -66,6 +46,10 @@ class UserService {
     return new Promise<boolean>((resolve) => {
       UserService.init().then((_) => resolve(UserService.userInfo !== null));
     });
+  }
+
+  static loadUserInfo(token: string) {
+    UserService.userInfo = jwtDecode<CurrentUser>(token);
   }
 
   private static init(): Promise<void> {

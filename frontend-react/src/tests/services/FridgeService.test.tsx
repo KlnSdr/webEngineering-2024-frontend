@@ -38,7 +38,6 @@ describe("FridgeService", () => {
         expect(fetch).toHaveBeenCalledTimes(1);
         expect(fetch).toHaveBeenCalledWith(`http://localhost:13000/fridge/${userId}`, {
             method: "GET",
-            credentials: "include",
         });
     });
 
@@ -71,7 +70,6 @@ describe("FridgeService", () => {
         expect(fetch).toHaveBeenCalledTimes(1);
         expect(fetch).toHaveBeenCalledWith(`http://localhost:13000/fridge/${userId}`, {
             method: "PUT",
-            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -102,7 +100,6 @@ describe("FridgeService", () => {
         expect(fetch).toHaveBeenCalledTimes(1);
         expect(fetch).toHaveBeenCalledWith(`http://localhost:13000/fridge/${userId}/${productId}`, {
             method: "DELETE",
-            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
             },

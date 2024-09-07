@@ -3,4 +3,10 @@ interface User {
     userName: string;
 }
 
-export type { User };
+interface CurrentUser {
+    id: number;
+    username: string;
+    profileImage: string;
+}
+
+export type { User, CurrentUser };

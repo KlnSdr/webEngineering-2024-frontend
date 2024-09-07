@@ -164,9 +164,9 @@ class RecipeService {
                 });
         });
     }
-    public static getRecipeByUser(UserId: number): Promise<Recipe[]> {
+    public static getRecipeByUser(userId: number): Promise<Recipe[]> {
         return new Promise((resolve, reject) => {
-            authorizedRequest(`${this.backendURL}/recipes/user/${UserId}`, {
+            authorizedRequest(`${this.backendURL}/recipes/user/${userId}`, {
                 method: "GET",
             }).then((response: Response) => {
                 if (!response.ok) {

@@ -53,7 +53,6 @@ function HomePage() {
                     console.log("User info1:", userInfo);
                     setUserId(userId);
                     myRecipeSet(userId);
-                    console.log("Recipe", myRecipes);
                     return FridgeService.getFridgeContent(userId); // Fetch fridge content using userId
                 }
                 throw new Error("User not found");
@@ -72,7 +71,7 @@ function HomePage() {
             .catch((error) => {
                 console.error("Failed to load fridge content:", error);
             });
-    }, [myRecipes]);
+    }, []);
 
     function myRecipeSet(usrId: number) {
         RecipeService.getRecipeByUser(usrId!).then((recipes) => {
@@ -245,12 +244,7 @@ function HomePage() {
             .catch((error) => {
                 console.error("Failed to delete recipe:", error);
             });
-    }
-
-    if (myRecipes.length === 0) {
-        return <div>Loading...</div>;
-    }
-
+    };
     const realPage = (myRecipes.map((recipe:Recipe, index:number) => (
         <div className="RowArea ">
             <Stack direction={"horizontal"}>
@@ -266,7 +260,7 @@ function HomePage() {
 
     return (
         <div><h1>Meine Rezepte</h1>
-            {realPage}
+            {realPage.length === 0 ? <h3>Keine Rezepte vorhanden</h3> : realPage}
 
             <Heading2 headingText="Mein Kühlschrank" />
 

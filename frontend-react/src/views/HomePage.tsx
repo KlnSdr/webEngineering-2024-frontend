@@ -14,6 +14,7 @@ import Button from "react-bootstrap/Button";
 import {FridgeService} from "../services/FridgeService";
 import {UserService} from "../services/UserService";
 import {Table} from "react-bootstrap";
+import {CurrentUser} from "../types/Users";
 
 /**
  * HomePage view that displays recipes and manages fridge content.
@@ -58,12 +59,12 @@ function HomePage() {
      */
     useEffect(() => {
         UserService.getUserInfo()
-            .then((userInfo) => {
+            .then((userInfo: CurrentUser) => {
                 console.log("User info:", userInfo);
 
                 // Access userId from internalUser
-                if (userInfo && userInfo.internalUser && userInfo.internalUser.userId) {
-                    const userId = userInfo.internalUser.userId; // Extract userId from internalUser
+                if (userInfo && userInfo.id) {
+                    const userId = userInfo.id; // Extract userId from internalUser
                     setUserId(userId);
                     return FridgeService.getFridgeContent(userId); // Fetch fridge content using userId
                 }

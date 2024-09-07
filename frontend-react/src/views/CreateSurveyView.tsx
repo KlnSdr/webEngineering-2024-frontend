@@ -64,7 +64,7 @@ function CreateSurveyView({survey}: { survey: UpdateSurvey | null}) {
             const surveyUpdate : Survey={
                 id: survey.id,
                 title: state.title,
-                options: survey.options.map((recipe: any) => `/recipes/${recipe.id}`),
+                options: state.options.map((recipe: any) => `/recipes/${recipe.id}`),
                 creator: survey.creator,
                 creationDate: survey.creationDate,
                 participants: survey.participants,

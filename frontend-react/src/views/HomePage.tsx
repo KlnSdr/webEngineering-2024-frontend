@@ -24,14 +24,15 @@ function HomePage() {
     const [userId, setUserId] = useState<number | null>(null);
     const [isAddingProduct, setIsAddingProduct] = useState(false);
 
-    // Fetch single recipe
+    // Fetch recipe
     useEffect(() => {
         RecipeService.getRecipeById("1").then((recipes) => {
             if (recipes) {
-                setMyRecipe([recipes]); // Use array notation to match type
+                console.log("Recipes", recipes);
+                setMyRecipe(Array(recipes));
             }
         }).catch((error) => {
-            console.error("Failed to fetch recipe:", error);
+            console.error("Failed",error);
         });
     }, []);
 

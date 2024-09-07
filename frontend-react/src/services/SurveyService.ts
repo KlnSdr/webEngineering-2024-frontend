@@ -83,9 +83,8 @@ class SurveyService {
 
    public static updateSurvey(survey: Survey): Promise<Survey> {
         return new Promise((resolve, reject) => {
-            fetch(`${this.backendURL}/surveys/${survey.id}`, {
+            authorizedRequest(`${this.backendURL}/surveys/${survey.id}`, {
                 method: "PUT",
-                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },

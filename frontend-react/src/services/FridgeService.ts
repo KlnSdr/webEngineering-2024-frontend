@@ -1,4 +1,5 @@
 import { NeededProduct } from "../types/Products";
+import {authorizedRequest} from "./Requests";
 
 class FridgeService {
     private static backendURL: string =
@@ -11,9 +12,8 @@ class FridgeService {
      * @returns {Promise<NeededProduct[]>} A promise that resolves to the list of products in the fridge.
      */
     public static getFridgeContent(userId: number): Promise<NeededProduct[]> {
-        return fetch(`${this.backendURL}/fridge/${userId}`, {
+        return authorizedRequest(`${this.backendURL}/fridge/${userId}`, {
             method: "GET",
-            credentials: "include",
         })
             .then(response => {
                 if (!response.ok) {
@@ -49,9 +49,8 @@ class FridgeService {
 
         console.log("Payload for update:", JSON.stringify(payload, null, 2));
 
-        return fetch(`${this.backendURL}/fridge/${userId}`, {
+        return authorizedRequest(`${this.backendURL}/fridge/${userId}`, {
             method: "PUT",
-            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -83,9 +82,8 @@ class FridgeService {
             productId: productId,
         };
 
-        return fetch(`${this.backendURL}/fridge/${userId}/${productId}`, {
+        return authorizedRequest(`${this.backendURL}/fridge/${userId}/${productId}`, {
             method: "DELETE",
-            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
             },

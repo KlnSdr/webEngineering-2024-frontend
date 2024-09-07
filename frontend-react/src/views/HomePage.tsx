@@ -255,7 +255,7 @@ function HomePage() {
             <Stack direction={"horizontal"}>
                 <ImageArea origin={""}/>
                 <Link to={`/recipe/view/${myRecipes[0].id}`}> <MyRecipeBar Recipe={myRecipes[0]}/></Link>
-                <EditButton Recipe={myRecipes[0]}/>
+                <EditButton Link={`/recipe/edit/${myRecipes[0].id}`}/>
             </Stack>
         </div>
     );

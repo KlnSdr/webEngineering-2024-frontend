@@ -1,21 +1,20 @@
 import React from "react";
-import {Recipe} from "../types/Recipes";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
 interface EditButtonProps {
-    Recipe: Recipe;
+    Link: string;
 }
 
 interface CreateButtonProps {
     Link: string;
 }
 
-const EditButton: React.FC<EditButtonProps> = ({Recipe}) => {
+const EditButton: React.FC<EditButtonProps> = ({Link}) => {
     const navigate = useNavigate();
     return(
         <div className="EditButton">
-            <Button className="bi bi-pencil" onClick= {() => navigate("/recipe/edit/" + Recipe.id)}> Edit</Button>
+            <Button className="bi bi-pencil" onClick= {() => navigate(Link)}> Edit</Button>
         </div>
     );
 }

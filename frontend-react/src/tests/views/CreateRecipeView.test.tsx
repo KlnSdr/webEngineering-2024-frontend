@@ -11,7 +11,7 @@ describe("CreateSurveyView Component", () => {
         (UserService.isLoggedIn as jest.Mock).mockResolvedValue(false);
         render(
             <Router>
-                <CreateSurveyView />
+                <CreateSurveyView survey={null} />
             </Router>
         );
         await waitFor(() => expect(window.location.pathname).toBe("/login"));
@@ -21,7 +21,7 @@ describe("CreateSurveyView Component", () => {
         (UserService.isLoggedIn as jest.Mock).mockResolvedValue(true);
         const {asFragment} = render(
             <Router>
-                <CreateSurveyView />
+                <CreateSurveyView survey={null} />
             </Router>
         );
         expect(asFragment()).toMatchSnapshot();

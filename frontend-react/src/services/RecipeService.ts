@@ -132,7 +132,7 @@ class RecipeService {
                     title: recipe.title,
                     imgUri: recipe.imgUri,
                     description: recipe.description,
-                    isPrivate: false,
+                    isPrivate: recipe.isPrivate,
                     productUris: recipe.products.map((product) => `/products/${product.id}`),
                     productQuantities: quantityMap
                 }),

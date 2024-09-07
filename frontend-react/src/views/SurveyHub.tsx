@@ -3,7 +3,8 @@ import {Survey} from "../types/Surveys";
 import SurveyService from "../services/SurveyService";
 import "../style/SurveyHub.css";
 import {Link} from "react-router-dom";
-import {CreateButton} from "../components/EditButton";
+import EditButton, {CreateButton} from "../components/EditButton";
+import Stack from "react-bootstrap/Stack";
 
 function SurveyHub(){
     const [surveys, setSurveys] = useState<Survey[] | null>(null);
@@ -50,11 +51,13 @@ function SurveyHub(){
             <h1>Meine Umfragen</h1>
             <CreateButton Link={"./new"}/>
             {surveys.map((survey, index) => (
+                <Stack direction="horizontal" gap={3}>
                 <div key={index} className="TextArea align-content-center mt-3">
                     <Link to ={`./view/${survey.id}`}><h2 className={textsize(survey.title)}>{survey.title}</h2></Link>
                 </div>
+                    <EditButton Link={`/survey/edit/${survey.id}`}/>
+                </Stack>
             ))}
-
         </div>
     );
 }

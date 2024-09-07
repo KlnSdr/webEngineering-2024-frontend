@@ -12,6 +12,7 @@ import RecipeDetailView from "./views/RecipeDetailView";
 import CreateSurveyView from "./views/CreateSurveyView";
 import EditRecipeView from "./views/RecipeEditView";
 import SurveyHub from "./views/SurveyHub";
+import SurveyEditView from "./views/SurveyEditView";
 
 function App() {
   return (
@@ -91,7 +92,7 @@ function App() {
               element={
                   <>
                       <PageTitle title="Neue Umfragen" />
-                      <CreateSurveyView />
+                      <CreateSurveyView survey={null} />
                   </>
               }
           />
@@ -103,6 +104,15 @@ function App() {
                       <SurveyDetailView />
                   </>
               }
+          />
+          <Route
+                path="edit/:id"
+                element={
+                    <>
+                        <PageTitle title="Umfrage bearbeiten" />
+                        <SurveyEditView/>
+                    </>
+                }
           />
           <Route
               path="*"

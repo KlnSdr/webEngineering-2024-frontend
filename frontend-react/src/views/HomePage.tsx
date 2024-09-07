@@ -72,7 +72,7 @@ function HomePage() {
             .catch((error) => {
                 console.error("Failed to load fridge content:", error);
             });
-    }, []);
+    }, [myRecipes]);
 
     function myRecipeSet(usrId: number) {
         RecipeService.getRecipeByUser(usrId!).then((recipes) => {

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {CreateSurvey, Survey, UpdateSurvey} from "../types/Surveys";
+import {Survey, UpdateSurvey} from "../types/Surveys";
 import SurveyService from "../services/SurveyService";
 import CreateSurveyView from "./CreateSurveyView";
 

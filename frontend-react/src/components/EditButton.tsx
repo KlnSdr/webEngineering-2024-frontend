@@ -1,5 +1,4 @@
 import React from "react";
-import {Recipe} from "../types/Recipes";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 

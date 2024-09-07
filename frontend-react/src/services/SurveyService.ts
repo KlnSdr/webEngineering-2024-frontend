@@ -1,4 +1,4 @@
-import {CreateSurvey, Survey, UpdateSurvey} from "../types/Surveys";
+import {CreateSurvey, Survey} from "../types/Surveys";
 
 class SurveyService {
     private static backendURL: string =

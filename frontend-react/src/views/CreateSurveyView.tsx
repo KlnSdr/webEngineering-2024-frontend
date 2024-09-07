@@ -13,7 +13,6 @@ import {CreateSurvey, Survey, UpdateSurvey} from "../types/Surveys";
 import {Recipe} from "../types/Recipes";
 import Alert from "react-bootstrap/Alert";
 import SurveyService from "../services/SurveyService";
-import {RecipeService} from "../services/RecipeService";
 
 function CreateSurveyView({survey}: { survey: UpdateSurvey | null}) {
 

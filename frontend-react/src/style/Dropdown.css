@@ -1,0 +1,15 @@
+.dropdownOptionsContainer {
+    position: absolute;
+    background-color: white;
+    border: 1px solid black;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: scroll;
+    max-width: 10vw;
+    z-index: 9001;
+    border-radius: 5px;
+}
+
+.dropdownOption:hover {
+    background-color: #f1f1f1;
+}

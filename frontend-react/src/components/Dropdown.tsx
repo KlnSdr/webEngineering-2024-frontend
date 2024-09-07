@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import "../style/Dropdown.css";
+
 
 interface DropdownProps {
     options: string[],
@@ -16,28 +18,21 @@ const Dropdown: React.FC<DropdownProps> = ({
     return (
         <div>
             <input
+                className="form-control"
                 type="text"
                 value={filterValue}
                 onChange={(e) => {
                     setFilterValue(e.target.value);
                 }}
                 onFocus={() => setOpen(true)}
+                onBlur={() => setTimeout(() => setOpen(false), 200)}
             />
             {open && (
-                <div style={
-                    {
-                        position: "relative",
-                        backgroundColor: "white",
-                        border: "1px solid black",
-                        width: "100%",
-                        maxHeight: "200px",
-                        overflowY: "scroll",
-                        zIndex: 9001
-                    }
-                }>
+                <div className="dropdownOptionsContainer">
                     {options.filter((option: string) => option.toLowerCase().includes(filterValue.toLowerCase())).map((option: string) => {
                         return (
                             <div
+                                className="dropdownOption"
                                 style={{
                                     cursor: "pointer",
                                 }}
@@ -55,24 +50,6 @@ const Dropdown: React.FC<DropdownProps> = ({
                 </div>)
             }
         </div>
-        // <select
-        //     onChange={(e) => {
-        //         setValue(e.target.value);
-        //         onChange(e.target.value);
-        //     }}
-        // >
-        //     {options.map((option: string) => {
-        //         if (option === value) {
-        //             return (
-        //                 <option value={option} selected>
-        //                     {option}
-        //                 </option>
-        //             );
-        //         } else {
-        //             return <option value={option}>{option}</option>;
-        //         }
-        //     })}
-        // </select>
     );
 };
 

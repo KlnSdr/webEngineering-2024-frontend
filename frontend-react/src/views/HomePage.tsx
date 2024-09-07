@@ -15,7 +15,10 @@ import {FridgeService} from "../services/FridgeService";
 import {UserService} from "../services/UserService";
 import {Table} from "react-bootstrap";
 
-
+/**
+ * HomePage view that displays recipes and manages fridge content.
+ * @returns JSX.Element - The rendered component.
+ */
 function HomePage() {
     const [myRecipes, setMyRecipe] = useState<Recipe[]>([]);
     const [productsData, setProductsData] = useState<Product[]>([]);
@@ -24,7 +27,10 @@ function HomePage() {
     const [userId, setUserId] = useState<number | null>(null);
     const [isAddingProduct, setIsAddingProduct] = useState(false);
 
-    // Fetch recipe
+    /**
+     * Fetches a recipe by its ID when the component mounts.
+     * @returns void
+     */
     useEffect(() => {
         RecipeService.getRecipeById("1").then((recipes) => {
             if (recipes) {
@@ -36,14 +42,20 @@ function HomePage() {
         });
     }, []);
 
-    // Fetch products from the backend
+    /**
+     * Fetches all products from the backend when the component mounts.
+     * @returns void
+     */
     useEffect(() => {
         ProductsService.getAll().then((products) => {
             setProductsData(products);
         });
     }, []);
 
-    // Fetch user and fridge content
+    /**
+     * Fetches user info and fridge content when the component mounts.
+     * @returns void
+     */
     useEffect(() => {
         UserService.getUserInfo()
             .then((userInfo) => {
@@ -73,7 +85,13 @@ function HomePage() {
             });
     }, []);
 
-
+    /**
+     * Handles changes to the product in the temporary product list.
+     * @param index - The index of the product in the temporary list.
+     * @param productName - The name of the product.
+     * @param amount - The amount of the product.
+     * @returns void
+     */
     const handleProductChange = (index: number, productName: string, amount: number) => {
         const productId = productsData.find(p => p.name === productName)?.id;
         const updatedProducts = [...tempProducts];
@@ -83,6 +101,11 @@ function HomePage() {
         }
     };
 
+    /**
+     * Handles removal of a product from the temporary product list.
+     * @param index - The index of the product to remove.
+     * @returns void
+     */
     const handleRemoveProduct = (index: number) => {
         const updatedProducts = tempProducts.filter((_, i) => i !== index);
         setTempProducts(updatedProducts);
@@ -93,6 +116,10 @@ function HomePage() {
         }
     };
 
+    /**
+     * Adds a new product to the temporary product list.
+     * @returns void
+     */
     const addProduct = () => {
         setIsAddingProduct(true); // Show table when adding a product
         const defaultProduct = productsData.length > 0 ? productsData[0] : null;
@@ -104,6 +131,10 @@ function HomePage() {
         }
     };
 
+    /**
+     * Saves all products in the temporary list to the fridge.
+     * @returns void
+     */
     const saveAllProducts = () => {
         if (userId === null) return;
 
@@ -126,6 +157,11 @@ function HomePage() {
             });
     };
 
+    /**
+     * Deletes a product from the fridge.
+     * @param productId - The ID of the product to delete.
+     * @returns void
+     */
     const deleteProduct = (productId: number) => {
         if (userId === null) return;
 
@@ -145,6 +181,10 @@ function HomePage() {
             });
     };
 
+    /**
+     * Renders the content of the fridge as table rows.
+     * @returns JSX.Element[] - Array of JSX elements representing the table rows.
+     */
     const renderFridgeContent = () => {
         return fridgeProducts.map((product, index) => (
             <tr key={index}>
@@ -159,6 +199,10 @@ function HomePage() {
         ));
     };
 
+    /**
+     * Renders temporary product lines as table rows.
+     * @returns JSX.Element[] - Array of JSX elements representing the table rows.
+     */
     const renderProductLines = () =>
         tempProducts.map((product, index) => (
             <tr key={product.id}>

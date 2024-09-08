@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecipeDetailView Component matches snapshot when recipe is found 1`] = `<DocumentFragment />`;
+
+exports[`RecipeDetailView Component matches snapshot when recipe is not found 1`] = `<DocumentFragment />`;

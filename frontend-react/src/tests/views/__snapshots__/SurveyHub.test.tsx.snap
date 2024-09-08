@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SurveyHub Component matches snapshot for SurveyHub component 1`] = `
+<DocumentFragment>
+  <div>
+    <h1>
+      Hier könnten Ihre Umfragen stehen, aber Sie sind nicht angemeldet!
+    </h1>
+  </div>
+</DocumentFragment>
+`;

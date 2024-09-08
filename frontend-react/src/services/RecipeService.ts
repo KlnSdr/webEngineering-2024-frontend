@@ -1,7 +1,7 @@
 import { CreateRecipe } from "../types/Recipes";
 import { Recipe } from "../types/Recipes";
 import {NeededProduct} from "../types/Products";
-import {authorizedRequest, request} from "./Requests";
+import {authorizedRequest} from "./Requests";
 
 class RecipeService {
     private static backendURL: string =

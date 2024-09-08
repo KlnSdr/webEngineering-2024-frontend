@@ -244,22 +244,26 @@ function HomePage() {
                 console.error("Failed to delete recipe:", error);
             });
     };
-    const realPage = (myRecipes.map((recipe:Recipe, index:number) => (
+    const realPage = (myRecipes.map((recipe:Recipe) => (
         <div className="RowArea ">
-            <Stack direction={"horizontal"}>
-                <ImageArea origin={""}/>
-                <Link to={`/recipe/view/${myRecipes[index].id}`}> <MyRecipeBar Recipe={myRecipes[index]}/></Link>
-                <Stack direction={"vertical"} gap={2}>
-                    <EditButton Link={`/recipe/edit/${myRecipes[index].id}`}/>
-                    <Button variant="danger" className={"bi bi-x m-2"} onClick={()=> deleteRecipe(myRecipes[index].id)} ></Button>
-                </Stack>
+            <Stack direction={"horizontal"} className={"mt-3"}>
+                <ImageArea origin={recipe.imgUri}/>
+                <Link to={`/recipe/view/${recipe.id}`}> <MyRecipeBar Recipe={recipe}/></Link>
+                    <div className="col-1">
+                        <EditButton Link={`/recipe/edit/${recipe.id}`}/>
+                        <Button variant="danger" className={"bi bi-x m-2"}
+                                onClick={() => deleteRecipe(recipe.id)}></Button>
+                    </div>
             </Stack>
         </div>
-        )));
+)));
 
-    return (
-        <div><h1>Meine Rezepte</h1>
-            {realPage.length === 0 ? <h3>Keine Rezepte vorhanden</h3> : realPage}
+return (
+        <div>
+            <h1>Meine Rezepte</h1>
+            <div className="myRecipesDiv">
+                {realPage.length === 0 ? <h3>Keine Rezepte vorhanden</h3> : realPage}
+            </div>
 
             <Heading2 headingText="Mein Kühlschrank" />
 

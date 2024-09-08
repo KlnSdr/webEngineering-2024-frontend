@@ -253,7 +253,7 @@ function HomePage() {
                         <EditButton Link={`/recipe/edit/${recipe.id}`}/>
                         <Button variant="danger" className={"bi bi-x m-2"}
                                 onClick={() => deleteRecipe(recipe.id)}></Button>
-                        </div>
+                    </div>
             </Stack>
         </div>
 )));

@@ -1,6 +1,5 @@
 import React from "react";
 import {render} from "@testing-library/react";
-import HomePage from "../../views/HomePage";
 import SurveyEditView from "../../views/SurveyEditView";
 
 describe("SurveyEditView Component", () => {

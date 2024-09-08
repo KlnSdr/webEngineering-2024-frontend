@@ -2,10 +2,8 @@ import React from "react";
 import { render, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import SurveyDetailView from "../../views/SurveyDetailView";
-import { RecipeService } from "../../services/RecipeService";
 import { UserService } from "../../services/UserService";
 import { Survey } from "../../types/Surveys";
-import { Recipe } from "../../types/Recipes";
 import { User } from "../../types/Users";
 import SurveyService from "../../services/SurveyService";
 

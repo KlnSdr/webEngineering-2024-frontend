@@ -6,7 +6,6 @@ import SearchView from "../../views/SearchView";
 import {ProductsService} from "../../services/ProductService";
 import {RecipeService} from "../../services/RecipeService";
 
-// Mocking services
 jest.mock("../../services/ProductService");
 jest.mock("../../services/RecipeService");
 

@@ -35,7 +35,7 @@ function SurveyHub(){
         return "display-2";
 
     }
-    const deleteSurvey = (id: number) => {
+const deleteSurvey = (id: number) => {
         SurveyService.deleteSurvey(id).then(() => {
             SurveyService.getSurveysByUserId().then((surveys) => {
                 if(surveys){
@@ -49,11 +49,18 @@ function SurveyHub(){
         });
 
     }
-
     if(!surveys){
         return(
             <div>
-                <h1>Hier könnten deine Umfragen stehen aber du hast keine!!</h1>
+                <h1>Hier könnten Ihre Umfragen stehen, aber Sie sind nicht angemeldet!</h1>
+            </div>
+        );
+    }
+
+    if(surveys.length === 0 ){
+        return(
+            <div>
+                <h1>Erstellen Sie Ihre erste Umfrage, Sie haben noch keine!</h1>
                 <CreateButton Link={"./new"}/>
 
             </div>

@@ -18,7 +18,7 @@ function Layout() {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top navbar-inverse">
         <button
           className="navbar-toggler"
           type="button"

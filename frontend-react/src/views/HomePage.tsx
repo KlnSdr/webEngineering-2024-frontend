@@ -15,6 +15,7 @@ import {FridgeService} from "../services/FridgeService";
 import {UserService} from "../services/UserService";
 import {Table} from "react-bootstrap";
 import {CurrentUser} from "../types/Users";
+import Dropdown from "../components/Dropdown";
 
 /**
  * HomePage view that displays recipes and manages fridge content.
@@ -219,22 +220,15 @@ function HomePage() {
         tempProducts.map((product, index) => (
             <tr key={product.id}>
                 <td>
-                    <select
-                        value={product.productName}
-                        onChange={(e) => handleProductChange(index, e.target.value, product.amount)}
-                    >
-                        {productsData.map((prod) => (
-                            <option key={prod.id} value={prod.name}>
-                                {prod.name}
-                            </option>
-                        ))}
-                    </select>
+                    <Dropdown options={productsData.map((val: Product) => val.name)} initialValue={product.productName} onChange={
+                        (value: string) => handleProductChange(index, value, product.amount)
+                    } />
                 </td>
                 <td>
                     <input
                         type="number"
                         value={product.amount}
-                        onChange={(e) => handleProductChange(index, product.productName, parseFloat(e.target.value))}
+                        onChange={(e) => handleProductChange(index, product.productName, parseInt(e.target.value))}
                     />{" "}
                     {productsData.find((p) => p.name === product.productName)?.unit || ""}
                 </td>

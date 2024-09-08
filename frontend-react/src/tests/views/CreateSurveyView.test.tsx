@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import CreateSurveyView from "../../views/CreateSurveyView";
 import {UserService} from "../../services/UserService";

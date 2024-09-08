@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditRecipeView with PageTitle Component matches snapshot when recipe data is successfully fetched 1`] = `<DocumentFragment />`;
+
+exports[`EditRecipeView with PageTitle Component matches snapshot when recipe is not found 1`] = `<DocumentFragment />`;

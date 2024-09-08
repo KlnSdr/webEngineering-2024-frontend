@@ -24,7 +24,6 @@ function SurveyDetailView() {
     useEffect(() => {
         SurveyService.getSurveyById(id).then((survey) => {
             if (survey) {
-                console.log("Survey data:", survey);
                 setSurvey(survey);
                 recipeSet(survey);
                 UserService.getUser(survey.creator)

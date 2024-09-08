@@ -22,7 +22,6 @@ const AddProducts: React.FC<AddProductsProps> = ({
   };
 
   useEffect(() => {
-    console.log("initialValue", initialValue);
     setNeededProducts(initialValue);
   }, [initialValue]);
 

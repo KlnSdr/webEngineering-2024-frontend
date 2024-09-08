@@ -21,7 +21,6 @@ function SurveyHub(){
     }, []);
 
     function textsize(title: string | any ){
-        console.log(title, title.length);
         if (title.length > 45){
             return "display-6";
         }else if (title.length > 35){

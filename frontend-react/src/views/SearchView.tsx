@@ -42,7 +42,6 @@ function SearchView() {
                 amount: product.amount,
             }
         })).then((results) => {
-            console.log(results);
             setSearchResults(results);
         }).catch((_) => {
             setSearchResults([])

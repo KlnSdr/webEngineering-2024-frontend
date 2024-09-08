@@ -28,7 +28,6 @@ class SurveyService {
                 }
                 return response.json();
             }).then((data: Survey) => {
-                console.log(data);
                 resolve(data);
             }).catch((reason: any) => {
                 reject(reason);

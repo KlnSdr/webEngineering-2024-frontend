@@ -45,11 +45,8 @@ function HomePage() {
     useEffect(() => {
         UserService.getUserInfo()
             .then((userInfo) => {
-                console.log("User info0:", userInfo);
-                console.log("User info01:", userInfo.id);
                 if (userInfo && userInfo.id) {
                     const userId = userInfo.id // Extract userId from internalUser
-                    console.log("User info1:", userInfo);
                     setUserId(userId);
                     myRecipeSet(userId);
                     return FridgeService.getFridgeContent(userId); // Fetch fridge content using userId
@@ -57,7 +54,6 @@ function HomePage() {
                 throw new Error("User not found");
             })
             .then((products) => {
-                console.log("Fetched fridge products:", products);
                 // Transform fetched products to match NeededProduct format
                 const updatedFridgeProducts = products.map((product: any) => ({
                     id: product.id,
@@ -235,7 +231,6 @@ function HomePage() {
     const deleteRecipe = (id: number) => {
         RecipeService.deleteRecipe(id)
             .then(() => {
-                console.log("userid", userId)
                 RecipeService.getRecipeByUser(userId!).then((recipes) => {
                     setMyRecipe(recipes);
                 });

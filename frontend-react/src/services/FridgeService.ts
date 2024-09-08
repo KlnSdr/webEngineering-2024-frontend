@@ -24,7 +24,6 @@ class FridgeService {
                 return response.json();
             })
             .then((products: NeededProduct[]) => {
-                console.log("Fetched fridge products:", products);
                 return products;
             })
             .catch(error => {
@@ -46,8 +45,6 @@ class FridgeService {
             productID: product.id,
             quantity: product.amount
         }));
-
-        console.log("Payload for update:", JSON.stringify(payload, null, 2));
 
         return authorizedRequest(`${this.backendURL}/fridge/${userId}`, {
             method: "PUT",

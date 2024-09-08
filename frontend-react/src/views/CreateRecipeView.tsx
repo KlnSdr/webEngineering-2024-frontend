@@ -112,7 +112,7 @@ function CreateRecipeView({ recipe }: { recipe: Recipe | null }) {
           navigate(`/recipe/view/${updatedRecipe.id}`);
         })
         .catch((reason: any) => {
-          console.log(reason);
+          console.error(reason);
           showPopUpFail();
         });
       return;
@@ -134,7 +134,7 @@ function CreateRecipeView({ recipe }: { recipe: Recipe | null }) {
         navigate(`/recipe/view/${storedRecipe.id}`);
       })
       .catch((reason: any) => {
-        console.log(reason);
+        console.error(reason);
         showPopUpFail();
       });
   };

@@ -24,7 +24,6 @@ function CreateSurveyView({survey}: { survey: UpdateSurvey | null}) {
         emptySurvey.options = survey.options;
     }
     const popUpTimeout: number = parseInt(process.env.REACT_APP_POPUP_TIMEOUT || "5000");
-    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
     const [showFailAlert, setShowFailAlert] = useState(false);
     const [state, setState] = useState<CreateSurvey>(emptySurvey);
 
@@ -94,17 +93,11 @@ function CreateSurveyView({survey}: { survey: UpdateSurvey | null}) {
     };
 
     return (<div>
-        {showSuccessAlert && (<Alert
-            variant="success"
-            onClose={() => setShowSuccessAlert(false)}
-            dismissible
-        >
-            Umfrage erfolgreich erstellt!
-        </Alert>)}
         {showFailAlert && (<Alert
             variant="danger"
             onClose={() => setShowFailAlert(false)}
             dismissible
+            className={"fixed-top"}
         >
             Umfrage konnte nicht erstellt werden!
         </Alert>)}

@@ -1,5 +1,85 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RecipeDetailView Component matches snapshot when recipe is found 1`] = `<DocumentFragment />`;
-
-exports[`RecipeDetailView Component matches snapshot when recipe is not found 1`] = `<DocumentFragment />`;
+exports[`RecipeDetailView Component matches snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="vstack"
+    >
+      <h1
+        class="headline-with-lines"
+      >
+        Rezept nicht gefunden
+      </h1>
+      <img
+        alt="dish"
+        class="img-fluid"
+        src="https://www.gluthelden.de/wp-content/uploads/2018/06/K%C3%A4seso%C3%9Fe-.jpg"
+      />
+      <h1
+        class="headline-with-lines"
+      >
+        Zutaten
+      </h1>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              Zutat
+            </th>
+            <th>
+              Menge
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Käse
+            </td>
+            <td>
+              3 g
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Teig
+            </td>
+            <td>
+              100 g
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <h1
+          class="headline-with-lines"
+        >
+          Zubereitung
+        </h1>
+        <textarea
+          class="form-control"
+          readonly=""
+          rows="10"
+        >
+          Rezept nicht gefunden
+        </textarea>
+      </div>
+      <footer
+        class="text-center bg-body-tertiary pt-3"
+      >
+        <div
+          class="hstack gap-5"
+        >
+          <text>
+             Erstellt von: unknown 
+          </text>
+          <text>
+             Datum: unknown 
+          </text>
+        </div>
+      </footer>
+    </div>
+  </div>
+</DocumentFragment>
+`;

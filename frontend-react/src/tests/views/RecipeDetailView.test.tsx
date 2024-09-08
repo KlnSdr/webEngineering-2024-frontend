@@ -1,67 +1,18 @@
-import React from "react";
-import { render, waitFor } from "@testing-library/react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import RecipeDetailView from "../../views/RecipeDetailView";
-import { request } from "../../services/Requests";
-import {UserService} from "../../services/UserService";
-
-jest.mock("../../services/Requests");
-jest.mock("../../services/UserService");
-
-const mockRequest = request as jest.Mock;
-const mockIsLoggedIn = UserService.isLoggedIn as jest.Mock;
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import RecipeDetailView from "../../views/RecipeDetailView"; // For simulating routing
 
 describe("RecipeDetailView Component", () => {
-
-    it("matches snapshot when recipe is found", async () => {
-        mockIsLoggedIn.mockResolvedValue(true);
-        mockRequest.mockResolvedValueOnce({
-            ok: true,
-            json: async () => ({
-                id: "1",
-                title: "Test Recipe",
-                description: "Description of the recipe",
-                imgUri: "/image/...",
-                isPrivate: false,
-                creationDate: new Date().toISOString(),
-                ownerUri: "/owneruri/1",
-                likedByUserUris: [],
-                productQuantities: {
-                    "/products/1": 100,
-                },
-            }),
-        } as Response);
+    test('matches snapshot', () => {
 
         const { asFragment } = render(
-            <Router>
-                <Routes>
-                    <Route path="/recipes/:id" element={<RecipeDetailView />} />
-                </Routes>
-            </Router>
+            <MemoryRouter initialEntries={["/recipes/view/:id"]}>
+                <RecipeDetailView />
+            </MemoryRouter>
         );
 
-        await waitFor(() => {
-            expect(asFragment()).toMatchSnapshot();
-        });
+        expect(asFragment()).toMatchSnapshot();
     });
 
-    it("matches snapshot when recipe is not found", async () => {
-        mockIsLoggedIn.mockResolvedValue(true);
-        mockRequest.mockResolvedValueOnce({
-            ok: false,
-            json: async () => ({}),
-        } as Response);
-
-        const { asFragment } = render(
-            <Router>
-                <Routes>
-                    <Route path="/recipes/:id" element={<RecipeDetailView />} />
-                </Routes>
-            </Router>
-        );
-
-        await waitFor(() => {
-            expect(asFragment()).toMatchSnapshot();
-        });
-    });
 });

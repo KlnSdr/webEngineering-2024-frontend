@@ -1,6 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SurveyEditView Component matches snapshot for SurveyEditView component 1`] = `
+exports[`SurveyEditView Component matches snapshot for SurveyEditView component if user is logged in 1`] = `
+<DocumentFragment>
+  <div>
+    Umfrage mit Id  konnte nicht gefunden werden.
+  </div>
+</DocumentFragment>
+`;
+
+exports[`SurveyEditView Component matches snapshot for SurveyEditView component if user is not logged in 1`] = `
 <DocumentFragment>
   <div>
     Umfrage mit Id  konnte nicht gefunden werden.

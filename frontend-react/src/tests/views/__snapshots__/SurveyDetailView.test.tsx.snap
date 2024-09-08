@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SurveyDetailView Component renders correctly with survey data 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="FoodTitle"
+    >
+      Survey
+    </h2>
+    <h1>
+      Survey not found
+    </h1>
+  </div>
+</DocumentFragment>
+`;

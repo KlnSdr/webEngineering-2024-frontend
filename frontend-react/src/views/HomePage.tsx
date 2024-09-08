@@ -14,7 +14,6 @@ import Button from "react-bootstrap/Button";
 import {FridgeService} from "../services/FridgeService";
 import {UserService} from "../services/UserService";
 import {Table} from "react-bootstrap";
-import {CurrentUser} from "../types/Users";
 import Dropdown from "../components/Dropdown";
 
 /**

@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomePage Component matches snapshot for HomePage component 1`] = `
+<DocumentFragment>
+  <div>
+    <h1>
+      Meine Rezepte
+    </h1>
+    <h3>
+      Keine Rezepte vorhanden
+    </h3>
+    <h2
+      class="FoodTitle"
+    >
+      Mein Kühlschrank
+    </h2>
+    <div
+      class="col-md-4 mx-auto mt-3 vstack gap-2"
+    >
+      <button
+        class="btn btn-success"
+        type="button"
+      >
+        Produkt hinzufügen
+      </button>
+      <button
+        class="btn btn-primary"
+        type="button"
+      >
+        Speichern
+      </button>
+    </div>
+    <h2
+      class="FoodTitle"
+    >
+      Kühlschrank Inhalt:
+    </h2>
+    <table
+      class="mt-3 table table-striped table-bordered table-hover"
+    >
+      <thead>
+        <tr>
+          <th>
+            Produkt
+          </th>
+          <th>
+            Menge
+          </th>
+          <th>
+            Löschen
+          </th>
+        </tr>
+      </thead>
+      <tbody />
+    </table>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`HomePage Component matches snapshot for NotFoundView component 1`] = `
+<DocumentFragment>
+  <div>
+    <h1>
+      Meine Rezepte
+    </h1>
+    <h3>
+      Keine Rezepte vorhanden
+    </h3>
+    <h2
+      class="FoodTitle"
+    >
+      Mein Kühlschrank
+    </h2>
+    <div
+      class="col-md-4 mx-auto mt-3 vstack gap-2"
+    >
+      <button
+        class="btn btn-success"
+        type="button"
+      >
+        Produkt hinzufügen
+      </button>
+      <button
+        class="btn btn-primary"
+        type="button"
+      >
+        Speichern
+      </button>
+    </div>
+    <h2
+      class="FoodTitle"
+    >
+      Kühlschrank Inhalt:
+    </h2>
+    <table
+      class="mt-3 table table-striped table-bordered table-hover"
+    >
+      <thead>
+        <tr>
+          <th>
+            Produkt
+          </th>
+          <th>
+            Menge
+          </th>
+          <th>
+            Löschen
+          </th>
+        </tr>
+      </thead>
+      <tbody />
+    </table>
+  </div>
+</DocumentFragment>
+`;

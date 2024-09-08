@@ -10,7 +10,7 @@ import {ProductsService} from "../services/ProductService";
 import {Product} from "../types/Products";
 import {User} from "../types/Users";
 import {UserService} from "../services/UserService";
-import {authorizedRequest, request} from "../services/Requests";
+import {authorizedRequest} from "../services/Requests";
 
 function RecipeDetailView() {
   const backendURL: string =

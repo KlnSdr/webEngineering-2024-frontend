@@ -14,7 +14,6 @@ import Button from "react-bootstrap/Button";
 import {FridgeService} from "../services/FridgeService";
 import {UserService} from "../services/UserService";
 import {Table} from "react-bootstrap";
-import {CurrentUser} from "../types/Users";
 import Dropdown from "../components/Dropdown";
 
 /**
@@ -28,21 +27,6 @@ function HomePage() {
     const [tempProducts, setTempProducts] = useState<NeededProduct[]>([]);
     const [userId, setUserId] = useState<number | null>(null);
     const [isAddingProduct, setIsAddingProduct] = useState(false);
-
-    /**
-     * Fetches a recipe by its ID when the component mounts.
-     * @returns void
-     */
-    useEffect(() => {
-        RecipeService.getRecipeById("1").then((recipes) => {
-            if (recipes) {
-                console.log("Recipes", recipes);
-                setMyRecipe(Array(recipes));
-            }
-        }).catch((error) => {
-            console.error("Failed",error);
-        });
-    }, []);
 
     /**
      * Fetches all products from the backend when the component mounts.
@@ -60,13 +44,14 @@ function HomePage() {
      */
     useEffect(() => {
         UserService.getUserInfo()
-            .then((userInfo: CurrentUser) => {
-                console.log("User info:", userInfo);
-
-                // Access userId from internalUser
+            .then((userInfo) => {
+                console.log("User info0:", userInfo);
+                console.log("User info01:", userInfo.id);
                 if (userInfo && userInfo.id) {
-                    const userId = userInfo.id; // Extract userId from internalUser
+                    const userId = userInfo.id // Extract userId from internalUser
+                    console.log("User info1:", userInfo);
                     setUserId(userId);
+                    myRecipeSet(userId);
                     return FridgeService.getFridgeContent(userId); // Fetch fridge content using userId
                 }
                 throw new Error("User not found");
@@ -86,6 +71,15 @@ function HomePage() {
                 console.error("Failed to load fridge content:", error);
             });
     }, []);
+
+    function myRecipeSet(usrId: number) {
+        RecipeService.getRecipeByUser(usrId!).then((recipes) => {
+            if (recipes) {
+                setMyRecipe(recipes);
+            }
+        })
+    }
+
 
     /**
      * Handles changes to the product in the temporary product list.
@@ -152,7 +146,6 @@ function HomePage() {
             };
         });
 
-        // Update fridge content and then fetch updated fridge content
         FridgeService.updateFridgeContent(userId, filteredProducts)
             .then(() => FridgeService.getFridgeContent(userId))
             .then((fetchedProducts) => {
@@ -178,7 +171,6 @@ function HomePage() {
     const deleteProduct = (productId: number) => {
         if (userId === null) return;
 
-        // Delete the product using productId and then fetch updated fridge content
         FridgeService.deleteFridgeProduct(userId, productId)
             .then(() => FridgeService.getFridgeContent(userId))
             .then((updatedProducts) => {
@@ -240,24 +232,34 @@ function HomePage() {
             </tr>
 
         ));
-
-    if (myRecipes.length === 0) {
-        return <div>Loading...</div>;
-    }
-
-    const realPage = (
+    const deleteRecipe = (id: number) => {
+        RecipeService.deleteRecipe(id)
+            .then(() => {
+                console.log("userid", userId)
+                RecipeService.getRecipeByUser(userId!).then((recipes) => {
+                    setMyRecipe(recipes);
+                });
+            })
+            .catch((error) => {
+                console.error("Failed to delete recipe:", error);
+            });
+    };
+    const realPage = (myRecipes.map((recipe:Recipe, index:number) => (
         <div className="RowArea ">
             <Stack direction={"horizontal"}>
                 <ImageArea origin={""}/>
-                <Link to={`/recipe/view/${myRecipes[0].id}`}> <MyRecipeBar Recipe={myRecipes[0]}/></Link>
-                <EditButton Link={`/recipe/edit/${myRecipes[0].id}`}/>
+                <Link to={`/recipe/view/${myRecipes[index].id}`}> <MyRecipeBar Recipe={myRecipes[index]}/></Link>
+                <Stack direction={"vertical"} gap={2}>
+                    <EditButton Link={`/recipe/edit/${myRecipes[index].id}`}/>
+                    <Button variant="danger" className={"bi bi-x m-2"} onClick={()=> deleteRecipe(myRecipes[index].id)} ></Button>
+                </Stack>
             </Stack>
         </div>
-    );
+        )));
 
     return (
         <div><h1>Meine Rezepte</h1>
-            {realPage}
+            {realPage.length === 0 ? <h3>Keine Rezepte vorhanden</h3> : realPage}
 
             <Heading2 headingText="Mein Kühlschrank" />
 

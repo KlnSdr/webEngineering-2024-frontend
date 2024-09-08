@@ -3,12 +3,24 @@ import AddProductLine from "./AddProductLine";
 import Button from "react-bootstrap/Button";
 import { NeededProduct, Product } from "../types/Products";
 
+/**
+ * Props for the AddProducts component.
+ * @typedef {Object} AddProductsProps
+ * @property {NeededProduct[]} initialValue - Initial list of needed products.
+ * @property {function} onChange - Callback function to handle changes in the needed products list.
+ * @property {Product[]} availableProducts - List of available products.
+ */
 interface AddProductsProps {
   initialValue: NeededProduct[];
   onChange: (products: NeededProduct[]) => void;
   availableProducts: Product[];
 }
 
+/**
+ * AddProducts component allows users to manage a list of needed products.
+ * @param {AddProductsProps} props - The props for the component.
+ * @returns {JSX.Element} The rendered AddProducts component.
+ */
 const AddProducts: React.FC<AddProductsProps> = ({
   initialValue,
   onChange,
@@ -25,6 +37,12 @@ const AddProducts: React.FC<AddProductsProps> = ({
     setNeededProducts(initialValue);
   }, [initialValue]);
 
+  /**
+   * Updates a needed product at a specific index.
+   * @param {number} index - The index of the product to update.
+   * @param {string} productName - The new product name.
+   * @param {number} amount - The new amount.
+   */
   const updateNeededProduct = (
     index: number,
     productName: string,
@@ -40,6 +58,10 @@ const AddProducts: React.FC<AddProductsProps> = ({
     onChange(neededProductsCopy);
   };
 
+  /**
+   * Removes a needed product at a specific index.
+   * @param {number} index - The index of the product to remove.
+   */
   const removeNeededProductAt = (index: number) => {
     const filtered = neededProducts.filter((_, i: number) => i !== index);
     setNeededProducts(filtered);

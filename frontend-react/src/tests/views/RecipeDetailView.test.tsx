@@ -3,14 +3,18 @@ import { render, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import RecipeDetailView from "../../views/RecipeDetailView";
 import { request } from "../../services/Requests";
+import {UserService} from "../../services/UserService";
 
 jest.mock("../../services/Requests");
+jest.mock("../../services/UserService");
 
 const mockRequest = request as jest.Mock;
+const mockIsLoggedIn = UserService.isLoggedIn as jest.Mock;
 
 describe("RecipeDetailView Component", () => {
 
     it("matches snapshot when recipe is found", async () => {
+        mockIsLoggedIn.mockResolvedValue(true);
         mockRequest.mockResolvedValueOnce({
             ok: true,
             json: async () => ({
@@ -42,6 +46,7 @@ describe("RecipeDetailView Component", () => {
     });
 
     it("matches snapshot when recipe is not found", async () => {
+        mockIsLoggedIn.mockResolvedValue(true);
         mockRequest.mockResolvedValueOnce({
             ok: false,
             json: async () => ({}),

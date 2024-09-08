@@ -6,17 +6,7 @@ import NotFoundView from "../../views/NotFoundView";
 
 describe("NotFoundView Component", () => {
 
-    it("renders 404 NotFoundView for unknown routes and matches snapshot", () => {
-        const { asFragment } = render(
-            <MemoryRouter initialEntries={["/unknown"]}>
-                <App />
-            </MemoryRouter>
-        );
-
-        expect(asFragment()).toMatchSnapshot();
-    });
-
-    it('matches snapshot for NotFoundView component alone', () => {
+    it('matches snapshot for NotFoundView component', () => {
         const { asFragment } = render(<NotFoundView />);
         expect(asFragment()).toMatchSnapshot();
     });

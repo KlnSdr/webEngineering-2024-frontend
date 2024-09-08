@@ -101,6 +101,21 @@ class SurveyService {
             });
         });
     }
+
+    public static deleteSurvey(surveyId: number): Promise<void> {
+        return new Promise((resolve, reject) => {
+            authorizedRequest(`${this.backendURL}/surveys/${surveyId}`, {
+                method: "DELETE",
+            }).then((response: Response) => {
+                if (!response.ok) {
+                    throw new Error("Could not delete survey.");
+                }
+                resolve();
+            }).catch((reason: any) => {
+                reject(reason);
+            });
+        });
+    }
 }
 
 export default SurveyService;

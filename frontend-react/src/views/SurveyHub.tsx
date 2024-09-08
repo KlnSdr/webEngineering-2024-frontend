@@ -5,6 +5,7 @@ import "../style/SurveyHub.css";
 import {Link} from "react-router-dom";
 import EditButton, {CreateButton} from "../components/EditButton";
 import Stack from "react-bootstrap/Stack";
+import Button from "react-bootstrap/Button";
 
 function SurveyHub(){
     const [surveys, setSurveys] = useState<Survey[] | null>(null);
@@ -35,6 +36,21 @@ function SurveyHub(){
 
     }
 
+    const deleteSurvey = (id: number) => {
+        SurveyService.deleteSurvey(id).then(() => {
+            SurveyService.getSurveysByUserId().then((surveys) => {
+                if(surveys){
+                    setSurveys(surveys);
+                }
+            }).catch((error) => {
+                console.error("Failed to load surveys", error);
+            });
+        }).catch((error) => {
+            console.error("Failed to delete survey", error);
+        });
+
+    }
+
 
     if(!surveys){
         return(
@@ -55,7 +71,10 @@ function SurveyHub(){
                 <div key={index} className="TextArea align-content-center mt-3">
                     <Link to ={`./view/${survey.id}`}><h2 className={textsize(survey.title)}>{survey.title}</h2></Link>
                 </div>
-                    <EditButton Link={`/survey/edit/${survey.id}`}/>
+                    <div className="col-1">
+                        <EditButton Link={`/survey/edit/${survey.id}`}/>
+                        <Button variant="danger" className={"bi bi-x m-2"} onClick={()=> deleteSurvey(survey.id)}></Button>
+                    </div>
                 </Stack>
             ))}
         </div>

@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import "../style/Dropdown.css";
+
 
 interface DropdownProps {
     options: string[],
@@ -10,26 +12,42 @@ const Dropdown: React.FC<DropdownProps> = ({
                                                initialValue,
                                                onChange,
                                            }) => {
-    const [value, setValue] = useState(initialValue);
+    const [open, setOpen] = useState(false);
+    const [filterValue, setFilterValue] = useState(initialValue);
     return (
-        <select
-            onChange={(e) => {
-                setValue(e.target.value);
-                onChange(e.target.value);
-            }}
-        >
-            {options.map((option: string) => {
-                if (option === value) {
-                    return (
-                        <option value={option} selected>
-                            {option}
-                        </option>
-                    );
-                } else {
-                    return <option value={option}>{option}</option>;
-                }
-            })}
-        </select>
+        <div>
+            <input
+                className="form-control"
+                type="text"
+                value={filterValue}
+                onChange={(e) => {
+                    setFilterValue(e.target.value);
+                }}
+                onFocus={() => setOpen(true)}
+                onBlur={() => setTimeout(() => setOpen(false), 200)}
+            />
+            {open && (
+                <div className="dropdownOptionsContainer">
+                    {options.filter((option: string) => option.toLowerCase().includes(filterValue.toLowerCase())).map((option: string) => {
+                        return (
+                            <div
+                                className="dropdownOption"
+                                style={{
+                                    cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                    setOpen(false);
+                                    setFilterValue(option);
+                                    onChange(option);
+                                }}
+                            >
+                                {option}
+                            </div>
+                        );
+                    })}
+                </div>)
+            }
+        </div>
     );
 };
 

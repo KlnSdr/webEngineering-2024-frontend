@@ -66,7 +66,7 @@ describe('SearchView', () => {
         fireEvent.click(addButton);
 
         // Check that the select input is now rendered
-        const selectInput = screen.getByRole('combobox');
+        const selectInput = screen.getByRole('textbox');
         expect(selectInput).toBeInTheDocument();
     });
 
@@ -78,7 +78,7 @@ describe('SearchView', () => {
         fireEvent.click(addButton);
 
         // Ensure the product line is rendered
-        const selectInput = screen.getByRole('combobox');
+        const selectInput = screen.getByRole('textbox');
         expect(selectInput).toBeInTheDocument();
 
         // Locate the remove button

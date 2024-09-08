@@ -45,6 +45,7 @@ describe("RecipeService", () => {
       title: "Test Recipe",
       image: "data:image/png;base64,testImage",
       description: "Test description",
+      isPrivate: false,
       products: [
         { id: 1, productName: "Product 1", amount: 100 },
         { id: 2, productName: "Product 2", amount: 200 },
@@ -73,6 +74,7 @@ describe("RecipeService", () => {
       title: "Recipe with No Image",
       image: null,
       description: "Description with no image",
+      isPrivate: false,
       products: [{ id: 3, productName: "Product 3", amount: 150 }],
     };
 
@@ -107,6 +109,7 @@ describe("RecipeService", () => {
       title: "A".repeat(1000),
       image: "data:image/png;base64," + "B".repeat(1000),
       description: "C".repeat(1000),
+      isPrivate: false,
       products: Array(1000).fill({ id: 1, productName: "Product", amount: 1 }),
     };
 
@@ -142,6 +145,7 @@ describe("RecipeService", () => {
       title: "Test Recipe",
       image: "data:image/png;base64,testImage",
       description: "Test description",
+      isPrivate: false,
       products: [
         { id: 1, productName: "Product 1", amount: 100 },
         { id: 2, productName: "Product 2", amount: 200 },
@@ -171,6 +175,7 @@ describe("RecipeService", () => {
       title: "Test Recipe",
       image: "data:image/png;base64,testImage",
       description: "Test description",
+      isPrivate: false,
       products: [
         { id: 1, productName: "Product 1", amount: 100 },
         { id: 2, productName: "Product 2", amount: 200 },
@@ -190,61 +195,6 @@ describe("RecipeService", () => {
       },
       body: JSON.stringify(mockCreateRecipe),
     });
-  });
-  test("getAll returns a list of recipes", async () => {
-    // Mock the response from the fetch call
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockRecipes,
-    });
-
-    const recipes = await RecipeService.getAll();
-    expect(recipes).toEqual(mockRecipes);
-    expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {});
-  });
-
-  test("getAll returns recipes with correct properties", async () => {
-    // Mock the response from the fetch call
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockRecipes,
-    });
-
-    const recipes = await RecipeService.getAll();
-
-    recipes.forEach((recipe) => {
-      expect(recipe).toHaveProperty("title");
-      expect(recipe).toHaveProperty("image");
-      expect(recipe).toHaveProperty("description");
-      expect(recipe).toHaveProperty("products");
-    });
-
-    expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {});
-  });
-
-  test("getAll throws an error if the network request fails", async () => {
-    // Mock a failed network request
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      ok: false,
-    });
-
-    await expect(RecipeService.getAll()).rejects.toThrow(
-        "Failed to load recipes."
-    );
-    expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {});
-  });
-
-  test("getAll throws an error if fetch rejects", async () => {
-    // Mock a network error (fetch rejects)
-    const mockError = new Error("Network Error");
-    (fetch as jest.Mock).mockRejectedValueOnce(mockError);
-
-    await expect(RecipeService.getAll()).rejects.toThrow(mockError);
-    expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {});
   });
 
   //Static recipes for testing

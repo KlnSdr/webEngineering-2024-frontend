@@ -4,7 +4,7 @@ interface CreateRecipe {
   title: string;
   image: string | null;
   description: string;
-
+  isPrivate: boolean;
   products: NeededProduct[];
 }
 

@@ -1,7 +1,7 @@
 import { CreateRecipe } from "../types/Recipes";
 import { Recipe } from "../types/Recipes";
 import {NeededProduct} from "../types/Products";
-import {authorizedRequest, request} from "./Requests";
+import {authorizedRequest} from "./Requests";
 
 class RecipeService {
     private static backendURL: string =
@@ -44,25 +44,9 @@ class RecipeService {
         });
     }
 
-    public static getAll(): Promise<Recipe[]> {
-        return new Promise((resolve, reject) => {
-            request(`${this.backendURL}/recipes`).then((response: Response) => {
-                if (!response.ok) {
-                    throw new Error("Failed to load recipes.");
-                }
-                return response.json();
-            }).then((data: Recipe[]) => {
-                resolve(data);
-            })
-                .catch((reason: any) => {
-                    reject(reason);
-                });
-        });
-    }
-
     public static searchRecipesByText(searchString: string): Promise<Recipe[]> {
         return new Promise((resolve, reject) => {
-            request(`${this.backendURL}/search/recipes?searchString=${searchString}`).then((response: Response) => {
+            authorizedRequest(`${this.backendURL}/search/recipes?searchString=${searchString}`).then((response: Response) => {
                 if (!response.ok) {
                     throw new Error("Failed to search recipes.");
                 }
@@ -79,7 +63,7 @@ class RecipeService {
     public static searchRecipesByProducts(neededProducts: NeededProduct[]): Promise<Recipe[]> {
         return new Promise((resolve, reject) => {
             const productUris: string[] = neededProducts.map((product: NeededProduct) => `/products/${product.id}`);
-            request(`${this.backendURL}/search/recipes/by-products`, {
+            authorizedRequest(`${this.backendURL}/search/recipes/by-products`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -100,7 +84,7 @@ class RecipeService {
 
     public static getRecipeById(id: string): Promise<Recipe> {
         return new Promise((resolve, reject) => {
-            request(`${this.backendURL}/recipes/${id}`).then((response: Response) => {
+            authorizedRequest(`${this.backendURL}/recipes/${id}`).then((response: Response) => {
                 if (!response.ok) {
                     throw new Error("Failed to load recipe.");
                 }

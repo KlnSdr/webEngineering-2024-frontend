@@ -3,6 +3,11 @@ interface UncheckCheckboxProps {
     voteChange: ()=> void;
 }
 
+interface isPrivateCheckbox{
+    isPrivate: ()=> void;
+    checked: boolean;
+}
+
 const  UncheckCheckbox: React.FC<UncheckCheckboxProps> = ({ voteChange}) => {
 
     function getAllCheckboxes(): HTMLInputElement[] {
@@ -30,4 +35,15 @@ const  UncheckCheckbox: React.FC<UncheckCheckboxProps> = ({ voteChange}) => {
     );
 }
 
+const IsPrivateCheckbox: React.FC<isPrivateCheckbox> = ({ isPrivate, checked}) => {
+    return (
+            <div className="form-check">
+                <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked={checked} onChange={isPrivate}/>
+                <label className="form-check-label" htmlFor="flexCheckChecked">Privat</label>
+            </div>
+    );
+}
+
+
 export default UncheckCheckbox;
+export {IsPrivateCheckbox};

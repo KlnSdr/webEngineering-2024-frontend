@@ -31,3 +31,30 @@ describe("UncheckCheckbox Component", () => {
         expect(checkbox).toBeChecked();
     });
 });
+describe("IsPrivateCheckbox Component", () => {
+
+        test("renders with initial value", () => {
+            const isPrivate = jest.fn();
+            const {asFragment} = render(<UncheckCheckbox voteChange={isPrivate} />);
+            const checkbox = screen.getByRole("checkbox");
+            expect(checkbox).not.toBeChecked();
+            expect(asFragment()).toMatchSnapshot();
+        });
+
+        test("calls isPrivate callback when checkbox is clicked", () => {
+            const isPrivate = jest.fn();
+            render(<UncheckCheckbox voteChange={isPrivate} />);
+            const checkbox = screen.getByRole("checkbox");
+            userEvent.click(checkbox);
+            expect(checkbox).toBeChecked();
+            expect(isPrivate).toHaveBeenCalledTimes(1);
+        });
+
+        test(" check checkbox when clicked", () => {
+            const isPrivate = jest.fn();
+            render(<UncheckCheckbox voteChange={isPrivate} />);
+            const checkbox = screen.getByRole("checkbox");
+            userEvent.click(checkbox);
+            expect(checkbox).toBeChecked();
+        });
+});

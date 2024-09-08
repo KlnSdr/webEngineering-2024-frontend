@@ -9,9 +9,6 @@ jest.mock("../../services/UserService");
 const mockIsLoggedIn = UserService.isLoggedIn as jest.Mock;
 
 describe("CreateRecipeView Component", () => {
-    beforeEach(() => {
-        jest.resetAllMocks();
-    });
 
     it("redirects to login if user is not logged in", async () => {
         mockIsLoggedIn.mockResolvedValue(false);
@@ -25,13 +22,11 @@ describe("CreateRecipeView Component", () => {
 
     it("renders correctly when user is logged in and matches snapshot", async () => {
         mockIsLoggedIn.mockResolvedValue(true);
-
         const { asFragment } = render(
             <Router>
                 <CreateRecipeView recipe={null} />
             </Router>
         );
-
         await waitFor(() => {
             expect(asFragment()).toMatchSnapshot();
         });

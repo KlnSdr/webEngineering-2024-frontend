@@ -1,56 +1,36 @@
 import React from "react";
-import { render, waitFor } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
-import SurveyDetailView from "../../views/SurveyDetailView";
+import { render } from "@testing-library/react";
+import { MemoryRouter} from "react-router-dom";
 import { UserService } from "../../services/UserService";
-import { Survey } from "../../types/Surveys";
-import { User } from "../../types/Users";
-import SurveyService from "../../services/SurveyService";
+import RecipeDetailView from "../../views/RecipeDetailView";
+import SurveyDetailView from "../../views/SurveyDetailView";
 
-jest.mock("../../services/SurveyService");
-jest.mock("../../services/RecipeService");
 jest.mock("../../services/UserService");
 
-const mockGetSurveyById = SurveyService.getSurveyById as jest.Mock;
-const mockGetUser = UserService.getUser as jest.Mock;
+const mockIsLoggedIn = UserService.isLoggedIn as jest.Mock;
 
-describe("SurveyDetailView Component", () => {
-    const mockSurvey: Survey = {
-        id: 1,
-        title: "Test Survey",
-        participants: ["User1", "User2"],
-        creator: "User1",
-        recipeVote: {
-            "recipe1": 2,
-            "recipe2": 0,
-        },
-        options: ["recipe1", "recipe2"],
-        creationDate: new Date()
-    };
+describe("RecipeEditView Component", () => {
 
-
-    const mockUser: User = {
-        userId: 1,
-        userName: "User1",
-    };
-
-    beforeEach(() => {
-        jest.resetAllMocks();
-    });
-
-    it("renders correctly with survey data", async () => {
-        mockGetSurveyById.mockResolvedValue(mockSurvey);
-        mockGetUser.mockResolvedValue(mockUser);
-
+    test('matches snapshot for SurveyDetailView component if user is logged in', () => {
+        mockIsLoggedIn.mockResolvedValue(true);
         const { asFragment } = render(
-            <Router>
+            <MemoryRouter initialEntries={["/survey/view/:id"]}>
                 <SurveyDetailView />
-            </Router>
+            </MemoryRouter>
         );
 
-        await waitFor(() => {
-            expect(asFragment()).toMatchSnapshot();
-        });
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    test('matches snapshot for SurveyDetailView component if user is not logged in', () => {
+        mockIsLoggedIn.mockResolvedValue(false);
+        const { asFragment } = render(
+            <MemoryRouter initialEntries={["/survey/view/:id"]}>
+                <SurveyDetailView />
+            </MemoryRouter>
+        );
+
+        expect(asFragment()).toMatchSnapshot();
     });
 
 });

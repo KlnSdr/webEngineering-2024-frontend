@@ -1,51 +1,84 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SearchView renders correctly 1`] = `
+exports[`SearchView matches snapshot  1`] = `
 <DocumentFragment>
-  <div
-    class="search-view"
-  >
-    <h1
-      class="headline-with-lines"
-    >
-      Suche
-    </h1>
-    <h2
-      class="FoodTitle"
-    >
-      Produkte:
-    </h2>
+  <div>
     <div
-      class="col-md-4 mx-auto vstack gap-2"
+      class="vstack"
     >
-      <button
-        class="bi bi-plus btn btn-primary"
-        type="button"
+      <h1
+        class="headline-with-lines"
       >
-        Produkt hinzufügen
-      </button>
-      <button
-        class="mt-3 bi bi-search btn btn-primary"
-        type="button"
+        Rezept nicht gefunden
+      </h1>
+      <img
+        alt="dish"
+        class="img-fluid"
+        src="https://www.gluthelden.de/wp-content/uploads/2018/06/K%C3%A4seso%C3%9Fe-.jpg"
+      />
+      <h1
+        class="headline-with-lines"
       >
-        Suchen
-      </button>
-    </div>
-    <h2
-      class="FoodTitle"
-    >
-      Ergebnisse:
-    </h2>
-    <div
-      class="list-group"
-    >
-      <div
-        class="d-flex align-items-center list-group-item"
-      >
-        <span>
-          Keine Rezepte gefunden
-        </span>
+        Zutaten
+      </h1>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              Zutat
+            </th>
+            <th>
+              Menge
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Käse
+            </td>
+            <td>
+              3 g
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Teig
+            </td>
+            <td>
+              100 g
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <h1
+          class="headline-with-lines"
+        >
+          Zubereitung
+        </h1>
+        <textarea
+          class="form-control"
+          readonly=""
+          rows="10"
+        >
+          Rezept nicht gefunden
+        </textarea>
       </div>
+      <footer
+        class="text-center bg-body-tertiary pt-3"
+      >
+        <div
+          class="hstack gap-5"
+        >
+          <text>
+             Erstellt von: unknown 
+          </text>
+          <text>
+             Datum: unknown 
+          </text>
+        </div>
+      </footer>
     </div>
   </div>
 </DocumentFragment>

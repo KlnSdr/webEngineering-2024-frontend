@@ -138,12 +138,13 @@ function CreateRecipeView({ recipe }: { recipe: Recipe | null }) {
   };
 
   return (
-    <div className="createRecipeView">
+    <div>
       {showFailAlert && (
         <Alert
           variant="danger"
           onClose={() => setShowFailAlert(false)}
           dismissible
+          className={"fixed-top"}
         >
           Rezept konnte nicht gespeichert werden.
         </Alert>

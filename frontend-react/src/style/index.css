@@ -43,3 +43,9 @@ nav,
 .nav-link {
   color: white;
 }
+
+.alert {
+  margin-top: 8vh;
+  width: 50%;
+  margin-left: 25%;
+}

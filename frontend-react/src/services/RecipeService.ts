@@ -12,6 +12,7 @@ class RecipeService {
         recipe.products.forEach((product) => {
             quantityMap[`/products/${product.id}`] = product.amount;
         });
+        alert(JSON.stringify(recipe));
         return new Promise((resolve, reject) => {
             authorizedRequest(`${this.backendURL}/recipes`, {
                 method: "POST",
@@ -22,7 +23,7 @@ class RecipeService {
             title: recipe.title,
             imgUri: recipe.image,
             description: recipe.description,
-            isPrivate: false,
+            isPrivate: recipe.isPrivate,
             productUris: recipe.products.map((product) => `/products/${product.id}`),
             productQuantities: quantityMap
 

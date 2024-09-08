@@ -10,7 +10,7 @@ import {ProductsService} from "../services/ProductService";
 import {Product} from "../types/Products";
 import {User} from "../types/Users";
 import {UserService} from "../services/UserService";
-import {request} from "../services/Requests";
+import {authorizedRequest, request} from "../services/Requests";
 
 function RecipeDetailView() {
   const backendURL: string =
@@ -24,7 +24,7 @@ function RecipeDetailView() {
         ProductsService.getAll().then((productDetails: Product[]) => {
         (async () => {
             try {
-                const response = await request(`${backendURL}/recipes/${id}`);
+                const response = await authorizedRequest(`${backendURL}/recipes/${id}`);
                 if (!response.ok) {
                     throw new Error("Failed to load recipe.");
                 }

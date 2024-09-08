@@ -344,4 +344,53 @@ describe("RecipeService", () => {
     const recipe = await RecipeService.getRecipeById(recipeId);
     expect(recipe).toEqual(mockRecipes[0]);
   });
+  test("getRecipeById throws an error if the network request fails", async () => {
+    const recipeId = "1";
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+    });
+
+    await expect(RecipeService.getRecipeById(recipeId)).rejects.toThrow(
+        "Failed to load recipe."
+    );
+  });
+
+  test("getRecipeByUser resolves successfully with valid recipe", async () => {
+    const userId = 1;
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockRecipes,
+    });
+    await expect(RecipeService.getRecipeByUser(userId)).resolves.toEqual(mockRecipes);
+  });
+    test("getRecipeByUser throws an error if the network request fails", async () => {
+        const userId = 1;
+        (fetch as jest.Mock).mockResolvedValueOnce({
+        ok: false,
+        });
+
+        await expect(RecipeService.getRecipeByUser(userId)).rejects.toThrow(
+            "Failed to load recipes."
+        );
+    });
+    test("deleteRecipe resolves successfully with valid recipe", async () => {
+        const recipeId = 1;
+        (fetch as jest.Mock).mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockRecipes[0],
+        });
+
+        await expect(RecipeService.deleteRecipe(recipeId)).resolves.toEqual(undefined);
+    });
+
+    test("deleteRecipe throws an error if the network request fails", async () => {
+        const recipeId = 1;
+        (fetch as jest.Mock).mockResolvedValueOnce({
+        ok: false,
+        });
+
+        await expect(RecipeService.deleteRecipe(recipeId)).rejects.toThrow(
+            "Failed to delete recipe."
+        );
+    });
 });

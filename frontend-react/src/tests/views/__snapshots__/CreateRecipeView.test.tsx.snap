@@ -1,5 +1,141 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`CreateRecipeView Component renders correct when user is logged in and matches snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div>
+      <h1
+        class="headline-with-lines"
+      >
+        Title
+      </h1>
+      <input
+        class="form-control"
+        type="text"
+        value=""
+      />
+    </div>
+    <div>
+      <h1
+        class="headline-with-lines"
+      >
+        Bild Url
+      </h1>
+      <input
+        class="form-control"
+        type="text"
+        value=""
+      />
+    </div>
+    <h1
+      class="headline-with-lines"
+    >
+      Zutaten
+    </h1>
+    <div>
+      <button
+        class="bi bi-plus btn btn-primary"
+        data-testid="add-product"
+        type="button"
+      />
+    </div>
+    <h1
+      class="headline-with-lines"
+    >
+      Zubereitung
+    </h1>
+    <textarea
+      class="form-control"
+      rows="10"
+    />
+    <div
+      class="hstack"
+    >
+      <button
+        class="ms-auto btn btn-secondary"
+        type="button"
+      >
+        verwerfen
+      </button>
+      <button
+        class="btn btn-primary"
+        type="button"
+      >
+        speichern
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CreateRecipeView Component renders correctly when user is logged in and matches snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div>
+      <h1
+        class="headline-with-lines"
+      >
+        Title
+      </h1>
+      <input
+        class="form-control"
+        type="text"
+        value=""
+      />
+    </div>
+    <div>
+      <h1
+        class="headline-with-lines"
+      >
+        Bild Url
+      </h1>
+      <input
+        class="form-control"
+        type="text"
+        value=""
+      />
+    </div>
+    <h1
+      class="headline-with-lines"
+    >
+      Zutaten
+    </h1>
+    <div>
+      <button
+        class="bi bi-plus btn btn-primary"
+        data-testid="add-product"
+        type="button"
+      />
+    </div>
+    <h1
+      class="headline-with-lines"
+    >
+      Zubereitung
+    </h1>
+    <textarea
+      class="form-control"
+      rows="10"
+    />
+    <div
+      class="hstack"
+    >
+      <button
+        class="ms-auto btn btn-secondary"
+        type="button"
+      >
+        verwerfen
+      </button>
+      <button
+        class="btn btn-primary"
+        type="button"
+      >
+        speichern
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`CreateSurveyView Component renders correct when user is logged in 1`] = `
 <DocumentFragment>
   <div>

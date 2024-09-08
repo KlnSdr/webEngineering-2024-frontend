@@ -4,87 +4,35 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { ProductsService } from "../../services/ProductService";
 import { request } from "../../services/Requests";
 import EditRecipeView from "../../views/RecipeEditView";
-import PageTitle from "../../components/PageTitle";
+import RecipeDetailView from "../../views/RecipeDetailView";
+import {UserService} from "../../services/UserService";
 
-jest.mock("../../services/ProductService");
-jest.mock("../../services/Requests");
+jest.mock("../../services/UserService");
 
-const mockRequest = request as jest.Mock;
-const mockGetAll = ProductsService.getAll as jest.Mock;
+const mockIsLoggedIn = UserService.isLoggedIn as jest.Mock;
 
-describe("EditRecipeView with PageTitle Component", () => {
+describe("RecipeEditView Component", () => {
 
-    mockGetAll.mockResolvedValue([
-        { id: 1, name: "One", unit: "g" },
-        { id: 2, name: "Two", unit: "ml" }
-    ]);
-
-    it("matches snapshot when recipe data is successfully fetched", async () => {
-
-        mockRequest.mockResolvedValue({
-            ok: true,
-            json: async () => ({
-                id: "1",
-                title: "Test Recipe",
-                description: "Test Description",
-                imgUri: "/test-image.jpg",
-                isPrivate: false,
-                creationDate: "2024-01-01T00:00:00.000Z",
-                ownerUri: "/owneruri/1",
-                likedByUserUris: [],
-                productQuantities: {
-                    "/products/1": 500,
-                    "/products/2": 200,
-                },
-            }),
-        } as Response);
-
+    test('matches snapshot for RecipeEditView component if user is logged in', () => {
+        mockIsLoggedIn.mockResolvedValue(true);
         const { asFragment } = render(
-            <MemoryRouter initialEntries={["/recipes/edit/1"]}>
-                <Routes>
-                    <Route
-                        path="recipe/:id"
-                        element={
-                            <>
-                                <PageTitle title="Rezept bearbeiten" />
-                                <EditRecipeView />
-                            </>
-                        }
-                    />
-                </Routes>
+            <MemoryRouter initialEntries={["/recipes/edit/:id"]}>
+                <RecipeDetailView />
             </MemoryRouter>
         );
 
-        await waitFor(() => {
-            expect(asFragment()).toMatchSnapshot();
-        });
+        expect(asFragment()).toMatchSnapshot();
     });
 
-    it("matches snapshot when recipe is not found", async () => {
-
-        mockRequest.mockResolvedValue({
-            ok: false,
-            json: async () => ({}),
-        } as Response);
-
+    test('matches snapshot for RecipeEditView component if user is not logged in', () => {
+        mockIsLoggedIn.mockResolvedValue(false);
         const { asFragment } = render(
-            <MemoryRouter initialEntries={["/recipes/1"]}>
-                <Routes>
-                    <Route
-                        path="edit/:id"
-                        element={
-                            <>
-                                <PageTitle title="Rezept bearbeiten" />
-                                <EditRecipeView />
-                            </>
-                        }
-                    />
-                </Routes>
+            <MemoryRouter initialEntries={["/recipes/edit/:id"]}>
+                <RecipeDetailView />
             </MemoryRouter>
         );
 
-        await waitFor(() => {
-            expect(asFragment()).toMatchSnapshot();
-        });
+        expect(asFragment()).toMatchSnapshot();
     });
+
 });

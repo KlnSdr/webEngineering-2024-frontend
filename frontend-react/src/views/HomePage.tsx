@@ -244,14 +244,14 @@ function HomePage() {
                 console.error("Failed to delete recipe:", error);
             });
     };
-    const realPage = (myRecipes.map((recipe:Recipe, index:number) => (
+    const realPage = (myRecipes.map((recipe:Recipe) => (
         <div className="RowArea ">
             <Stack direction={"horizontal"}>
-                <ImageArea origin={""}/>
-                <Link to={`/recipe/view/${myRecipes[index].id}`}> <MyRecipeBar Recipe={myRecipes[index]}/></Link>
+                <ImageArea origin={recipe.imgUri}/>
+                <Link to={`/recipe/view/${recipe.id}`}> <MyRecipeBar Recipe={recipe}/></Link>
                 <Stack direction={"vertical"} gap={2}>
-                    <EditButton Link={`/recipe/edit/${myRecipes[index].id}`}/>
-                    <Button variant="danger" className={"bi bi-x m-2"} onClick={()=> deleteRecipe(myRecipes[index].id)} ></Button>
+                    <EditButton Link={`/recipe/edit/${recipe.id}`}/>
+                    <Button variant="danger" className={"bi bi-x m-2"} onClick={()=> deleteRecipe(recipe.id)} ></Button>
                 </Stack>
             </Stack>
         </div>

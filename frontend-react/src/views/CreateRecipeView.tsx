@@ -14,18 +14,21 @@ import Stack from "react-bootstrap/Stack";
 import { RecipeService } from "../services/RecipeService";
 import { UserService } from "../services/UserService";
 import { useNavigate } from "react-router-dom";
+import {IsPrivateCheckbox} from "../components/UncheckCheckbox";
 
 function CreateRecipeView({ recipe }: { recipe: Recipe | null }) {
   const emptyRecipe: CreateRecipe = {
     title: "",
     image: null,
     description: "",
+    isPrivate: false,
     products: [],
   };
   if (recipe) {
     emptyRecipe.title = recipe.title;
     emptyRecipe.image = recipe.imgUri;
     emptyRecipe.description = recipe.description;
+    emptyRecipe.isPrivate = recipe.isPrivate;
     emptyRecipe.products = recipe.products.map((product) => ({
       id: product.id,
       productName: product.name,
@@ -53,7 +56,6 @@ function CreateRecipeView({ recipe }: { recipe: Recipe | null }) {
       )
       .catch((reason: any) => {
         console.error(reason);
-        // TODO display error popup
       });
   }, [navigate]);
 
@@ -137,6 +139,10 @@ function CreateRecipeView({ recipe }: { recipe: Recipe | null }) {
       });
   };
 
+    const handelClick = () => {
+      setState({ ...state, isPrivate: !state.isPrivate });
+    };
+
   return (
     <div>
       {showFailAlert && (
@@ -180,6 +186,7 @@ function CreateRecipeView({ recipe }: { recipe: Recipe | null }) {
         }}
       />
       <Stack direction="horizontal">
+        <IsPrivateCheckbox isPrivate={()=> handelClick()} checked={state.isPrivate}/>
         <Button
           variant="secondary"
           onClick={() => {

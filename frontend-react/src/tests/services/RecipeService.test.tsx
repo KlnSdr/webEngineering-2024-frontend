@@ -45,6 +45,7 @@ describe("RecipeService", () => {
       title: "Test Recipe",
       image: "data:image/png;base64,testImage",
       description: "Test description",
+      isPrivate: false,
       products: [
         { id: 1, productName: "Product 1", amount: 100 },
         { id: 2, productName: "Product 2", amount: 200 },
@@ -73,6 +74,7 @@ describe("RecipeService", () => {
       title: "Recipe with No Image",
       image: null,
       description: "Description with no image",
+      isPrivate: false,
       products: [{ id: 3, productName: "Product 3", amount: 150 }],
     };
 
@@ -107,6 +109,7 @@ describe("RecipeService", () => {
       title: "A".repeat(1000),
       image: "data:image/png;base64," + "B".repeat(1000),
       description: "C".repeat(1000),
+      isPrivate: false,
       products: Array(1000).fill({ id: 1, productName: "Product", amount: 1 }),
     };
 
@@ -142,6 +145,7 @@ describe("RecipeService", () => {
       title: "Test Recipe",
       image: "data:image/png;base64,testImage",
       description: "Test description",
+      isPrivate: false,
       products: [
         { id: 1, productName: "Product 1", amount: 100 },
         { id: 2, productName: "Product 2", amount: 200 },
@@ -171,6 +175,7 @@ describe("RecipeService", () => {
       title: "Test Recipe",
       image: "data:image/png;base64,testImage",
       description: "Test description",
+      isPrivate: false,
       products: [
         { id: 1, productName: "Product 1", amount: 100 },
         { id: 2, productName: "Product 2", amount: 200 },

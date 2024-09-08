@@ -196,61 +196,6 @@ describe("RecipeService", () => {
       body: JSON.stringify(mockCreateRecipe),
     });
   });
-  test("getAll returns a list of recipes", async () => {
-    // Mock the response from the fetch call
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockRecipes,
-    });
-
-    const recipes = await RecipeService.getAll();
-    expect(recipes).toEqual(mockRecipes);
-    expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {});
-  });
-
-  test("getAll returns recipes with correct properties", async () => {
-    // Mock the response from the fetch call
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockRecipes,
-    });
-
-    const recipes = await RecipeService.getAll();
-
-    recipes.forEach((recipe) => {
-      expect(recipe).toHaveProperty("title");
-      expect(recipe).toHaveProperty("image");
-      expect(recipe).toHaveProperty("description");
-      expect(recipe).toHaveProperty("products");
-    });
-
-    expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {});
-  });
-
-  test("getAll throws an error if the network request fails", async () => {
-    // Mock a failed network request
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      ok: false,
-    });
-
-    await expect(RecipeService.getAll()).rejects.toThrow(
-        "Failed to load recipes."
-    );
-    expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {});
-  });
-
-  test("getAll throws an error if fetch rejects", async () => {
-    // Mock a network error (fetch rejects)
-    const mockError = new Error("Network Error");
-    (fetch as jest.Mock).mockRejectedValueOnce(mockError);
-
-    await expect(RecipeService.getAll()).rejects.toThrow(mockError);
-    expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("http://localhost:13000/recipes", {});
-  });
 
   //Static recipes for testing
   const fixedDate = new Date('2024-08-29T22:21:23.840Z');

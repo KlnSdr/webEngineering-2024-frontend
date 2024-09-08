@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SurveyEditView Component matches snapshot for HomePage component 1`] = `
+<DocumentFragment>
+  <div>
+    Umfrage mit Id  konnte nicht gefunden werden.
+  </div>
+</DocumentFragment>
+`;
+
+exports[`SurveyEditView Component matches snapshot for SurveyEditView component 1`] = `
+<DocumentFragment>
+  <div>
+    Umfrage mit Id  konnte nicht gefunden werden.
+  </div>
+</DocumentFragment>
+`;

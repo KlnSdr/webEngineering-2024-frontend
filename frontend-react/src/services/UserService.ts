@@ -24,7 +24,12 @@ class UserService {
         resolve(UserService.userInfo);
         return;
       }
-      resolve(null);
+
+      if (localStorage.getItem("token")) {
+          this.loadUserInfo(localStorage.getItem("token")!);
+      }
+
+      resolve(UserService.userInfo);
     });
   }
 

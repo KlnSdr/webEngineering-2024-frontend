@@ -7,6 +7,15 @@ import { useEffect, useState } from "react";
 import { UserService } from "./services/UserService";
 import UserInfo from "./components/UserInfo";
 
+/**
+ * Layout component that defines the main structure of the application.
+ *
+ * This component includes a navigation bar with links to different parts of the application
+ * and an outlet for rendering the matched child route components. It also fetches and displays
+ * user information if the user is logged in.
+ *
+ * @returns {JSX.Element} The rendered layout component.
+ */
 function Layout() {
   const [user, setUser] = useState(null);
 

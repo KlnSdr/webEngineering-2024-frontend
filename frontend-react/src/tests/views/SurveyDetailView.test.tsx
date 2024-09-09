@@ -1,18 +1,25 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter} from "react-router-dom";
-import { UserService } from "../../services/UserService";
-import RecipeDetailView from "../../views/RecipeDetailView";
 import SurveyDetailView from "../../views/SurveyDetailView";
+import SurveyService from "../../services/SurveyService";
 
-jest.mock("../../services/UserService");
+jest.mock("../../services/SurveyService");
 
-const mockIsLoggedIn = UserService.isLoggedIn as jest.Mock;
+const mockSurveys = SurveyService.getSurveyById as jest.Mock;
+const mockSurveyTest = [{id: 1, title: "Test Survey", participants: ["user1" , "user2"],
+    creator: "user1", recipeVote: {"recipe1" : 1},
+    options: ["recipe1", "recipe2"], creationDate: new Date() }];
 
-describe("RecipeEditView Component", () => {
+describe("SurveyDetailView Component", () => {
 
     test('matches snapshot for SurveyDetailView component if user is logged in', () => {
-        mockIsLoggedIn.mockResolvedValue(true);
+
+        (mockSurveys as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+            json: async () => mockSurveyTest,
+        });
+
         const { asFragment } = render(
             <MemoryRouter initialEntries={["/survey/view/:id"]}>
                 <SurveyDetailView />
@@ -23,14 +30,16 @@ describe("RecipeEditView Component", () => {
     });
 
     test('matches snapshot for SurveyDetailView component if user is not logged in', () => {
-        mockIsLoggedIn.mockResolvedValue(false);
-        const { asFragment } = render(
-            <MemoryRouter initialEntries={["/survey/view/:id"]}>
-                <SurveyDetailView />
-            </MemoryRouter>
-        );
 
-        expect(asFragment()).toMatchSnapshot();
+        const mockError = new Error("Failed to load survey detail view");
+        (mockSurveys as jest.Mock).mockRejectedValueOnce(mockError);
+            const {asFragment} = render(
+                <MemoryRouter initialEntries={["/survey/view/:id"]}>
+                    <SurveyDetailView/>
+                </MemoryRouter>
+            );
+
+            expect(asFragment()).toMatchSnapshot();
     });
 
 });

@@ -1,12 +1,10 @@
 import React from "react";
 import HomePage from "../../views/HomePage";
-import { render, waitFor, screen } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { UserService } from "../../services/UserService";
 import { RecipeService } from "../../services/RecipeService";
-import { FridgeService } from "../../services/FridgeService";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Recipe } from "../../types/Recipes";
-import { NeededProduct } from "../../types/Products";
 
 jest.mock("../../services/UserService");
 jest.mock("../../services/RecipeService");

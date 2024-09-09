@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginView Component matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="d-flex justify-content-center mt-5"
+    style="margin-top: 25%;"
+  >
+    <div
+      class="card"
+    >
+      <div
+        class="card-header"
+      >
+        Anmelden
+      </div>
+      <div
+        class="card-body"
+      >
+        <p
+          class="card-text"
+        >
+          Um alle Features verwenden zu können müssen Sie sich anmelden.
+        </p>
+        <div
+          class="btn-group"
+          role="group"
+        >
+          <button
+            class="btn btn-primary"
+            type="button"
+          >
+            <i
+              class="bi bi-gitlab"
+            />
+             Login mit GitLab
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

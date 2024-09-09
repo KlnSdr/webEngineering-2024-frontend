@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SurveyDetailView Component matches snapshot for SurveyDetailView component if user is logged in 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="FoodTitle"
+    >
+      Survey
+    </h2>
+    <h1>
+      Survey not found
+    </h1>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`SurveyDetailView Component matches snapshot for SurveyDetailView component if user is not logged in 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="FoodTitle"
+    >
+      Survey
+    </h2>
+    <h1>
+      Survey not found
+    </h1>
+  </div>
+</DocumentFragment>
+`;

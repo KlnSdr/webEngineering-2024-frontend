@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotFoundView Component matches snapshot for NotFoundView component 1`] = `
+<DocumentFragment>
+  <div>
+    <h1>
+      ups!
+    </h1>
+    <h1>
+      diese url kennen wir nicht
+    </h1>
+  </div>
+</DocumentFragment>
+`;

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CreateSurveyView Component renders correct when user is logged in 1`] = `
+exports[`CreateRecipeView Component renders correctly when user is logged in and matches snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div>
@@ -16,27 +16,57 @@ exports[`CreateSurveyView Component renders correct when user is logged in 1`] =
       />
     </div>
     <div>
-      <div>
-        <h1
-          class="headline-with-lines"
-        >
-          Rezepte suchen
-        </h1>
-        <input
-          class="form-control"
-          type="text"
-          value=""
-        />
-      </div>
+      <h1
+        class="headline-with-lines"
+      >
+        Bild Url
+      </h1>
+      <input
+        class="form-control"
+        type="text"
+        value=""
+      />
     </div>
     <h1
       class="headline-with-lines"
     >
-      Rezepte
+      Zutaten
     </h1>
+    <div>
+      <button
+        class="bi bi-plus btn btn-primary"
+        data-testid="add-product"
+        type="button"
+      />
+    </div>
+    <h1
+      class="headline-with-lines"
+    >
+      Zubereitung
+    </h1>
+    <textarea
+      class="form-control"
+      rows="10"
+    />
     <div
       class="hstack"
     >
+      <div
+        class="form-check"
+      >
+        <input
+          class="form-check-input"
+          id="flexCheckChecked"
+          type="checkbox"
+          value=""
+        />
+        <label
+          class="form-check-label"
+          for="flexCheckChecked"
+        >
+          Privat
+        </label>
+      </div>
       <button
         class="ms-auto btn btn-secondary"
         type="button"

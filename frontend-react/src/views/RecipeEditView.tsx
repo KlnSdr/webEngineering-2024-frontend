@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import {Recipe} from "../types/Recipes";
-import {useParams} from "react-router-dom";
+import { Recipe } from "../types/Recipes";
+import { useParams } from "react-router-dom";
 import CreateRecipeView from "./CreateRecipeView";
-import {Product} from "../types/Products";
-import {ProductsService} from "../services/ProductService";
-import {authorizedRequest} from "../services/Requests";
+import { Product } from "../types/Products";
+import { ProductsService } from "../services/ProductService";
+import { authorizedRequest } from "../services/Requests";
 
-function EditRecipeView() {
-    const {id} = useParams<{id:string}>();
+/**
+ * Component for editing an existing recipe.
+ *
+ * This component fetches the details of a recipe by its ID and displays the
+ * `CreateRecipeView` component pre-filled with the recipe's data for editing.
+ *
+ * @returns {JSX.Element} The rendered component.
+ */
+function EditRecipeView(): JSX.Element {
+    const { id } = useParams<{ id: string }>();
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const backendURL: string = process.env.REACT_APP_BACKEND_URL || "http://localhost:13000";
 
@@ -48,7 +56,6 @@ function EditRecipeView() {
         });
     }, [id, backendURL]);
 
-
     if (recipe === null) {
         return <div>Rezept mit Id {id} konnte nicht gefunden werden.</div>
     } else {
@@ -56,8 +63,6 @@ function EditRecipeView() {
             <CreateRecipeView recipe={recipe} />
         </div>);
     }
-
-
 }
 
 export default EditRecipeView;

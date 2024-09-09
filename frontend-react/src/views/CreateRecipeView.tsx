@@ -14,9 +14,19 @@ import Stack from "react-bootstrap/Stack";
 import { RecipeService } from "../services/RecipeService";
 import { UserService } from "../services/UserService";
 import { useNavigate } from "react-router-dom";
-import {IsPrivateCheckbox} from "../components/UncheckCheckbox";
+import { IsPrivateCheckbox } from "../components/UncheckCheckbox";
 
-function CreateRecipeView({ recipe }: { recipe: Recipe | null }) {
+/**
+ * Component for creating or editing a recipe.
+ * @param {Object} props - The component props.
+ * @param {Recipe | null} props.recipe - The recipe to edit, or null to create a new recipe.
+ * @returns {JSX.Element} The rendered component.
+ */
+function CreateRecipeView({ recipe }: { recipe: Recipe | null }): JSX.Element {
+  /**
+   * The initial state for a new recipe.
+   * @type {CreateRecipe}
+   */
   const emptyRecipe: CreateRecipe = {
     title: "",
     image: null,
@@ -24,6 +34,8 @@ function CreateRecipeView({ recipe }: { recipe: Recipe | null }) {
     isPrivate: false,
     products: [],
   };
+
+  // If editing an existing recipe, populate the initial state with its data.
   if (recipe) {
     emptyRecipe.title = recipe.title;
     emptyRecipe.image = recipe.imgUri;
@@ -35,14 +47,22 @@ function CreateRecipeView({ recipe }: { recipe: Recipe | null }) {
       amount: product.amount,
     }));
   }
+
+  /**
+   * Timeout duration for the failure alert popup.
+   * @type {number}
+   */
   const popUpTimeout: number = parseInt(
     process.env.REACT_APP_POPUP_TIMEOUT || "5000"
   );
+
   const [showFailAlert, setShowFailAlert] = useState(false);
   const [state, setState] = useState(emptyRecipe);
   const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
 
   const navigate = useNavigate();
+
+  // Effect to check if the user is logged in and fetch available products.
   useEffect(() => {
     UserService.isLoggedIn().then((isLoggedIn: boolean) => {
       if (!isLoggedIn) {
@@ -59,6 +79,10 @@ function CreateRecipeView({ recipe }: { recipe: Recipe | null }) {
       });
   }, [navigate]);
 
+  /**
+   * Validates the current state of the recipe.
+   * @returns {boolean} True if the state is valid, false otherwise.
+   */
   const validate: () => boolean = () => {
     if (state.title.trim() === "") {
       return false;
@@ -79,10 +103,17 @@ function CreateRecipeView({ recipe }: { recipe: Recipe | null }) {
     return true;
   };
 
+  /**
+   * Shows the failure alert popup.
+   */
   const showPopUpFail = () => {
     setShowFailAlert(true);
     setTimeout(() => setShowFailAlert(false), popUpTimeout);
   };
+
+  /**
+   * Saves the recipe, either by creating a new one or updating an existing one.
+   */
   const saveRecipe = () => {
     if (!validate()) {
       showPopUpFail();
@@ -94,15 +125,17 @@ function CreateRecipeView({ recipe }: { recipe: Recipe | null }) {
         title: state.title,
         imgUri: state.image || "",
         description: state.description,
-          products: state.products.map((product) => ({
-              id: availableProducts.find(
-                  (p: Product) => p.name === product.productName
-              )?.id || 0,
-              name: product.productName,
-              amount: product.amount,
-              unit: availableProducts.find((prod: Product) => prod.id === product.id)?.unit || ""
-          })),
-          isPrivate: recipe!.isPrivate,
+        products: state.products.map((product) => ({
+          id: availableProducts.find(
+            (p: Product) => p.name === product.productName
+          )?.id || 0,
+          name: product.productName,
+          amount: product.amount,
+          unit:
+            availableProducts.find((prod: Product) => prod.id === product.id)
+              ?.unit || "",
+        })),
+        isPrivate: recipe!.isPrivate,
         creationDate: recipe!.creationDate,
         ownerUri: recipe!.ownerUri,
         likedByUserUris: recipe!.likedByUserUris,
@@ -139,9 +172,12 @@ function CreateRecipeView({ recipe }: { recipe: Recipe | null }) {
       });
   };
 
-    const handelClick = () => {
-      setState({ ...state, isPrivate: !state.isPrivate });
-    };
+  /**
+   * Handles the click event for the private checkbox.
+   */
+  const handelClick = () => {
+    setState({ ...state, isPrivate: !state.isPrivate });
+  };
 
   return (
     <div>
@@ -186,7 +222,7 @@ function CreateRecipeView({ recipe }: { recipe: Recipe | null }) {
         }}
       />
       <Stack direction="horizontal">
-        <IsPrivateCheckbox isPrivate={()=> handelClick()} checked={state.isPrivate}/>
+        <IsPrivateCheckbox isPrivate={() => handelClick()} checked={state.isPrivate} />
         <Button
           variant="secondary"
           onClick={() => {

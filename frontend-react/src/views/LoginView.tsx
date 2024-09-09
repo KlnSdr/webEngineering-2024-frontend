@@ -1,10 +1,11 @@
-// import { useEffect } from "react";
-// import { UserService } from "../services/UserService";
-
 import { Button } from "react-bootstrap";
 import { UserService } from "../services/UserService";
 
-function LoginView() {
+/**
+ * Component for the login view.
+ * @returns {JSX.Element} The rendered component.
+ */
+function LoginView(): JSX.Element {
   return (
     <div
       className="d-flex justify-content-center mt-5"

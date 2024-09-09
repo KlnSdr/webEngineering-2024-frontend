@@ -2,25 +2,25 @@ import "../style/HomePage.css";
 import React, { useEffect, useState } from "react";
 import ImageArea from "../components/ImageArea";
 import { RecipeService } from "../services/RecipeService";
-import {Recipe} from "../types/Recipes";
+import { Recipe } from "../types/Recipes";
 import MyRecipeBar from "../components/MyRecipeBar";
 import EditButton from "../components/EditButton";
 import Stack from "react-bootstrap/Stack";
-import {Link} from "react-router-dom";
-import {ProductsService} from "../services/ProductService";
-import {NeededProduct, Product} from "../types/Products";
-import {Heading2} from "../components/Heading";
+import { Link } from "react-router-dom";
+import { ProductsService } from "../services/ProductService";
+import { NeededProduct, Product } from "../types/Products";
+import { Heading2 } from "../components/Heading";
 import Button from "react-bootstrap/Button";
-import {FridgeService} from "../services/FridgeService";
-import {UserService} from "../services/UserService";
-import {Table} from "react-bootstrap";
+import { FridgeService } from "../services/FridgeService";
+import { UserService } from "../services/UserService";
+import { Table } from "react-bootstrap";
 import Dropdown from "../components/Dropdown";
 
 /**
  * HomePage view that displays recipes and manages fridge content.
- * @returns JSX.Element - The rendered component.
+ * @returns {JSX.Element} The rendered component.
  */
-function HomePage() {
+function HomePage(): JSX.Element {
     const [myRecipes, setMyRecipe] = useState<Recipe[]>([]);
     const [productsData, setProductsData] = useState<Product[]>([]);
     const [fridgeProducts, setFridgeProducts] = useState<NeededProduct[]>([]);
@@ -30,7 +30,7 @@ function HomePage() {
 
     /**
      * Fetches all products from the backend when the component mounts.
-     * @returns void
+     * @returns {void}
      */
     useEffect(() => {
         ProductsService.getAll().then((products) => {
@@ -40,13 +40,13 @@ function HomePage() {
 
     /**
      * Fetches user info and fridge content when the component mounts.
-     * @returns void
+     * @returns {void}
      */
     useEffect(() => {
         UserService.getUserInfo()
             .then((userInfo) => {
                 if (userInfo && userInfo.id) {
-                    const userId = userInfo.id // Extract userId from internalUser
+                    const userId = userInfo.id; // Extract userId from internalUser
                     setUserId(userId);
                     myRecipeSet(userId);
                     return FridgeService.getFridgeContent(userId); // Fetch fridge content using userId
@@ -68,23 +68,27 @@ function HomePage() {
             });
     }, []);
 
-    function myRecipeSet(usrId: number) {
-        RecipeService.getRecipeByUser(usrId!).then((recipes) => {
+    /**
+     * Fetches recipes created by the user.
+     * @param {number} usrId - The user ID.
+     * @returns {void}
+     */
+    function myRecipeSet(usrId: number): void {
+        RecipeService.getRecipeByUser(usrId).then((recipes) => {
             if (recipes) {
                 setMyRecipe(recipes);
             }
-        })
+        });
     }
-
 
     /**
      * Handles changes to the product in the temporary product list.
-     * @param index - The index of the product in the temporary list.
-     * @param productName - The name of the product.
-     * @param amount - The amount of the product.
-     * @returns void
+     * @param {number} index - The index of the product in the temporary list.
+     * @param {string} productName - The name of the product.
+     * @param {number} amount - The amount of the product.
+     * @returns {void}
      */
-    const handleProductChange = (index: number, productName: string, amount: number) => {
+    const handleProductChange = (index: number, productName: string, amount: number): void => {
         const productId = productsData.find(p => p.name === productName)?.id;
         const updatedProducts = [...tempProducts];
         if (productId !== undefined) {
@@ -95,10 +99,10 @@ function HomePage() {
 
     /**
      * Handles removal of a product from the temporary product list.
-     * @param index - The index of the product to remove.
-     * @returns void
+     * @param {number} index - The index of the product to remove.
+     * @returns {void}
      */
-    const handleRemoveProduct = (index: number) => {
+    const handleRemoveProduct = (index: number): void => {
         const updatedProducts = tempProducts.filter((_, i) => i !== index);
         setTempProducts(updatedProducts);
 
@@ -110,9 +114,9 @@ function HomePage() {
 
     /**
      * Adds a new product to the temporary product list.
-     * @returns void
+     * @returns {void}
      */
-    const addProduct = () => {
+    const addProduct = (): void => {
         setIsAddingProduct(true); // Show table when adding a product
         const defaultProduct = productsData.length > 0 ? productsData[0] : null;
         if (defaultProduct) {
@@ -125,9 +129,9 @@ function HomePage() {
 
     /**
      * Saves all products in the temporary list to the fridge.
-     * @returns void
+     * @returns {void}
      */
-    const saveAllProducts = () => {
+    const saveAllProducts = (): void => {
         if (userId === null) return;
 
         // Filter out products with an amount of 0
@@ -161,10 +165,10 @@ function HomePage() {
 
     /**
      * Deletes a product from the fridge.
-     * @param productId - The ID of the product to delete.
-     * @returns void
+     * @param {number} productId - The ID of the product to delete.
+     * @returns {void}
      */
-    const deleteProduct = (productId: number) => {
+    const deleteProduct = (productId: number): void => {
         if (userId === null) return;
 
         FridgeService.deleteFridgeProduct(userId, productId)
@@ -184,9 +188,9 @@ function HomePage() {
 
     /**
      * Renders the content of the fridge as table rows.
-     * @returns JSX.Element[] - Array of JSX elements representing the table rows.
+     * @returns {JSX.Element[]} Array of JSX elements representing the table rows.
      */
-    const renderFridgeContent = () => {
+    const renderFridgeContent = (): JSX.Element[] => {
         return fridgeProducts.map((product, index) => (
             <tr key={index}>
                 <td>{product.productName}</td>
@@ -202,9 +206,9 @@ function HomePage() {
 
     /**
      * Renders temporary product lines as table rows.
-     * @returns JSX.Element[] - Array of JSX elements representing the table rows.
+     * @returns {JSX.Element[]} Array of JSX elements representing the table rows.
      */
-    const renderProductLines = () =>
+    const renderProductLines = (): JSX.Element[] =>
         tempProducts.map((product, index) => (
             <tr key={product.id}>
                 <td>
@@ -226,9 +230,14 @@ function HomePage() {
                     </Button>
                 </td>
             </tr>
-
         ));
-    const deleteRecipe = (id: number) => {
+
+    /**
+     * Deletes a recipe.
+     * @param {number} id - The ID of the recipe to delete.
+     * @returns {void}
+     */
+    const deleteRecipe = (id: number): void => {
         RecipeService.deleteRecipe(id)
             .then(() => {
                 RecipeService.getRecipeByUser(userId!).then((recipes) => {
@@ -239,21 +248,22 @@ function HomePage() {
                 console.error("Failed to delete recipe:", error);
             });
     };
-    const realPage = (myRecipes.map((recipe:Recipe) => (
+
+    const realPage = myRecipes.map((recipe: Recipe) => (
         <div className="RowArea ">
             <Stack direction={"horizontal"} className={"mt-3"}>
-                <ImageArea origin={recipe.imgUri}/>
-                <Link to={`/recipe/view/${recipe.id}`}> <MyRecipeBar Recipe={recipe}/></Link>
-                    <div className="col-1">
-                        <EditButton Link={`/recipe/edit/${recipe.id}`}/>
-                        <Button variant="danger" className={"bi bi-x m-2"}
-                                onClick={() => deleteRecipe(recipe.id)}></Button>
-                    </div>
+                <ImageArea origin={recipe.imgUri} />
+                <Link to={`/recipe/view/${recipe.id}`}> <MyRecipeBar Recipe={recipe} /></Link>
+                <div className="col-1">
+                    <EditButton Link={`/recipe/edit/${recipe.id}`} />
+                    <Button variant="danger" className={"bi bi-x m-2"}
+                        onClick={() => deleteRecipe(recipe.id)}></Button>
+                </div>
             </Stack>
         </div>
-)));
+    ));
 
-return (
+    return (
         <div>
             <h1>Meine Rezepte</h1>
             <div className="myRecipesDiv">
@@ -275,11 +285,11 @@ return (
             {isAddingProduct && (
                 <Table striped bordered hover className="mt-3">
                     <thead>
-                    <tr>
-                        <th>Produkt</th>
-                        <th>Menge</th>
-                        <th>Zeile entfernen</th>
-                    </tr>
+                        <tr>
+                            <th>Produkt</th>
+                            <th>Menge</th>
+                            <th>Zeile entfernen</th>
+                        </tr>
                     </thead>
                     <tbody>{renderProductLines()}</tbody>
                 </Table>
@@ -288,14 +298,14 @@ return (
             <Heading2 headingText="Kühlschrank Inhalt:" />
             <Table striped bordered hover className="mt-3">
                 <thead>
-                <tr>
-                    <th>Produkt</th>
-                    <th>Menge</th>
-                    <th>Löschen</th>
-                </tr>
+                    <tr>
+                        <th>Produkt</th>
+                        <th>Menge</th>
+                        <th>Löschen</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {renderFridgeContent()}
+                    {renderFridgeContent()}
                 </tbody>
             </Table>
         </div>

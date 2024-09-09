@@ -7,6 +7,14 @@ import EditButton, {CreateButton} from "../components/EditButton";
 import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
 
+/**
+ * Component for displaying and managing user surveys.
+ *
+ * This component fetches and displays the surveys created by the logged-in user.
+ * It allows the user to create new surveys, edit existing ones, and delete surveys.
+ *
+ * @returns {JSX.Element} The rendered component.
+ */
 function SurveyHub(){
     const [surveys, setSurveys] = useState<Survey[] | null>(null);
 
@@ -20,6 +28,12 @@ function SurveyHub(){
         });
     }, []);
 
+    /**
+     * Determines the appropriate text size class based on the length of the survey title.
+     *
+     * @param {string} title - The title of the survey.
+     * @returns {string} The CSS class for the text size.
+     */
     function textsize(title: string | any ){
         if (title.length > 45){
             return "display-6";
@@ -32,9 +46,14 @@ function SurveyHub(){
             return "display-3";
         }
         return "display-2";
-
     }
-const deleteSurvey = (id: number) => {
+
+    /**
+     * Deletes a survey by its ID and updates the survey list.
+     *
+     * @param {number} id - The ID of the survey to delete.
+     */
+    const deleteSurvey = (id: number) => {
         SurveyService.deleteSurvey(id).then(() => {
             SurveyService.getSurveysByUserId().then((surveys) => {
                 if(surveys){
@@ -46,8 +65,8 @@ const deleteSurvey = (id: number) => {
         }).catch((error) => {
             console.error("Failed to delete survey", error);
         });
-
     }
+
     if(!surveys){
         return(
             <div>
@@ -61,7 +80,6 @@ const deleteSurvey = (id: number) => {
             <div>
                 <h1>Erstellen Sie Ihre erste Umfrage, Sie haben noch keine!</h1>
                 <CreateButton Link={"./new"}/>
-
             </div>
         );
     }
@@ -84,6 +102,5 @@ const deleteSurvey = (id: number) => {
         </div>
     );
 }
-
 
 export default SurveyHub;
